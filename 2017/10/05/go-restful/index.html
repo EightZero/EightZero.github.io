@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>go restful | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="go http web123456789101112&#x2F;&#x2F;基础 web serverfunc simpleHttpServer()&amp;#123;	&#x2F;&#x2F;1. 往serverMux的 map[string]muxEntry 添加路由规则pattern以及封装了handler的muxEntry	&#x2F;&#x2F;2. 匹配pattern，Handler被调用	http.HandleFunc(&quot;&#x2F;hello&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go restful">
+<meta property="og:url" content="http://example.com/2017/10/05/go-restful/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="go http web123456789101112&#x2F;&#x2F;基础 web serverfunc simpleHttpServer()&amp;#123;	&#x2F;&#x2F;1. 往serverMux的 map[string]muxEntry 添加路由规则pattern以及封装了handler的muxEntry	&#x2F;&#x2F;2. 匹配pattern，Handler被调用	http.HandleFunc(&quot;&#x2F;hello&amp;qu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-10-05T15:18:50.000Z">
+<meta property="article:modified_time" content="2021-10-03T15:19:55.987Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-go-restful" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/10/05/go-restful/" class="article-date">
+  <time class="dt-published" datetime="2017-10-05T15:18:50.000Z" itemprop="datePublished">2017-10-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      go restful
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="go-http-web"><a href="#go-http-web" class="headerlink" title="go http web"></a>go http web</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//基础 web server</span><br><span class="line">func simpleHttpServer()&#123;</span><br><span class="line">	//1. 往serverMux的 map[string]muxEntry 添加路由规则pattern以及封装了handler的muxEntry</span><br><span class="line">	//2. 匹配pattern，Handler被调用</span><br><span class="line">	http.HandleFunc(&quot;/hello&quot;, SayHello)</span><br><span class="line">	//1. 实例化Server</span><br><span class="line">	http.ListenAndServe(&quot;:8000&quot;,nil)</span><br><span class="line">&#125;</span><br><span class="line">func SayHello(w http.ResponseWriter, req *http.Request)  &#123;</span><br><span class="line">	fmt.Println(req)</span><br><span class="line">	w.Write([]byte(&quot;Hello!!!&quot;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="golang-装饰器模式"><a href="#golang-装饰器模式" class="headerlink" title="golang 装饰器模式"></a>golang 装饰器模式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func HandleFunc(pattern string, handler func(ResponseWriter, *Request)) &#123;</span><br><span class="line">	DefaultServeMux.HandleFunc(pattern, handler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="go-restful"><a href="#go-restful" class="headerlink" title="go-restful"></a>go-restful</h4><p>一个 Container 包含多个 WebService，同时container实现了http.handler接口定义的ServeHTTP方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">type Container struct &#123;</span><br><span class="line">   webServicesLock        sync.RWMutex</span><br><span class="line">   webServices            []*WebService //一个Container包含多个webservice</span><br><span class="line">   ServeMux               *http.ServeMux</span><br><span class="line">   isRegisteredOnRoot     bool</span><br><span class="line">   containerFilters       []FilterFunction</span><br><span class="line">   doNotRecover           bool // default is true</span><br><span class="line">   recoverHandleFunc      RecoverHandleFunction</span><br><span class="line">   serviceErrorHandleFunc ServiceErrorHandleFunction</span><br><span class="line">   router                 RouteSelector // default is a CurlyRouter (RouterJSR311 is a slower alternative)</span><br><span class="line">   contentEncodingEnabled bool          // default is false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (c *Container) ServeHTTP(httpwriter http.ResponseWriter, httpRequest *http.Request) &#123;</span><br><span class="line">    c.ServeMux.ServeHTTP(httpwriter, httpRequest)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个 webservice 包含多个Route，webservice里定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">type WebService struct &#123;</span><br><span class="line">    rootPath       string</span><br><span class="line">    pathExpr       *pathExpression</span><br><span class="line">    routes         []Route //一个webservice包含多个Route</span><br><span class="line">    produces       []string</span><br><span class="line">    consumes       []string</span><br><span class="line">    pathParameters []*Parameter</span><br><span class="line">    filters        []FilterFunction</span><br><span class="line">    documentation  string</span><br><span class="line">    apiVersion     string</span><br><span class="line"></span><br><span class="line">    typeNameHandleFunc TypeNameHandleFunction</span><br><span class="line"></span><br><span class="line">    dynamicRoutes bool</span><br><span class="line"></span><br><span class="line">    // protects &#x27;routes&#x27; if dynamic routes are enabled</span><br><span class="line">    routesLock sync.RWMutex</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Path specifies the root URL template path of the WebService.</span><br><span class="line">// All Routes will be relative to this path.</span><br><span class="line">func (w *WebService) Path(root string) *WebService &#123;</span><br><span class="line">	w.rootPath = root</span><br><span class="line">	if len(w.rootPath) == 0 &#123;</span><br><span class="line">		w.rootPath = &quot;/&quot;</span><br><span class="line">	&#125;</span><br><span class="line">	w.compilePathExpression()</span><br><span class="line">	return w</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Route creates a new Route using the RouteBuilder and add to the ordered list of Routes.</span><br><span class="line">func (w *WebService) Route(builder *RouteBuilder) *WebService &#123;</span><br><span class="line">	w.routesLock.Lock()</span><br><span class="line">	defer w.routesLock.Unlock()</span><br><span class="line">	builder.copyDefaults(w.produces, w.consumes)</span><br><span class="line">	w.routes = append(w.routes, builder.Build())</span><br><span class="line">	return w</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个 Route 包含HTTP 协议协议相关的HTTP Request 、HTTP Reponse 、方法等处理。由RouteBuilder传递过来的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">type Route struct &#123;</span><br><span class="line">    Method   string</span><br><span class="line">    Produces []string</span><br><span class="line">    Consumes []string</span><br><span class="line">    Path     string // webservice root path + described path</span><br><span class="line">    Function RouteFunction//具体处理函数</span><br><span class="line">    Filters  []FilterFunction</span><br><span class="line">    If       []RouteSelectionConditionFunction</span><br><span class="line"></span><br><span class="line">    // cached values for dispatching</span><br><span class="line">    relativePath string</span><br><span class="line">    pathParts    []string</span><br><span class="line">    pathExpr     *pathExpression // cached compilation of relativePath as RegExp</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// RouteFunction declares the signature of a function that can be bound to a Route.</span><br><span class="line">type RouteFunction func(*Request, *Response)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// To bind the route to a function.</span><br><span class="line">// If this route is matched with the incoming Http Request then call this function with the *Request,*Response pair. Required.</span><br><span class="line">func (b *RouteBuilder) To(function RouteFunction) *RouteBuilder &#123;</span><br><span class="line">	b.function = function</span><br><span class="line">	return b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-ResourceMethod-and-ResourceMethodContainer"><a href="#1-ResourceMethod-and-ResourceMethodContainer" class="headerlink" title="1. ResourceMethod and ResourceMethodContainer"></a>1. ResourceMethod and ResourceMethodContainer</h3><h3 id="2-Apply-Builder-pattern-to-reduce-clutter"><a href="#2-Apply-Builder-pattern-to-reduce-clutter" class="headerlink" title="2: Apply Builder pattern to reduce clutter"></a>2: Apply Builder pattern to reduce clutter</h3><h3 id="3-Introduce-defaults-on-the-Resource-and-override-per-method-if-needed"><a href="#3-Introduce-defaults-on-the-Resource-and-override-per-method-if-needed" class="headerlink" title="3: Introduce defaults on the Resource and override per method if needed"></a>3: Introduce defaults on the Resource and override per method if needed</h3><h3 id="4-Binding-Routes-to-Functions"><a href="#4-Binding-Routes-to-Functions" class="headerlink" title="4:  Binding Routes to Functions"></a>4:  Binding Routes to Functions</h3><h3 id="5-Document-the-API"><a href="#5-Document-the-API" class="headerlink" title="5: Document the API"></a>5: Document the API</h3><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="http://ernestmicklei.com/2012/11/go-restful-api-design/">http://ernestmicklei.com/2012/11/go-restful-api-design/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/10/05/go-restful/" data-id="ckubdxmby000atktrbvbxad3j" data-title="go restful" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          pod创建大致流程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/03/go-protobuf/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">go protobuf</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 16.67px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/">马拉车算法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">kubernetes下的DNS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/19/k-NN/">K-NN</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

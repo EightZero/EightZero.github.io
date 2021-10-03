@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>申请移动设备管理厂商(MDM Vendor) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="申请移动设备管理厂商(MDM Vendor)前提：必须是苹果企业开发者 前往苹果开发者网站申请成为MDM Vendor，申请成功后在开发者网站可以看到多出一个MDM CSR选项 ![](https:&#x2F;&#x2F;gitee.com&#x2F;eightzero&#x2F;pico&#x2F;raw&#x2F;master&#x2F;MDM CSR.png)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="申请移动设备管理厂商(MDM Vendor)">
+<meta property="og:url" content="http://example.com/2016/07/01/MDM-vendor/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="申请移动设备管理厂商(MDM Vendor)前提：必须是苹果企业开发者 前往苹果开发者网站申请成为MDM Vendor，申请成功后在开发者网站可以看到多出一个MDM CSR选项 ![](https:&#x2F;&#x2F;gitee.com&#x2F;eightzero&#x2F;pico&#x2F;raw&#x2F;master&#x2F;MDM CSR.png)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-07-01T14:21:30.000Z">
+<meta property="article:modified_time" content="2021-10-03T14:27:33.071Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MDM Vendor">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-MDM-vendor" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/07/01/MDM-vendor/" class="article-date">
+  <time class="dt-published" datetime="2016-07-01T14:21:30.000Z" itemprop="datePublished">2016-07-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      申请移动设备管理厂商(MDM Vendor)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="申请移动设备管理厂商-MDM-Vendor"><a href="#申请移动设备管理厂商-MDM-Vendor" class="headerlink" title="申请移动设备管理厂商(MDM Vendor)"></a>申请移动设备管理厂商(MDM Vendor)</h2><p>前提：必须是苹果企业开发者</p>
+<p>前往苹果开发者网站申请成为<a target="_blank" rel="noopener" href="https://developer.apple.com/contact/submit/">MDM Vendor</a>，申请成功后在开发者网站可以看到多出一个MDM CSR选项</p>
+<p>![](<a target="_blank" rel="noopener" href="https://gitee.com/eightzero/pico/raw/master/MDM">https://gitee.com/eightzero/pico/raw/master/MDM</a> CSR.png)</p>
+<span id="more"></span>
+
+<h2 id="MDM提供商侧-MDM-vendor"><a href="#MDM提供商侧-MDM-vendor" class="headerlink" title="MDM提供商侧(MDM vendor)"></a>MDM提供商侧(MDM vendor)</h2><h3 id="创建CSR"><a href="#创建CSR" class="headerlink" title="创建CSR"></a>创建CSR</h3><h3 id="生成MDM证书"><a href="#生成MDM证书" class="headerlink" title="生成MDM证书"></a>生成MDM证书</h3><h3 id="下载苹果WWDR和苹果根证书"><a href="#下载苹果WWDR和苹果根证书" class="headerlink" title="下载苹果WWDR和苹果根证书"></a>下载苹果WWDR和苹果根证书</h3><p>地址：</p>
+<p><a target="_blank" rel="noopener" href="https://developer.apple.com/certificationauthority/AppleWWDRCA.cer">WWDR internediate certificate</a>  </p>
+<p><a target="_blank" rel="noopener" href="http://www.apple.com/appleca/AppleIncRootCertificate.cer">Apple root certificate</a></p>
+<h3 id="转化成PEM"><a href="#转化成PEM" class="headerlink" title="转化成PEM"></a>转化成PEM</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform der -in mdm_identity.cer -out mdm.pem</span><br><span class="line">openssl x509 -inform der -in AppleWWDRCA.cer -out intermediate.pem</span><br><span class="line">openssl x509 -inform der -in AppleIncRootCertificate.cer -out root.pem</span><br></pre></td></tr></table></figure>
+
+<h2 id="MDM使用侧-customer"><a href="#MDM使用侧-customer" class="headerlink" title="MDM使用侧(customer)"></a>MDM使用侧(customer)</h2><h3 id="创建CSR-1"><a href="#创建CSR-1" class="headerlink" title="创建CSR"></a>创建CSR</h3><h3 id="CSR签名成encoded-plist"><a href="#CSR签名成encoded-plist" class="headerlink" title="CSR签名成encoded_plist"></a>CSR签名成encoded_plist</h3><p>PYTHON：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">from plistlib import writePlistToString</span><br><span class="line">import os</span><br><span class="line">import subprocess</span><br><span class="line">from base64 import b64encode</span><br><span class="line">import sys</span><br><span class="line">import urllib2</span><br><span class="line"></span><br><span class="line">def p(s):</span><br><span class="line">	sys.stdout.write(s)</span><br><span class="line">	sys.stdout.flush()</span><br><span class="line"></span><br><span class="line">def mdm_vendor_sign():</span><br><span class="line">	&quot;&quot;&quot;</span><br><span class="line">	This utility will create a properly encoded certifiate signing request</span><br><span class="line">	that you can upload to identity.apple.com/pushcert</span><br><span class="line">	&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">	parser = argparse.ArgumentParser(description=mdm_vendor_sign.__doc__)</span><br><span class="line">	parser.add_argument(&#x27;--key&#x27;, help=&#x27;Private key&#x27;, required=True)</span><br><span class="line">	parser.add_argument(&#x27;--csr&#x27;, help=&#x27;Certificate signing request&#x27;, required=True)</span><br><span class="line">	parser.add_argument(&#x27;--mdm&#x27;, help=&#x27;MDM vendor certificate&#x27;, required=True)</span><br><span class="line">	parser.add_argument(&#x27;--out&#x27;, help=&#x27;Output filename&#x27;, required=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	cli_args = vars(parser.parse_args())</span><br><span class="line"></span><br><span class="line">	# Verify CSR</span><br><span class="line">	# openssl req -text -noout -verify -in CSR.csr</span><br><span class="line">	p(&#x27;Verifying %s ... &#x27; % cli_args[&#x27;csr&#x27;])</span><br><span class="line">	csr_file = open(cli_args[&#x27;csr&#x27;]).read()</span><br><span class="line">	args = [&#x27;openssl&#x27;, &#x27;req&#x27;, &#x27;-noout&#x27;, &#x27;-verify&#x27; ]</span><br><span class="line">	command = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)</span><br><span class="line">	output, error = command.communicate(input = csr_file)	</span><br><span class="line">	if output.rstrip().split(&#x27;\n&#x27;)[0] == &#x27;verify OK&#x27;:</span><br><span class="line">		p(&#x27;OK\n&#x27;)</span><br><span class="line">	else:</span><br><span class="line">		p(&#x27;FAILED\n&#x27;)</span><br><span class="line">		return</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	# Verify private key</span><br><span class="line">	# openssl rsa -in privateKey.key -check</span><br><span class="line">	p(&#x27;Verifying %s ... &#x27; % cli_args[&#x27;key&#x27;])</span><br><span class="line">	key_file = open(cli_args[&#x27;key&#x27;]).read()</span><br><span class="line">	args = [&#x27;openssl&#x27;, &#x27;rsa&#x27;, &#x27;-check&#x27;, &#x27;-noout&#x27; ]</span><br><span class="line">	command = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)</span><br><span class="line">	output, error = command.communicate(input = key_file)	</span><br><span class="line">	if output.rstrip().split(&#x27;\n&#x27;)[0] == &#x27;RSA key ok&#x27;:</span><br><span class="line">		p(&#x27;OK\n&#x27;)</span><br><span class="line">	else:</span><br><span class="line">		p(&#x27;FAILED\n\n&#x27;)</span><br><span class="line">		print &quot;&quot;&quot;If you don&#x27;t have the plain private key already, you need</span><br><span class="line">to extract it from the pkcs12 file...</span><br><span class="line">First convert to PEM</span><br><span class="line">openssl pkcs12 -in filename.p12 -nocerts -out key.pem</span><br><span class="line">Then export the certificate file from the pfx file</span><br><span class="line">openssl pkcs12 -in filename.pfx -clcerts -nokeys -out cert.pem</span><br><span class="line">Lastly Remove the passphrase from the private key</span><br><span class="line">openssl rsa -in key.pem -out the_private_key.key</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">		return</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	# Verify MDM vendor certificate</span><br><span class="line">	# openssl x509 -noout -in mdm.cer -inform DER</span><br><span class="line">	p(&#x27;Verifying %s ... &#x27; % cli_args[&#x27;mdm&#x27;])</span><br><span class="line">	mdm_cert_file = open(cli_args[&#x27;mdm&#x27;],&#x27;rb&#x27;).read()  # Binary read</span><br><span class="line">	args = [&#x27;openssl&#x27;, &#x27;x509&#x27;, &#x27;-noout&#x27;, &#x27;-inform&#x27;, &#x27;DER&#x27; ]</span><br><span class="line">	command = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)</span><br><span class="line">	output, error = command.communicate(input = mdm_cert_file)	</span><br><span class="line">	if len(output) == 0:</span><br><span class="line">		p(&#x27;OK\n&#x27;)</span><br><span class="line">	else:</span><br><span class="line">		p(&#x27;FAILED\n&#x27;)</span><br><span class="line">		return</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	# Convert CSR to DER format</span><br><span class="line">	# openssl req -inform pem -outform der -in customer.csr -out customer.der</span><br><span class="line">	p(&#x27;Converting %s to DER format... &#x27; % cli_args[&#x27;csr&#x27;])</span><br><span class="line">	args = [&#x27;openssl&#x27;, &#x27;req&#x27;, &#x27;-inform&#x27;, &#x27;pem&#x27;, &#x27;-outform&#x27;, &#x27;der&#x27; ]</span><br><span class="line">	command = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)</span><br><span class="line">	output, error = command.communicate(input = csr_file)	</span><br><span class="line">	if error:</span><br><span class="line">		p(&#x27;FAILED\n&#x27;)</span><br><span class="line">		return</span><br><span class="line">	p(&#x27;OK\n&#x27;)</span><br><span class="line">	csr_der = output</span><br><span class="line">	csr_b64 = b64encode(csr_der)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	# Sign the CSR with the private key </span><br><span class="line">	# openssl sha1 -sign private_key.key -out signed_output.rsa data_to_sign.txt</span><br><span class="line">	p(&#x27;Signing CSR with private key... &#x27;)</span><br><span class="line">	args = [&#x27;openssl&#x27;, &#x27;sha1&#x27;, &#x27;-sign&#x27;, cli_args[&#x27;key&#x27;] ]</span><br><span class="line">	command = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)</span><br><span class="line">	output, error = command.communicate(input = csr_der)</span><br><span class="line">	if error:</span><br><span class="line">		p(&#x27;FAILED\n&#x27;)</span><br><span class="line">		return</span><br><span class="line">	p(&#x27;OK\n&#x27;)</span><br><span class="line">	signature_bytes = output</span><br><span class="line">	signature = b64encode(signature_bytes)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	def cer_to_pem(cer_data):</span><br><span class="line">		# openssl x509 -inform der -in mdm.cer -out mdm.pem</span><br><span class="line">		# -in and -out flags are handled by STDIN and STDOUT</span><br><span class="line">		args = [&#x27;openssl&#x27;, &#x27;x509&#x27;, &#x27;-inform&#x27;, &#x27;der&#x27; ]</span><br><span class="line">		command = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)</span><br><span class="line">		output, error = command.communicate(input = cer_data)</span><br><span class="line">		if error:</span><br><span class="line">			p(&#x27;Error converting from cer to pem: %s&#x27; % error)</span><br><span class="line">		return output</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	# TODO : Probably should verify these too</span><br><span class="line"></span><br><span class="line">	p(&#x27;Downloading WWDR intermediate certificate...&#x27;)</span><br><span class="line">	intermediate_cer = urllib2.urlopen(&#x27;https://developer.apple.com/certificationauthority/AppleWWDRCA.cer&#x27;).read()</span><br><span class="line">	p(&#x27; converting to pem...&#x27;)</span><br><span class="line">	intermediate_pem = cer_to_pem(intermediate_cer)</span><br><span class="line">	p(&#x27;OK\n&#x27;)</span><br><span class="line"></span><br><span class="line">	p(&#x27;Downloading Apple Root Certificate...&#x27;)</span><br><span class="line">	root_cer = urllib2.urlopen(&#x27;http://www.apple.com/appleca/AppleIncRootCertificate.cer&#x27;).read()</span><br><span class="line">	p(&#x27; converting to pem...&#x27;)</span><br><span class="line">	root_pem = cer_to_pem(root_cer)</span><br><span class="line">	p(&#x27;OK\n&#x27;)</span><br><span class="line"></span><br><span class="line">	mdm_pem = cer_to_pem(mdm_cert_file)</span><br><span class="line"></span><br><span class="line">	p(&#x27;Finishing...&#x27;)</span><br><span class="line">	plist_dict = dict(</span><br><span class="line">	    PushCertRequestCSR = csr_b64,</span><br><span class="line">	    PushCertCertificateChain = mdm_pem + intermediate_pem + root_pem,</span><br><span class="line">	    PushCertSignature = signature</span><br><span class="line">	)</span><br><span class="line">	plist_xml = writePlistToString(plist_dict)</span><br><span class="line">	plist_b64 = b64encode(plist_xml)</span><br><span class="line"></span><br><span class="line">	output_filename =  cli_args[&#x27;out&#x27;] if  cli_args[&#x27;out&#x27;] else &#x27;plist_encoded&#x27;</span><br><span class="line">	write_path = os.path.join(os.getcwd(), output_filename)</span><br><span class="line">	output = open(write_path, &#x27;wb&#x27;)</span><br><span class="line">	output.write(plist_b64)</span><br><span class="line">	output.close()</span><br><span class="line">	p(&#x27;DONE\n\nGo upload file \&#x27;%s\&#x27; to identity.apple.com/pushcert !\n&#x27; % output_filename)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__==&quot;__main__&quot;:</span><br><span class="line">	mdm_vendor_sign()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="创建或更新MDM证书"><a href="#创建或更新MDM证书" class="headerlink" title="创建或更新MDM证书"></a>创建或更新MDM证书</h3><p><a target="_blank" rel="noopener" href="https://identity.apple.com/pushcert/">iOS Push CERT</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/07/01/MDM-vendor/" data-id="ckubdxmbi0001tktrd3euh3zo" data-title="申请移动设备管理厂商(MDM Vendor)" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS应用签名原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hexo搭建个人博客</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 16.67px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/">马拉车算法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">kubernetes下的DNS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/19/k-NN/">K-NN</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

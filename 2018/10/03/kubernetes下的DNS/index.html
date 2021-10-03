@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>kubernetes下的DNS | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Kubernetes中的DNS主要用作服务发现，在集群中调度Pod和Service，并且配置kubelet使得容器可以使用DNS Service的IP解析域名 skyDNS（Kubernetes 1.3）—&gt;kubeDNS（Kubernetes1.3之后）—&gt;CoreDNS（Kubernetes 1.11之后GA） stubdomains、upstreamnameservers（1.6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubernetes下的DNS">
+<meta property="og:url" content="http://example.com/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Kubernetes中的DNS主要用作服务发现，在集群中调度Pod和Service，并且配置kubelet使得容器可以使用DNS Service的IP解析域名 skyDNS（Kubernetes 1.3）—&gt;kubeDNS（Kubernetes1.3之后）—&gt;CoreDNS（Kubernetes 1.11之后GA） stubdomains、upstreamnameservers（1.6">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-10-03T15:16:25.000Z">
+<meta property="article:modified_time" content="2021-10-03T15:17:26.928Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-kubernetes下的DNS" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/" class="article-date">
+  <time class="dt-published" datetime="2018-10-03T15:16:25.000Z" itemprop="datePublished">2018-10-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      kubernetes下的DNS
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Kubernetes中的DNS主要用作服务发现，在集群中调度Pod和Service，并且配置kubelet使得容器可以使用DNS Service的IP解析域名</p>
+<p>skyDNS（Kubernetes 1.3）—&gt;kubeDNS（Kubernetes1.3之后）—&gt;CoreDNS（Kubernetes 1.11之后GA）</p>
+<p>stubdomains、upstreamnameservers（1.6增加）、federation</p>
+<p>DNS </p>
+<p>svc</p>
+<p>A记录（域名解析IP的记录）：</p>
+<p>SRV记录：</p>
+<p>Pod：</p>
+<h2 id="kube-DNS"><a href="#kube-DNS" class="headerlink" title="kube-DNS"></a>kube-DNS</h2><h2 id="CoreDNS和kube-DNS主要差异"><a href="#CoreDNS和kube-DNS主要差异" class="headerlink" title="CoreDNS和kube-DNS主要差异"></a>CoreDNS和kube-DNS主要差异</h2><h3 id="实现差异"><a href="#实现差异" class="headerlink" title="实现差异"></a>实现差异</h3><p>kube-dns中一个pod内使用了数个容器：kubedns、dnsmasq 和 sidecar。 kubedns 进程监视 Kubernetes master 对 Service 和 Endpoint 操作的变更，并维护一个内存查询结构去处理 DNS 请求。dnsmasq 容器增加了一个 DNS 缓存来改善性能。为执行对 dnsmasq 和 kubedns 的健康检查，sidecar容器提供了一个单独的健康检查 Endpoint</p>
+<p>dnsmasq中的安全漏洞导致过去需要发布Kubernetes安全补丁。此外，由于dnsmasq处理存根域，但kubedns处理External Services，因此你无法在外部服务中使用存根域</p>
+<h3 id="一体化解决方案"><a href="#一体化解决方案" class="headerlink" title="一体化解决方案"></a>一体化解决方案</h3><p>区别于 kube-dns，CoreDNS 编译出来就是一个单独的二进制可执行文件，内置了 cache，backend storage ，health check 等功能，无需第三方组件来辅助实现其他功能，从而使得部署更方便，内存管理更为安全；</p>
+<h3 id="bug修复和增强功能"><a href="#bug修复和增强功能" class="headerlink" title="bug修复和增强功能"></a>bug修复和增强功能</h3><p>——dns＃55：kube-dns的自定义DNS条目可以通过使用kubernetes插件中的“fallthrough”机制、使用重写插件或者仅使用不同的插件（如文件插件）提供子区域来处理。</p>
+<p>——dns＃116：只有一个A记录集用于具有单个主机名的pod无头服务。此问题已修复，无需任何其他配置。</p>
+<p>——dns＃131： externalName不使用stubDomains设置。此问题已修复，无需任何其他配置。</p>
+<p>——dns＃167：启用skyDNS循环A / AAAA记录。可以使用负载均衡插件配置等效功能。</p>
+<p>——dns＃190：kube-dns无法以非root用户身份运行。现在通过使用非默认镜像解决了此问题，但在将来的版本中它将成为默认的CoreDNS行为。</p>
+<p>——dns＃232：将pod hostname修复为dns srv记录的podname，这是通过下面描述的“endpoint_pod_names”功能支持的增强功能。</p>
+<h2 id="CoreDNS实现原理"><a href="#CoreDNS实现原理" class="headerlink" title="CoreDNS实现原理"></a>CoreDNS实现原理</h2><h3 id="插件化"><a href="#插件化" class="headerlink" title="插件化"></a>插件化</h3><p><strong>Kube-dns<strong><strong>三个容器，</strong></strong>CoreDNS****一个容器</strong></p>
+<p><strong>区别于**<strong>kube</strong></strong>-DNS<strong><strong>，</strong></strong>CoreDNS<strong><strong>编译出为一个单独二进制可</strong></strong>执行文件，内置了** <strong>cache<strong><strong>，</strong></strong>backend storage</strong> <strong>，****health check</strong> <strong>等功能，无需第三方组件来辅助实现其他功能，从而使得部署更方便，内存管理更为安全</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">coredns.io:5300 &#123;</span><br><span class="line">  file /etc/coredns/zones/coredns.io.db</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">example.io:53 &#123;</span><br><span class="line">  errors</span><br><span class="line">  log</span><br><span class="line">  file /etc/coredns/zones/example.io.db</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">example.net:53 &#123;</span><br><span class="line">  file /etc/coredns/zones/example.net.db</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.:53 &#123;</span><br><span class="line">  errors</span><br><span class="line">  log</span><br><span class="line">  health</span><br><span class="line">  rewrite name foo.example.com foo.default.svc.cluster.local</span><br><span class="line">  kubernetes cluster.local 10.0.0.0/24</span><br><span class="line">  file /etc/coredns/example.db example.org</span><br><span class="line">  proxy . /etc/resolv.conf</span><br><span class="line">  cache 30</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从kube-dns迁移到CoreDNS"><a href="#从kube-dns迁移到CoreDNS" class="headerlink" title="从kube-dns迁移到CoreDNS"></a>从kube-dns迁移到CoreDNS</h2><p>在Kubernetes1.10之后，CoreDNS支持将kube-dns的ConfigMap转换成CoreDNS的Corefile。也就是说，当你在kube-dns中已经通过ConfigMap配置了<code>stubdomains</code>、<code>upstreamnameservers</code>、<code>federation</code> 等参数, 在通过<code>kubeadm upgrade</code> 来安装CoreDNS后，将自动转换原来的ConfigMap到CoreDNS下的Corefile。</p>
+<p>kube-dns下的ConfigMap：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  federations: |</span><br><span class="line">    &#123;&quot;foo&quot; : &quot;foo.feddomain.com&quot;&#125;</span><br><span class="line">  stubDomains: |</span><br><span class="line">    &#123;&quot;abc.com&quot; : [&quot;1.2.3.4&quot;], &quot;my.cluster.local&quot; : [&quot;2.3.4.5&quot;]&#125;</span><br><span class="line">  upstreamNameservers: |</span><br><span class="line">    [&quot;8.8.8.8&quot;, &quot;8.8.4.4&quot;]</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: 2018-01-22T20:21:56Z</span><br><span class="line">  name: kube-dns</span><br><span class="line">  namespace: kube-system</span><br></pre></td></tr></table></figure>
+
+<p>转换后的CoreDNS Corefile:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">.:53 &#123;</span><br><span class="line">       errors</span><br><span class="line">       health</span><br><span class="line">       kubernetes cluster.local  in-addr.arpa ip6.arpa &#123;</span><br><span class="line">          upstream  8.8.8.8 8.8.4.4</span><br><span class="line">          pods insecure</span><br><span class="line">          fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">       &#125;</span><br><span class="line">       federation cluster.local &#123;</span><br><span class="line">          foo foo.feddomain.com</span><br><span class="line">       &#125;</span><br><span class="line">       prometheus :9153</span><br><span class="line">       proxy .  8.8.8.8 8.8.4.4</span><br><span class="line">       cache 30</span><br><span class="line">   &#125;</span><br><span class="line">   abc.com:53 &#123;</span><br><span class="line">       errors</span><br><span class="line">       cache 30</span><br><span class="line">       proxy . 1.2.3.4</span><br><span class="line">   &#125;</span><br><span class="line">   my.cluster.local:53 &#123;</span><br><span class="line">       errors</span><br><span class="line">       cache 30</span><br><span class="line">       proxy . 2.3.4.5</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>检查可以升级的CoreDNS版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm upgrade plan  --feature-gates CoreDNS=true</span><br></pre></td></tr></table></figure>
+
+<p>升级成CoreDNS并且设为默认DNS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm upgrade apply &lt;version&gt; --feature-gates CoreDNS=true</span><br></pre></td></tr></table></figure>
+
+<p>新建集群设置CoreDNS为默认</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --feature-gates CoreDNS=true</span><br></pre></td></tr></table></figure>
+
+<h3 id="kubeadm-upgrade"><a href="#kubeadm-upgrade" class="headerlink" title="kubeadm upgrade"></a>kubeadm upgrade</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://kubernetes.io/blog/2018/07/10/coredns-ga-for-kubernetes-cluster-dns/">coredns-ga-for-kubernetes-cluster-dns</a></p>
+<p><a target="_blank" rel="noopener" href="https://coredns.io/2017/06/08/how-queries-are-processed-in-coredns/">How Queries Are Processed in CoreDNS</a></p>
+<p><a target="_blank" rel="noopener" href="https://coredns.io/2018/05/21/migration-from-kube-dns-to-coredns/">migration-from-kube-dns-to-coredns</a></p>
+<p><a target="_blank" rel="noopener" href="https://coredns.io/2018/01/29/deploying-kubernetes-with-coredns-using-kubeadm/">deploying-kubernetes-with-coredns-using-kubeadm</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39782114"></a></p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/"></a></p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/services-networking/dns-pod-service/#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"></a></p>
+<p><a target="_blank" rel="noopener" href="https://k8smeetup.github.io/docs/tasks/administer-cluster/dns-debugging-resolution/#%E9%A6%96%E5%85%88%E6%A3%80%E6%9F%A5%E6%9C%AC%E5%9C%B0-dns-%E9%85%8D%E7%BD%AE"></a></p>
+<p><a target="_blank" rel="noopener" href="https://zhengyinyong.com/coredns-basis.html"></a></p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/"></a></p>
+<p><a target="_blank" rel="noopener" href="https://jimmysong.io/kubernetes-handbook/practice/configuring-dns.html"></a></p>
+<p><a target="_blank" rel="noopener" href="https://draveness.me/dns-coredns"></a><br><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/tasks/administer-cluster/dns-custom-nameservers/"></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/" data-id="ckubdxmc0000etktr7gfk5ibm" data-title="kubernetes下的DNS" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          马拉车算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/19/k-NN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">K-NN</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 16.67px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/">马拉车算法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">kubernetes下的DNS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/19/k-NN/">K-NN</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
