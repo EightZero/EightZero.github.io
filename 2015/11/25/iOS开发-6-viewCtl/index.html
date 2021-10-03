@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>iOS开发教程(6)--viewController | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="视图控制器（viewcontroller）是UIViewController类或其子类的对象。每个视图控制器都负责管理一个视图结构，包括创建视图层次结构中的视图并处理相关用户事件，以及将整个视图层次结构添加到应用窗口。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发教程(6)--viewController">
+<meta property="og:url" content="http://example.com/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="视图控制器（viewcontroller）是UIViewController类或其子类的对象。每个视图控制器都负责管理一个视图结构，包括创建视图层次结构中的视图并处理相关用户事件，以及将整个视图层次结构添加到应用窗口。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://o8z0mw8i6.bkt.clouddn.com/article_ios6.png">
+<meta property="og:image" content="http://o8z0mw8i6.bkt.clouddn.com/article_ios6-2.png">
+<meta property="article:published_time" content="2015-11-25T04:27:42.000Z">
+<meta property="article:modified_time" content="2018-10-13T14:05:28.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://o8z0mw8i6.bkt.clouddn.com/article_ios6.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-iOS开发-6-viewCtl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/" class="article-date">
+  <time class="dt-published" datetime="2015-11-25T04:27:42.000Z" itemprop="datePublished">2015-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      iOS开发教程(6)--viewController
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>视图控制器（viewcontroller）是UIViewController类或其子类的对象。每个视图控制器都负责管理一个视图结构，包括创建视图层次结构中的视图并处理相关用户事件，以及将整个视图层次结构添加到应用窗口。</p>
+</blockquote>
+<span id="more"></span>
+
+<p>创建一个UITabBarController在两个视图层次结构之间(Hypnotize和Reminder)切换，Riminder包含两个子视图，一个UIDatePicker对象和一个UIbutton对象。</p>
+<p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_ios6.png" alt="Hypnotize"></p>
+<p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_ios6-2.png" alt="Riminder"></p>
+<p>视图控制器不会在其被创建出来的那一刻马上创建并载入相应的视图。只有当应用需要将某个视图控制器的视图显示到屏幕上时，相应的控制器才会创建其视图。这种延迟加载（lazy loading）视图的做法能提高内存使用效率。<br>视图控制器可以通过两种方式创建视图层次结构：</p>
+<p>代码方式：覆盖UIViewcontroller中的loadView方法<br>NIB文件方式：使用interface Builder创建一个NIB文件，然后加入所需的视图层次结构，最后视图控制器会在运行时加载由该NIB文件编译而成的XIB文件（应用在运行时，会按需载入XIB文件并激活文件中的视图）。</p>
+<h3 id="1-创建Hypnotize视图"><a href="#1-创建Hypnotize视图" class="headerlink" title="1. 创建Hypnotize视图"></a>1. 创建Hypnotize视图</h3><h4 id="1-1-代码方式创建视图"><a href="#1-1-代码方式创建视图" class="headerlink" title="1.1 代码方式创建视图"></a>1.1 代码方式创建视图</h4><p>BNRHypnosisViewController.m文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@implementation BNRHypnosisViewController</span><br><span class="line"></span><br><span class="line">- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil</span><br><span class="line">&#123;</span><br><span class="line">    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];</span><br><span class="line">    if (self) &#123;</span><br><span class="line"></span><br><span class="line">        // Set the tab bar item&#x27;s title</span><br><span class="line">        self.tabBarItem.title = @&quot;Hypnotize&quot;;</span><br><span class="line"></span><br><span class="line">        // Create a UIImage from a file</span><br><span class="line">        // This will use Hypno@2x on retina display devices</span><br><span class="line">        UIImage *image = [UIImage imageNamed:@&quot;Hypno.png&quot;];</span><br><span class="line"></span><br><span class="line">        // Put that image on the tab bar item</span><br><span class="line">        self.tabBarItem.image = image;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)loadView</span><br><span class="line">&#123;</span><br><span class="line">    // Create a view</span><br><span class="line">    CGRect frame = [UIScreen mainScreen].bounds;</span><br><span class="line">    BNRHypnosisView *backgroundView = [[BNRHypnosisView alloc] initWithFrame:frame];</span><br><span class="line"></span><br><span class="line">    // Set it as *the* view of this view controller</span><br><span class="line">    self.view = backgroundView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    // Always call the super implementation of viewDidLoad</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;BNRHypnosisViewController loaded its view&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-设置根视图控制器"><a href="#1-2-设置根视图控制器" class="headerlink" title="1.2 设置根视图控制器"></a>1.2 设置根视图控制器</h4><p>为了将视图控制器的视图层次结构加入应用窗口，UIWindow对象提供了一个方法：setRootViewController：。当程序将某个视图控制器设置为UIWindow对象的rootViewController时，UIWindow对象会将该视图控制器的view作为子视图加入窗口，并且还会自动调整view的大小，将其设置为与窗口的大小相同。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@implementation BNRAppDelegate</span><br><span class="line"></span><br><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</span><br><span class="line">&#123;</span><br><span class="line">    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</span><br><span class="line">    // Override point for customization after application launch.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    BNRHypnosisViewController *hvc = [[BNRHypnosisViewController alloc] init];</span><br><span class="line"></span><br><span class="line">    // Look in the appBundle for the file BNRReminderViewController.xib</span><br><span class="line">    BNRReminderViewController *rvc = [[BNRReminderViewController alloc] init];</span><br><span class="line"></span><br><span class="line">    UITabBarController *tabBarController = [[UITabBarController alloc] init];</span><br><span class="line">    tabBarController.viewControllers = @[hvc, rvc];</span><br><span class="line"></span><br><span class="line">    self.window.rootViewController = tabBarController;</span><br><span class="line"></span><br><span class="line">    self.window.backgroundColor = [UIColor whiteColor];</span><br><span class="line">    [self.window makeKeyAndVisible];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>rootViewController的view在应用启动完毕后就显示，因此，UIWindow对象会在设置完rootViewController后立即加载其view。</p>
+<p>以下是setRootViewController：的实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-(void)setRootViewController:(UIViewController *)viewController</span><br><span class="line">&#123;</span><br><span class="line">	//获取根视图控制器的视图</span><br><span class="line">	UIView *rootView = viewController.view;</span><br><span class="line">	</span><br><span class="line">	//根据UIWindow对象的bounds，为视图创建相应的frame</span><br><span class="line">	CGRect viewFrame = self.bounds;</span><br><span class="line">	rootView.frame = viewFrame;</span><br><span class="line">	</span><br><span class="line">	//将视图作为子视图加入UIWindow对象</span><br><span class="line">	[self addSubview:rootView];</span><br><span class="line">	</span><br><span class="line">	//将viewController赋给实例变量_rootViewController</span><br><span class="line">	_rootViewController = viewController;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建Reminder视图"><a href="#2-创建Reminder视图" class="headerlink" title="2. 创建Reminder视图"></a>2. 创建Reminder视图</h3><p>因为BNRReminderViewController包含两个子视图UIdatePicker和UIbutton，因此需要添加一个dataPicker属性，指向一个UIDatePicker对象。同时，将BNRViewController设置为UIButton对象的目标，还需编写一个addReminder：方法，并设置为UIButton对象的动作。<br>BNRReminderViewController对象的view有两个子视图，当某个视图控制器的view拥有子视图时，使用interface Builder创建视图层次会较方便。</p>
+<h4 id="2-1-Interface-Builder中创建视图"><a href="#2-1-Interface-Builder中创建视图" class="headerlink" title="2.1 Interface Builder中创建视图"></a>2.1 Interface Builder中创建视图</h4><p>创建一个xib文件，在File菜单选择new-file…，选择User interface，再选中Empty。</p>
+<h5 id="2-1-1-创建视图对象"><a href="#2-1-1-创建视图对象" class="headerlink" title="2.1.1 创建视图对象"></a>2.1.1 创建视图对象</h5><p>从xcode右下方对象库拖拽UIview，UIbutton，UIdatePicker至画布。</p>
+<h5 id="2-1-2-加载nib文件"><a href="#2-1-2-加载nib文件" class="headerlink" title="2.1.2 加载nib文件"></a>2.1.2 加载nib文件</h5><p>当视图控制器从NIB文件中创建试图层次结构时，不需要覆盖loadview方法，默认的loadview会自动处理NIB文件包含的视图层次结构。<br>接下来，用以下方法为reminder加载NIB文件</p>
+<p>-(id)initWithNibName:(NSString )nibNameOrNil bundle:(NSBundle )nibBundleOrNil</p>
+<p>上述方法两个参数，分别用于指定NIB文件的文件名及其所在的程序包</p>
+<h5 id="2-1-3-关联Files‘s-Owner"><a href="#2-1-3-关联Files‘s-Owner" class="headerlink" title="2.1.3 关联Files‘s Owner"></a>2.1.3 关联Files‘s Owner</h5><p>Files’s owner对象是一个占位符对象（placeholder），它是XIB文件特意留下的一个“空洞”。当某个视图控制器将XIB文件加载为NIB文件时，首先会创建XIB文件中所有的视图对象，然后会将自己填入相应的File‘s Owner空洞，并建立之前在Interface Builder中设置的关联。<br>因此，如果要在运行时关联加载NIB文件的对象，可在XIB文件中关联File’s Owner。首先，需要设置BNRReminderViewController.xib文件中的File‘s Owner是BNRReminderViewController。<br>接着，在XIB文件中添加所需关联：1，Ctrl+左键点击File‘s owner，在插座变量outlet部分找到view，鼠标连线至右侧视图控制器的View属性；2，同理关联datepicker；3，将UIbutton关联到File’s owner的addReminder方法。</p>
+<p>BNRReminderViewController.m完整代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;BNRReminderViewController.h&quot;</span><br><span class="line"></span><br><span class="line">@interface BNRReminderViewController ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, weak) IBOutlet UIDatePicker *datePicker;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation BNRReminderViewController</span><br><span class="line"></span><br><span class="line">- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil</span><br><span class="line">&#123;</span><br><span class="line">    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];</span><br><span class="line"></span><br><span class="line">    if (self) &#123;</span><br><span class="line">        // Set the tab bar item&#x27;s title</span><br><span class="line">        self.tabBarItem.title = @&quot;Reminder&quot;;</span><br><span class="line">    </span><br><span class="line">        // Create a UIImage from a file</span><br><span class="line">        // This will use Time@2x.png on retina display devices</span><br><span class="line">        UIImage *image = [UIImage imageNamed:@&quot;Time.png&quot;];</span><br><span class="line"></span><br><span class="line">        // Put that image on the tab bar item</span><br><span class="line">        self.tabBarItem.image = image;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;BNRReminderViewController loaded its view&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)viewWillAppear:(BOOL)animated</span><br><span class="line">&#123;</span><br><span class="line">    [super viewWillAppear:animated];</span><br><span class="line"></span><br><span class="line">    self.datePicker.minimumDate = [NSDate dateWithTimeIntervalSinceNow:60];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (IBAction)addReminder:(id)sender</span><br><span class="line">&#123;</span><br><span class="line">    NSDate *date = self.datePicker.date;</span><br><span class="line">    NSLog(@&quot;Setting a reminder for %@&quot;, date);</span><br><span class="line"></span><br><span class="line">    UILocalNotification *note = [[UILocalNotification alloc] init];</span><br><span class="line">    note.alertBody = @&quot;Hypnotize me!&quot;;</span><br><span class="line">    note.fireDate = date;</span><br><span class="line"></span><br><span class="line">    [[UIApplication sharedApplication] scheduleLocalNotification:note];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在BNRAppdelegate.m中，创建一个BNRReminderViewCOntroller对象，再将其设置为应用程序</p>
+<h3 id="3-UITabBarController"><a href="#3-UITabBarController" class="headerlink" title="3. UITabBarController"></a>3. UITabBarController</h3><p>UITabBarController对象可以保存一组视图控制器，此外UITabBarController还会在底部显示一个标签栏（tab bar），标签栏会有多个标签项（tab item）</p>
+<h4 id="3-1-设置标签项"><a href="#3-1-设置标签项" class="headerlink" title="3.1 设置标签项"></a>3.1 设置标签项</h4><p>设置tabbaritem的title以及image属性</p>
+<h3 id="4-视图控制器初始化方法"><a href="#4-视图控制器初始化方法" class="headerlink" title="4. 视图控制器初始化方法"></a>4. 视图控制器初始化方法</h3><p>当UIViewController子类和该子类需要加载的NIB文件同名时，即使用在appdelegate调用init初始化，传给vieController两个参数为nil，也能正常调用以下初始化，并正确加载</p>
+<p>-(id)initWithNibName:(NSString )nibNameOrNil bundle:(NSBundle )nibBundleOrNil</p>
+<h3 id="5-添加本地通知"><a href="#5-添加本地通知" class="headerlink" title="5. 添加本地通知"></a>5. 添加本地通知</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)addReminder:(id)sender</span><br><span class="line">&#123;</span><br><span class="line">    NSDate *date = self.datePicker.date;</span><br><span class="line">    NSLog(@&quot;Setting a reminder for %@&quot;, date);</span><br><span class="line"></span><br><span class="line">    UILocalNotification *note = [[UILocalNotification alloc] init];</span><br><span class="line">    note.alertBody = @&quot;Hypnotize me!&quot;;</span><br><span class="line">    note.fireDate = date;</span><br><span class="line"></span><br><span class="line">    [[UIApplication sharedApplication] scheduleLocalNotification:note];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-加载和显示视图"><a href="#6-加载和显示视图" class="headerlink" title="6. 加载和显示视图"></a>6. 加载和显示视图</h3><p>为了实现延迟加载，在initWithNibName:bundle 中不应访问view或view的任何子视图，凡是和view或view子视图有关的初始化代码，都放在 viewDidLoad中，避免加载时加载不需要在屏幕上显示的视图。</p>
+<h3 id="7-访问视图"><a href="#7-访问视图" class="headerlink" title="7. 访问视图"></a>7. 访问视图</h3><p>alloc【创建对象，分配空间】—&gt;init (initWithNibName)【初始化对象，初始化数据】—&gt; loadView【从nib载入视图 ，通常这一步不需要去干涉。除非你没有使用xib文件创建视图】—&gt; viewDidLoad—&gt; viewWillAppear—&gt;viewDidAppear—&gt; viewWillDisappear—&gt; viewDidDisappear—&gt; dealloc</p>
+<p>内存不足时，调用viewDidUnload函数释放views—-&gt;当需要使用view时，又回到loadview如此循环</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/" data-id="ckub8byel000b1rtrdlzc9gni" data-title="iOS开发教程(6)--viewController" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TabBar中添加UInavigation
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/28/OC-property/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">objective-c -- property</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/02/24/CoreDNS/">CoreDNS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/19/k-NN/">K-NN</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/14/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

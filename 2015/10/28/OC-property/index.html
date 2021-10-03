@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>objective-c -- property | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="@property、objective-c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="objective-c -- property">
+<meta property="og:url" content="http://example.com/2015/10/28/OC-property/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="@property、objective-c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-10-28T03:58:29.000Z">
+<meta property="article:modified_time" content="2018-10-13T14:06:42.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-OC-property" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2015/10/28/OC-property/" class="article-date">
+  <time class="dt-published" datetime="2015-10-28T03:58:29.000Z" itemprop="datePublished">2015-10-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      objective-c -- property
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>@property、objective-c </p>
+</blockquote>
+<span id="more"></span>
+
+<h4 id="1、”-”语法可能调setter，也可能调getter"><a href="#1、”-”语法可能调setter，也可能调getter" class="headerlink" title="1、”.”语法可能调setter，也可能调getter"></a>1、”.”语法可能调setter，也可能调getter</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xx.a=1  </span><br><span class="line">NSlog(&quot;%d&quot;,xx.a)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、可改变存取器的名字"><a href="#2、可改变存取器的名字" class="headerlink" title="2、可改变存取器的名字"></a>2、可改变存取器的名字</h4><p>getter= 让getter方法使用自定义的名字</p>
+<p>setter = 让setter方法使用自定义名字</p>
+<p><code>@property(getter=isRunning) BOOL running</code></p>
+<p>使用方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Car *honda = [[Car alloc] init];</span><br><span class="line">honda.running = YES;</span><br><span class="line">NSLog(@&quot;%d&quot;,honda.running);</span><br><span class="line">NSLog(@&quot;%d&quot;,[honda isRunning]);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、readonly不合成setter方法"><a href="#3、readonly不合成setter方法" class="headerlink" title="3、readonly不合成setter方法"></a>3、readonly不合成setter方法</h4><h4 id="4、nonatomic属性"><a href="#4、nonatomic属性" class="headerlink" title="4、nonatomic属性"></a>4、nonatomic属性</h4><p>原子性（Atomicity）的作用是属性在多线程的环境中怎么行为。当你不仅仅有一个线程， 那么getter和setter可能会在同一时间去调用，这就意味着getter/setter可能会被另一个方法打扰，很有可能造成数据错误。</p>
+<p>原子的属性会封锁object，防止这种情况发生，确保get或者set操作的操作对象是完整的。没有被损坏。然而，这仅仅是一个线程安全的方面，我们必须要理解这一点。使用原子性并不能确保我们的代码就是线程安全的</p>
+<h4 id="5、strong属性"><a href="#5、strong属性" class="headerlink" title="5、strong属性"></a>5、strong属性</h4><p>无论对象被指定为什么属性，强壮的属性可以创建拥有关系，这对所有对象属性来说是一种内隐行为，它默认是安全的，因为只要它被指定为strong属性，它就会确保对对象的值存在</p>
+<p>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface Person : NSObject</span><br><span class="line">@property(nonatomic)NSString *name;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>它的实现如下，@property产生的使用的默认存储方法，也重写了NSObject的描述方法，返回一个代表该对象的字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">@implementation Person</span><br><span class="line">-(NSString *)description</span><br><span class="line">&#123;</span><br><span class="line">    return self.name;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>然后，添加Person的属性给Car，改变Car.h：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">@interface Car : NSObject</span><br><span class="line">@property (nonatomic) NSString *model;</span><br><span class="line">@property(nonatomic,strong) Person *driver; </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>接着</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Person *john = [[Person alloc] init];</span><br><span class="line">john.name = @&quot;John&quot;;</span><br><span class="line"> </span><br><span class="line">Car *honda = [[Car alloc] init];</span><br><span class="line">honda.model = @&quot;Honda Civic&quot;;</span><br><span class="line">honda.driver = john;</span><br><span class="line">NSLog(@&quot;%@ is driving the %@&quot;,honda.driver,honda.model);</span><br></pre></td></tr></table></figure>
+<p><strong>只要driver是一个strong关联，honda对象就会持有john，这确保只要honda需要它，它就会有效</strong></p>
+<p>6、weak 属性</p>
+<p>在属性和指定value之间创建一个不拥有关系，使用这个防止循环引用。</p>
+<p>大多数情况下，强属性可以直观知道你想要什么对象属性，强引用会暴漏一个问题，例如，我们需要从driver引用他正在开的Car对象，首先，我们需要给Person添加一个car属性：</p>
+<p>Person.h</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"> </span><br><span class="line">@class Car;</span><br><span class="line"> </span><br><span class="line">@interface Person : NSObject</span><br><span class="line"> </span><br><span class="line">@property(nonatomic)NSString *name;</span><br><span class="line">@property(nonatomic,strong)Car *car;</span><br><span class="line"> </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>@class Car 是对Car类的前声明，就像它告诉编译器，“相信我，Car类是存在的，所有不要想着去立刻找到它”。我们不用#import这样做，因为Car也导入了Person.h，那样我们会陷入无尽的导入循环</p>
+<p>然后，添加下面的代码，在honda、driver分配后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Person *john = [[Person alloc] init];</span><br><span class="line">john.name = @&quot;John&quot;;</span><br><span class="line">Car *honda = [[Car alloc] init];</span><br><span class="line">honda.model = @&quot;Honda Civic&quot;;</span><br><span class="line">honda.driver = john;</span><br><span class="line">john.car = honda;  //添加这行</span><br><span class="line">NSLog(@&quot;%@ is driving the %@&quot;,honda.driver,honda.model);</span><br></pre></td></tr></table></figure>
+<p>这样我们现在有一个现象，就是john拥有honda,honda拥有john。这就意味着他们相互拥有，所以尽管他们不再有用，内存管理系统也不能够释放他们。</p>
+<p>这叫做 retain cycle（保持循环），是一种内存泄露的形式，内存泄露是很不好的。幸运的是，要想解决这个办法很简单，只需要告诉其中一个属性维持一个weak属性引用另一个对象。在Person.h中，改变car的声明：</p>
+<p><code>@property(nonatomic,weak)Car *car;</code></p>
+<p>这种weak(弱)属性会给car创建一个非拥有关系。它允许john有一个honda的引用，同时避免了保持循环。但是，还有一个可能性就是honda会被销毁，而这个时候john正在引用honda，如果这种情况发生，weak属性会很方便地设置car为nil，去避免悬挂指针。</p>
+<p>7、 copy属性</p>
+<p>它是strong的替代品，不是保持拥有一个存在的对象，而是创建一个引用，无论你指定什么属性，都会持有这个拥有。只有符合NSCopying protocol的对象才能使用这个属性。</p>
+<p>代表值的属性（相对于链接或关系）是一个使用copy的不错选择。例如，开发者通常复制字符串属性，而不是强引用它们</p>
+<p>strong是引用，copy是复制一份，保存当时的值，无论原对象值如何变化</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2015/10/28/OC-property/" data-id="ckub8bye600001rtrd59uglx9" data-title="objective-c -- property" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS开发教程(6)--viewController
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS开发教程--学习路线图</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/02/24/CoreDNS/">CoreDNS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/19/k-NN/">K-NN</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/14/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

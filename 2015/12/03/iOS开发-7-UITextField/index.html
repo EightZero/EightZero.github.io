@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>iOS开发_7_UITextField | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发_7_UITextField">
+<meta property="og:url" content="http://example.com/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://o8z0mw8i6.bkt.clouddn.com/article_iOS7.png">
+<meta property="article:published_time" content="2015-12-03T04:48:40.000Z">
+<meta property="article:modified_time" content="2018-10-13T14:05:25.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://o8z0mw8i6.bkt.clouddn.com/article_iOS7.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-iOS开发-7-UITextField" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/" class="article-date">
+  <time class="dt-published" datetime="2015-12-03T04:48:40.000Z" itemprop="datePublished">2015-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      iOS开发_7_UITextField
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_iOS7.png"></p>
+<span id="more"></span>
+
+<h3 id="UIResponder"><a href="#UIResponder" class="headerlink" title="UIResponder"></a>UIResponder</h3><p>UIResponder是UIkit框架中的一个抽象类，其定义了一系列方法，用于接收和处理用户事件，例如触摸事件、运动事件（摇晃设备）和功能控制事件（编辑文本或播放音乐）等。UIResponder的子类会覆盖这些方法。</p>
+<p>UIWindow有一个firstResponder属性指向第一响应者。例如，当用户点击UITextField对象时，UITextfield对象就会成为第一响应者。UIWindow会将firstResponder指向该对象，之后，如果应用接收到运动事件和功能控制事件，都会发送给UITextField对象。</p>
+<p>当某个UITextField对象或者UITextView对象成为第一响应者时，屏幕会弹出键盘。除了用户点击外，还可以在代码中向UITextField对象发送becomeFirstResponser消息，使其成为第一响应者。如果要关闭键盘，则可以向UITextField对象发送resignFirstResponder消息。</p>
+<h3 id="设置UITextField的键盘"><a href="#设置UITextField的键盘" class="headerlink" title="设置UITextField的键盘"></a>设置UITextField的键盘</h3><h4 id="UITextField的几个属性"><a href="#UITextField的几个属性" class="headerlink" title="UITextField的几个属性"></a>UITextField的几个属性</h4><ul>
+<li><p>autocapitalizationType：设置UITextField对象的自动大写功能，包括none、words（单词）、sentence、allcharacter（所有字母）</p>
+</li>
+<li><p>autocorrectionType：启用/禁用（设置为YES/NO，下同）UITextField对象的拼写建议功能</p>
+</li>
+<li><p>enablesReturnKeyAutomatically：启用/禁用UITextField对象的换行键自动检测功能，如果将该属性设置为YES，UITextField对象会自动检测用户输入，并根据是否输入文字启用/禁用换行键</p>
+</li>
+<li><p>keyboardType：设置UITextField对象弹出键盘类型，例如ASCII Capble（ASCII标准键盘）、E-Mail Address（电子邮件地址）、Number pad（数字键盘）和URL（网址）</p>
+</li>
+<li><p>secureTextEntry：启用/禁用UITextField对象的安全输入功能，如果将该属性设置为YES、UITextField对象会以原点代替用户输入的文字，常见于密码输入框</p>
+</li>
+</ul>
+<h3 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h3><p>UITextField对象具有一个委托属性，通过UITextField对象设置委托，UiTextField对象会在发生事件时向委托发送相应的消息，由委托处理该事件。</p>
+<p>对于编辑UiTextField对象文本内容的事件，有以下两个对应的委托方法：</p>
+<p>-(void) textFieldDidEndEditing: (UITextField *) textField;</p>
+<p>-(void) textFieldDidBeginEditing: (UITextField *) textField;</p>
+<p>还有带返回值的委托方法，用于从委托中查询需要的信息</p>
+<p>-(void) textFieldShouldEndEditing: (UITextField *) textField;</p>
+<p>-(void) textFieldShouldBeginEditing: (UITextField *) textField;</p>
+<p>-(void) textFieldShouldClear: (UITextField *) textField;</p>
+<p>-(void) textFieldShouldReturn: (UITextField *) textField;</p>
+<p>注意，在委托方法中，通常应该将对象自身作为第一个参数。</p>
+<p>多个对象可能具有相同的委托，当委托收到消息时，需要根据该参数判断发送给该消息的对象。例如，某个控制器中包含多个UITextField对象，他们的委托都是该控制器，那么控制器要根据TextField参数获取相应的UITextField对象并执行不同操作。</p>
+<h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>凡是支持委托的对象，其背后都有一个相应的协议，声明可以向该对象的委托对象发送的消息。被委托对象需要根据这个协议为其“感兴趣”的事件实现相应的方法。如果一个类实现了某个协议中规定的方法，称这个类遵守协议。</p>
+<p>UITextField的协议：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@protocol UITextFieldDelegate &lt;NSObject&gt;</span><br><span class="line"></span><br><span class="line">@optional</span><br><span class="line"></span><br><span class="line">- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;        // return NO to disallow editing.</span><br><span class="line">- (void)textFieldDidBeginEditing:(UITextField *)textField;           // became first responder</span><br><span class="line">- (BOOL)textFieldShouldEndEditing:(UITextField *)textField;          // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end</span><br><span class="line">- (void)textFieldDidEndEditing:(UITextField *)textField;             // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called</span><br><span class="line">- (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason NS_AVAILABLE_IOS(10_0); // if implemented, called in place of textFieldDidEndEditing:</span><br><span class="line"></span><br><span class="line">- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;   // return NO to not change text</span><br><span class="line"></span><br><span class="line">- (BOOL)textFieldShouldClear:(UITextField *)textField;               // called when clear button pressed. return NO to ignore (no notifications)</span><br><span class="line">- (BOOL)textFieldShouldReturn:(UITextField *)textField;              // called when &#x27;return&#x27; key pressed. return NO to ignore.</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>发送方在发送可选方法前，会先向其委托发送另一个名为respondsToSelector：方法。</p>
+<p>所有objective-c对象都从NSObject继承了respondToSelector：方法，该方法能在运行时检查对象是否实现了指定的方法。</p>
+<p>@selector()指令可以将选择器(selector)转换成数值，以便将其作为参数进行传递。</p>
+<p>例如，UITextField可以实现如下方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (void)clearButtonTapped</span><br><span class="line">&#123;</span><br><span class="line">	//textFieldshouldClear:是可选方法，需要检查委托是否实现了该方法</span><br><span class="line">	SEL clearAelector = @selector(textFieldShouldClear);</span><br><span class="line">	if([self.delegate respondsToSelector:clearSelector])&#123;</span><br><span class="line">		if([self.delegate textFieldShouldClear:self])&#123;</span><br><span class="line">			self.text = @&quot;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>iOS SDK很多类都具有委托，几乎所有的委托都是弱引用（weak）；这是为了避免对象及其委托之间产生强引用循环。</p>
+<h3 id="向屏幕中添加UILabel对象"><a href="#向屏幕中添加UILabel对象" class="headerlink" title="向屏幕中添加UILabel对象"></a>向屏幕中添加UILabel对象</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">- (void)drawHypnoticMessage:(NSString *)message</span><br><span class="line">&#123;</span><br><span class="line">    for (int i = 0; i &lt; 20; i++) &#123;</span><br><span class="line">        UILabel *messageLabel = [[UILabel alloc] init];</span><br><span class="line"></span><br><span class="line">        // Configure the label&#x27;s colors and text</span><br><span class="line">        messageLabel.backgroundColor = [UIColor clearColor];</span><br><span class="line">        messageLabel.textColor = [UIColor whiteColor];</span><br><span class="line">        messageLabel.text = message;</span><br><span class="line"></span><br><span class="line">        // This method resizes the label, which will be relative</span><br><span class="line">        // to the text that it is displaying</span><br><span class="line">        [messageLabel sizeToFit];</span><br><span class="line"></span><br><span class="line">        // Get a random x value that fits within the hypnosis view&#x27;s width</span><br><span class="line">        int width = self.view.bounds.size.width - messageLabel.bounds.size.width;</span><br><span class="line">        int x = arc4random_uniform(width);</span><br><span class="line"></span><br><span class="line">        // Get a random y value that fits within the hypnosis view&#x27;s height</span><br><span class="line">        int height = self.view.bounds.size.height - messageLabel.bounds.size.height;</span><br><span class="line">        int y = arc4random_uniform(height);</span><br><span class="line"></span><br><span class="line">        // Update the label&#x27;s frame</span><br><span class="line">        CGRect frame = messageLabel.frame;</span><br><span class="line">        frame.origin = CGPointMake(x, y);</span><br><span class="line">        messageLabel.frame = frame;</span><br><span class="line"></span><br><span class="line">        // Add the label to the hierarchy</span><br><span class="line">        [self.view addSubview:messageLabel];</span><br><span class="line">        //添加视差效果</span><br><span class="line">        UIInterpolatingMotionEffect *motionEffect;</span><br><span class="line">        motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@&quot;center.x&quot;</span><br><span class="line">                                                                       type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];</span><br><span class="line">        motionEffect.minimumRelativeValue = @-25;</span><br><span class="line">        motionEffect.maximumRelativeValue = @25;</span><br><span class="line">        [messageLabel addMotionEffect:motionEffect];</span><br><span class="line"></span><br><span class="line">        motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@&quot;center.y&quot;</span><br><span class="line">                                                                       type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];</span><br><span class="line">        motionEffect.minimumRelativeValue = @-25;</span><br><span class="line">        motionEffect.maximumRelativeValue = @25;</span><br><span class="line">        [messageLabel addMotionEffect:motionEffect];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>附：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">//  BNRHypnosisViewController.m</span><br><span class="line"></span><br><span class="line">#import &quot;BNRHypnosisViewController.h&quot;</span><br><span class="line">#import &quot;BNRHypnosisView.h&quot;</span><br><span class="line"></span><br><span class="line">@interface BNRHypnosisViewController () &lt;UITextFieldDelegate&gt;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation BNRHypnosisViewController</span><br><span class="line"></span><br><span class="line">- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil</span><br><span class="line">&#123;</span><br><span class="line">    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];</span><br><span class="line">    if (self) &#123;</span><br><span class="line"></span><br><span class="line">        // Set the tab bar item&#x27;s title</span><br><span class="line">        self.tabBarItem.title = @&quot;Hypnotize&quot;;</span><br><span class="line"></span><br><span class="line">        // Create a UIImage from a file</span><br><span class="line">        // This will use Hypno@2x on retina display devices</span><br><span class="line">        UIImage *image = [UIImage imageNamed:@&quot;Hypno.png&quot;];</span><br><span class="line"></span><br><span class="line">        // Put that image on the tab bar item</span><br><span class="line">        self.tabBarItem.image = image;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)loadView</span><br><span class="line">&#123;</span><br><span class="line">    // Create a view</span><br><span class="line">    CGRect frame = [UIScreen mainScreen].bounds;</span><br><span class="line">    BNRHypnosisView *backgroundView = [[BNRHypnosisView alloc] initWithFrame:frame];</span><br><span class="line"></span><br><span class="line">    CGRect textFieldRect = CGRectMake(40, 70, 240, 30);</span><br><span class="line">    UITextField *textField = [[UITextField alloc] initWithFrame:textFieldRect];</span><br><span class="line"></span><br><span class="line">    // Setting the border style on the text field will allow us to see it easier</span><br><span class="line">    textField.borderStyle = UITextBorderStyleRoundedRect;</span><br><span class="line">    textField.placeholder = @&quot;Hypnotize me&quot;;</span><br><span class="line">    textField.returnKeyType = UIReturnKeyDone;</span><br><span class="line">    [backgroundView addSubview:textField];</span><br><span class="line"></span><br><span class="line">    textField.delegate = self;</span><br><span class="line"></span><br><span class="line">    // Set it as *the* view of this view controller</span><br><span class="line">    self.view = backgroundView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    // Always call the super implementation of viewDidLoad</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;BNRHypnosisViewController loaded its view&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)textFieldShouldReturn:(UITextField *)textField</span><br><span class="line">&#123;</span><br><span class="line">    [self drawHypnoticMessage:textField.text];</span><br><span class="line"></span><br><span class="line">    textField.text = @&quot;&quot;;</span><br><span class="line">    [textField resignFirstResponder];</span><br><span class="line"></span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)drawHypnoticMessage:(NSString *)message</span><br><span class="line">&#123;</span><br><span class="line">    for (int i = 0; i &lt; 20; i++) &#123;</span><br><span class="line">        UILabel *messageLabel = [[UILabel alloc] init];</span><br><span class="line"></span><br><span class="line">        // Configure the label&#x27;s colors and text</span><br><span class="line">        messageLabel.backgroundColor = [UIColor clearColor];</span><br><span class="line">        messageLabel.textColor = [UIColor whiteColor];</span><br><span class="line">        messageLabel.text = message;</span><br><span class="line"></span><br><span class="line">        // This method resizes the label, which will be relative</span><br><span class="line">        // to the text that it is displaying</span><br><span class="line">        [messageLabel sizeToFit];</span><br><span class="line"></span><br><span class="line">        // Get a random x value that fits within the hypnosis view&#x27;s width</span><br><span class="line">        int width = self.view.bounds.size.width - messageLabel.bounds.size.width;</span><br><span class="line">        int x = arc4random_uniform(width);</span><br><span class="line"></span><br><span class="line">        // Get a random y value that fits within the hypnosis view&#x27;s height</span><br><span class="line">        int height = self.view.bounds.size.height - messageLabel.bounds.size.height;</span><br><span class="line">        int y = arc4random_uniform(height);</span><br><span class="line"></span><br><span class="line">        // Update the label&#x27;s frame</span><br><span class="line">        CGRect frame = messageLabel.frame;</span><br><span class="line">        frame.origin = CGPointMake(x, y);</span><br><span class="line">        messageLabel.frame = frame;</span><br><span class="line"></span><br><span class="line">        // Add the label to the hierarchy</span><br><span class="line">        [self.view addSubview:messageLabel];</span><br><span class="line"></span><br><span class="line">        UIInterpolatingMotionEffect *motionEffect;</span><br><span class="line">        motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@&quot;center.x&quot;</span><br><span class="line">                                                                       type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];</span><br><span class="line">        motionEffect.minimumRelativeValue = @-25;</span><br><span class="line">        motionEffect.maximumRelativeValue = @25;</span><br><span class="line">        [messageLabel addMotionEffect:motionEffect];</span><br><span class="line"></span><br><span class="line">        motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@&quot;center.y&quot;</span><br><span class="line">                                                                       type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];</span><br><span class="line">        motionEffect.minimumRelativeValue = @-25;</span><br><span class="line">        motionEffect.maximumRelativeValue = @25;</span><br><span class="line">        [messageLabel addMotionEffect:motionEffect];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/" data-id="ckub8byen000d1rtr6kvmas6g" data-title="iOS开发_7_UITextField" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          hexo搭建个人博客
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TabBar中添加UInavigation</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/02/24/CoreDNS/">CoreDNS</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/19/k-NN/">K-NN</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/14/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
