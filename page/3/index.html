@@ -71,10 +71,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-OC-property" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-docker抓包方法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2015/10/28/OC-property/" class="article-date">
-  <time class="dt-published" datetime="2015-10-28T03:58:29.000Z" itemprop="datePublished">2015-10-28</time>
+    <a href="/2017/08/01/docker%E6%8A%93%E5%8C%85%E6%96%B9%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2017-08-01T15:04:20.000Z" itemprop="datePublished">2017-08-01</time>
 </a>
     
   </div>
@@ -85,7 +85,170 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2015/10/28/OC-property/">objective-c -- property</a>
+      <a class="p-name article-title" href="/2017/08/01/docker%E6%8A%93%E5%8C%85%E6%96%B9%E6%B3%95/">docker抓包方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1-确认容器网络模式"><a href="#1-确认容器网络模式" class="headerlink" title="1. 确认容器网络模式"></a>1. 确认容器网络模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect container_name | grep NetworkMode</span><br></pre></td></tr></table></figure>
+
+<p>回显：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;NetworkMode&quot;: &quot;default&quot;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-host模式抓包"><a href="#2-host模式抓包" class="headerlink" title="2. host模式抓包"></a>2. host模式抓包</h3><h3 id="3-default模式抓包"><a href="#3-default模式抓包" class="headerlink" title="3. default模式抓包"></a>3. default模式抓包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format &#x27;&#123;&#123;.State.Pid&#125;&#125;&#x27; container_name</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">73602</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/run/netns</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /proc/73602/ns/net /var/run/netns/container_name</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ip netns exec container_name tcpdump -i eth0 -s0 -w 1.pcap</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/08/01/docker%E6%8A%93%E5%8C%85%E6%96%B9%E6%B3%95/" data-id="ckubdxmbp0003tktrhu3c9gw8" data-title="docker抓包方法" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Centos7搭建k8s" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/08/01/Centos7%E6%90%AD%E5%BB%BAk8s/" class="article-date">
+  <time class="dt-published" datetime="2017-08-01T14:59:30.000Z" itemprop="datePublished">2017-08-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/08/01/Centos7%E6%90%AD%E5%BB%BAk8s/">Centos7搭建k8s</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="关闭Swap"><a href="#关闭Swap" class="headerlink" title="关闭Swap"></a>关闭Swap</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">swapoff -a </span><br><span class="line">sed -i &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="关闭Selinux"><a href="#关闭Selinux" class="headerlink" title="关闭Selinux"></a>关闭Selinux</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setenforce  0 </span><br><span class="line">sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/sysconfig/selinux </span><br><span class="line">sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/selinux/config </span><br><span class="line">sed -i &quot;s/^SELINUX=permissive/SELINUX=disabled/g&quot; /etc/sysconfig/selinux </span><br><span class="line">sed -i &quot;s/^SELINUX=permissive/SELINUX=disabled/g&quot; /etc/selinux/config  </span><br><span class="line">modprobe br_netfilter</span><br><span class="line">cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl -p /etc/sysctl.d/k8s.conf</span><br><span class="line"></span><br><span class="line">ls /proc/sys/net/bridge</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="设置内核、K8S的yum源"><a href="#设置内核、K8S的yum源" class="headerlink" title="设置内核、K8S的yum源"></a>设置内核、K8S的yum源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="下载kubelet、-kubectl、-kubeadm、-docker、-kubernetes-cni"><a href="#下载kubelet、-kubectl、-kubeadm、-docker、-kubernetes-cni" class="headerlink" title="下载kubelet、 kubectl、 kubeadm、 docker、 kubernetes-cni"></a>下载kubelet、 kubectl、 kubeadm、 docker、 kubernetes-cni</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y kubeadm kubelet kubectl kubernetes-cni docker</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable kubelet &amp; systemctl start kubelet</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置docker加速器"><a href="#设置docker加速器" class="headerlink" title="设置docker加速器"></a>设置docker加速器</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h2 id="docker代理设置-amp-cgroupfs设置"><a href="#docker代理设置-amp-cgroupfs设置" class="headerlink" title="docker代理设置 &amp; cgroupfs设置"></a>docker代理设置 &amp; cgroupfs设置</h2><pre><code>vi /usr/lib/systemd/system/docker.service
+</code></pre>
+<p> 修改cgroup driver：native.cgroupdriver=systemd修改为native.cgroupdriver=cgroupfs</p>
+<p> 启动docker并设置开启自启<br>systemctl enable docker &amp; systemctl daemon-reload &amp; systemctl restart docker</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/08/01/Centos7%E6%90%AD%E5%BB%BAk8s/" data-id="ckubdxmba0000tktr7qch5v5w" data-title="Centos7搭建k8s" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/01/14/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2017-01-13T16:04:11.000Z" itemprop="datePublished">2017-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/01/14/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>hello world!</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/01/14/hello-world/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/01/14/hello-world/" data-id="ckub85e8q0000gxtr7fxj5kmi" data-title="Hello World" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-deepThinking-dontRepeat" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/06/deepThinking-dontRepeat/" class="article-date">
+  <time class="dt-published" datetime="2016-12-06T08:08:33.000Z" itemprop="datePublished">2016-12-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/06/deepThinking-dontRepeat/">Deep thinking, Don&#39;t repeat</a>
     </h1>
   
 
@@ -94,17 +257,110 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>@property、objective-c </p>
+<p>脚踏实地，也要仰望星空，更要停下思考，不忘初心，方得始终</p>
 </blockquote>
+<p>天道不一定酬勤，深度思考比勤奋工作更重要。</p>
         
           <p class="article-more-link">
-            <a href="/2015/10/28/OC-property/#more">Read More</a>
+            <a href="/2016/12/06/deepThinking-dontRepeat/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2015/10/28/OC-property/" data-id="ckub8bye600001rtrd59uglx9" data-title="objective-c -- property" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2016/12/06/deepThinking-dontRepeat/" data-id="ckub8byek00081rtrh3973ujt" data-title="Deep thinking, Don&#39;t repeat" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Read/" rel="tag">Read</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-嫌疑人x的献身" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/" class="article-date">
+  <time class="dt-published" datetime="2016-11-13T07:52:05.000Z" itemprop="datePublished">2016-11-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/">嫌疑人x的献身</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>究竟爱一个人，可以爱到什么地步？ 究竟什么样的邂逅，可以舍命不悔？ 逻辑的尽头，不是理性与秩序的理想国，而是我用生命奉献的爱情</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/" data-id="ckub8byer000l1rtrbfznd5lg" data-title="嫌疑人x的献身" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-iOS应用签名原理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2016-09-08T14:56:34.000Z" itemprop="datePublished">2016-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/">iOS应用签名原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="基本签名原理："><a href="#基本签名原理：" class="headerlink" title="基本签名原理："></a>基本签名原理：</h3><p>App签名使用到了数字签名，通过hash算法提取摘要，使用苹果私钥加密，形成签名，然后将原始数据，加密的的摘要（签名）及相关信息放到一起，形成已签名的数据（数字证书）。</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/" data-id="ckubdxmbw0008tktr043q63i1" data-title="iOS应用签名原理" class="article-share-link">Share</a>
       
       
       
@@ -118,10 +374,10 @@
 
 
   
-    <article id="post-iOS学习路线图" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-MDM-vendor" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/" class="article-date">
-  <time class="dt-published" datetime="2015-08-03T03:42:53.000Z" itemprop="datePublished">2015-08-03</time>
+    <a href="/2016/07/01/MDM-vendor/" class="article-date">
+  <time class="dt-published" datetime="2016-07-01T14:21:30.000Z" itemprop="datePublished">2016-07-01</time>
 </a>
     
   </div>
@@ -132,7 +388,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/">iOS开发教程--学习路线图</a>
+      <a class="p-name article-title" href="/2016/07/01/MDM-vendor/">申请移动设备管理厂商(MDM Vendor)</a>
     </h1>
   
 
@@ -140,16 +396,153 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_ios.png"></p>
+        <h2 id="申请移动设备管理厂商-MDM-Vendor"><a href="#申请移动设备管理厂商-MDM-Vendor" class="headerlink" title="申请移动设备管理厂商(MDM Vendor)"></a>申请移动设备管理厂商(MDM Vendor)</h2><p>前提：必须是苹果企业开发者</p>
+<p>前往苹果开发者网站申请成为<a target="_blank" rel="noopener" href="https://developer.apple.com/contact/submit/">MDM Vendor</a>，申请成功后在开发者网站可以看到多出一个MDM CSR选项</p>
+<p>![](<a target="_blank" rel="noopener" href="https://gitee.com/eightzero/pico/raw/master/MDM">https://gitee.com/eightzero/pico/raw/master/MDM</a> CSR.png)</p>
         
           <p class="article-more-link">
-            <a href="/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/#more">Read More</a>
+            <a href="/2016/07/01/MDM-vendor/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/" data-id="ckub8byej00071rtr6h9u8156" data-title="iOS开发教程--学习路线图" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2016/07/01/MDM-vendor/" data-id="ckubdxmbi0001tktrd3euh3zo" data-title="申请移动设备管理厂商(MDM Vendor)" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hexo搭建个人博客" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
+  <time class="dt-published" datetime="2016-06-15T06:40:46.000Z" itemprop="datePublished">2016-06-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">hexo搭建个人博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_hexo0.png"></p>
+        
+          <p class="article-more-link">
+            <a href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="ckub8byeg00041rtr7yw476b8" data-title="hexo搭建个人博客" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-iOS开发-7-UITextField" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/" class="article-date">
+  <time class="dt-published" datetime="2015-12-03T04:48:40.000Z" itemprop="datePublished">2015-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/">iOS开发_7_UITextField</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_iOS7.png"></p>
+        
+          <p class="article-more-link">
+            <a href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/" data-id="ckub8byen000d1rtr6kvmas6g" data-title="iOS开发_7_UITextField" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-iOS那些坑-1-tabBar" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/" class="article-date">
+  <time class="dt-published" datetime="2015-11-30T04:39:20.000Z" itemprop="datePublished">2015-11-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/">TabBar中添加UInavigation</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_iOS_nav0.png"></p>
+        
+          <p class="article-more-link">
+            <a href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/" data-id="ckub8byep000g1rtratwjg8of" data-title="TabBar中添加UInavigation" class="article-share-link">Share</a>
       
       
       
@@ -167,7 +560,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -181,7 +574,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Istio/" rel="tag">Istio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" rel="tag">边缘计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
     </div>
   </div>
 
@@ -191,7 +584,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 16.67px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/Istio/" style="font-size: 10px;">Istio</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/golang/" style="font-size: 15px;">golang</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 20px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">边缘计算</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
     </div>
   </div>
 
@@ -200,7 +593,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
     </div>
   </div>
 
@@ -213,23 +606,23 @@
       <ul>
         
           <li>
-            <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/">马拉车算法</a>
+            <a href="/2021/10/08/Openyurt-Superedge/">Openyurt Superedge</a>
           </li>
         
           <li>
-            <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">kubernetes下的DNS</a>
+            <a href="/2021/10/08/Superedge/">Superedge</a>
           </li>
         
           <li>
-            <a href="/2018/09/19/k-NN/">K-NN</a>
+            <a href="/2021/10/08/kubeedge-openyurt-superedge/">kubeedge openyurt superedge</a>
           </li>
         
           <li>
-            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+            <a href="/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/">kubernetes集群安装Flink</a>
           </li>
         
           <li>
-            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+            <a href="/2019/11/28/go%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90goroutine/">go深入解析goroutine</a>
           </li>
         
       </ul>

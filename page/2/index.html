@@ -71,10 +71,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Centos7搭建k8s" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-default-token" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2017/08/01/Centos7%E6%90%AD%E5%BB%BAk8s/" class="article-date">
-  <time class="dt-published" datetime="2017-08-01T14:59:30.000Z" itemprop="datePublished">2017-08-01</time>
+    <a href="/2019/05/08/default-token/" class="article-date">
+  <time class="dt-published" datetime="2019-05-08T06:08:13.000Z" itemprop="datePublished">2019-05-08</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2017/08/01/Centos7%E6%90%AD%E5%BB%BAk8s/">Centos7搭建k8s</a>
+      <a class="p-name article-title" href="/2019/05/08/default-token/">default-token</a>
     </h1>
   
 
@@ -93,39 +93,106 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="关闭Swap"><a href="#关闭Swap" class="headerlink" title="关闭Swap"></a>关闭Swap</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">swapoff -a </span><br><span class="line">sed -i &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="关闭Selinux"><a href="#关闭Selinux" class="headerlink" title="关闭Selinux"></a>关闭Selinux</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setenforce  0 </span><br><span class="line">sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/sysconfig/selinux </span><br><span class="line">sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/selinux/config </span><br><span class="line">sed -i &quot;s/^SELINUX=permissive/SELINUX=disabled/g&quot; /etc/sysconfig/selinux </span><br><span class="line">sed -i &quot;s/^SELINUX=permissive/SELINUX=disabled/g&quot; /etc/selinux/config  </span><br><span class="line">modprobe br_netfilter</span><br><span class="line">cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl -p /etc/sysctl.d/k8s.conf</span><br><span class="line"></span><br><span class="line">ls /proc/sys/net/bridge</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="设置内核、K8S的yum源"><a href="#设置内核、K8S的yum源" class="headerlink" title="设置内核、K8S的yum源"></a>设置内核、K8S的yum源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="下载kubelet、-kubectl、-kubeadm、-docker、-kubernetes-cni"><a href="#下载kubelet、-kubectl、-kubeadm、-docker、-kubernetes-cni" class="headerlink" title="下载kubelet、 kubectl、 kubeadm、 docker、 kubernetes-cni"></a>下载kubelet、 kubectl、 kubeadm、 docker、 kubernetes-cni</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y kubeadm kubelet kubectl kubernetes-cni docker</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable kubelet &amp; systemctl start kubelet</span><br></pre></td></tr></table></figure>
-
-<h2 id="设置docker加速器"><a href="#设置docker加速器" class="headerlink" title="设置docker加速器"></a>设置docker加速器</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<h2 id="docker代理设置-amp-cgroupfs设置"><a href="#docker代理设置-amp-cgroupfs设置" class="headerlink" title="docker代理设置 &amp; cgroupfs设置"></a>docker代理设置 &amp; cgroupfs设置</h2><pre><code>vi /usr/lib/systemd/system/docker.service
-</code></pre>
-<p> 修改cgroup driver：native.cgroupdriver=systemd修改为native.cgroupdriver=cgroupfs</p>
-<p> 启动docker并设置开启自启<br>systemctl enable docker &amp; systemctl daemon-reload &amp; systemctl restart docker</p>
+        <p>default-token得先从service account说起，Service account是Pod里面的进程调用Kubernetes API或其他外部服务而设计的，每个namespace下有一个名为default的默认的ServiceAccount对象，如下图：</p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081409513.png" alt="3_4_1_serviceaccount"></p>
+<p>Token controller监测service account的创建，并为它们创建默认token，即每个ServiceAccount都有一个名叫<code>&#123;Service Account name&#125;-token-xxx</code>的default token。在新建pod时，会自动挂载当前namespace的default token到pod的secrets下，用于Pod进程访问API Server。如下图：</p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410657.png" alt="3_4_1_svc_token-1"></p>
+<p>default-token实际上就是secret，由于每个namespace下有一个名为default的默认的ServiceAccount对象，因此，每个namespaces下都有一个名为<code>default-token-xxx</code>的secret，如下图：</p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410689.png" alt="3_4_1_ns_token"></p>
+<p>default-token自动刷新就是为每个default-token设置一个过期时间（24小时）。到期后，去IAM重新获取新的token更新到default-token中，如下图：</p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410936.png" alt="3_4_1_token_refresh"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/08/01/Centos7%E6%90%AD%E5%BB%BAk8s/" data-id="ckubdxmba0000tktr7qch5v5w" data-title="Centos7搭建k8s" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2019/05/08/default-token/" data-id="ckuiauwii0002q6trbahwat6n" data-title="default-token" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-马拉车算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2019-05-03T15:21:03.000Z" itemprop="datePublished">2019-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/">马拉车算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Manacher’s-Algorithm-马拉车算法"><a href="#Manacher’s-Algorithm-马拉车算法" class="headerlink" title="Manacher’s Algorithm 马拉车算法"></a>Manacher’s Algorithm 马拉车算法</h3><p>马拉车算法用来查找一个字符串的最长回文子串的线性方法</p>
+<p>传统查找最长回文串方法：以每个字符为中心，向两边寻找回文子串，遍历完整数组后，就可以找到最长回文子串，但是复杂度为O(n*n)</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/" data-id="ckubdxmc1000gtktr4uv09qs2" data-title="马拉车算法" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-kubernetes下的DNS" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/" class="article-date">
+  <time class="dt-published" datetime="2018-10-03T15:16:25.000Z" itemprop="datePublished">2018-10-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">kubernetes下的DNS</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Kubernetes中的DNS主要用作服务发现，在集群中调度Pod和Service，并且配置kubelet使得容器可以使用DNS Service的IP解析域名</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/" data-id="ckubdxmc0000etktr7gfk5ibm" data-title="kubernetes下的DNS" class="article-share-link">Share</a>
       
       
       
@@ -139,10 +206,10 @@
 
 
   
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-k-NN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2017/01/14/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2017-01-13T16:04:11.000Z" itemprop="datePublished">2017-01-14</time>
+    <a href="/2018/09/19/k-NN/" class="article-date">
+  <time class="dt-published" datetime="2018-09-18T16:27:31.000Z" itemprop="datePublished">2018-09-19</time>
 </a>
     
   </div>
@@ -153,7 +220,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2017/01/14/hello-world/">Hello World</a>
+      <a class="p-name article-title" href="/2018/09/19/k-NN/">K-NN</a>
     </h1>
   
 
@@ -161,16 +228,196 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>hello world!</p>
+        <p>k近邻法(k-nearest neighbor)在一个训练集中，对于新的实例，从训练数据集中找到与该实例<strong>最邻近</strong>的k个实例，如果这k个实例属于某个类，就把该实例分为这个类。k近邻法没有显式的学习过程</p>
         
           <p class="article-more-link">
-            <a href="/2017/01/14/hello-world/#more">Read More</a>
+            <a href="/2018/09/19/k-NN/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/01/14/hello-world/" data-id="ckub85e8q0000gxtr7fxj5kmi" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2018/09/19/k-NN/" data-id="ckub8byeq000i1rtr0d72egg5" data-title="K-NN" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Statistical-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/09/01/Statistical-learning/" class="article-date">
+  <time class="dt-published" datetime="2018-09-01T14:04:24.000Z" itemprop="datePublished">2018-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <span id="more"></span>
+
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>输入空间：</strong>输入所有可能取值的集合，每个具体的输入是一个实例(instance)，通常由特征向量(feature vector)表示。<br><strong>特征空间</strong>：所有的特征向量存在的空间成为特征空间(feature space)。特征空间的每一维对应于一个特征，特征空间相当于输入空间的抽象，二者不一定相等。模型实际上都是定义在特征空间上的<br><strong>输出空间：</strong>输出所有可能取值的集合<br>表示：X Y， xi=（xi1,xi2,….）</p>
+<p>机器学习分为：<strong>监督学习，非监督学习，强化学习</strong></p>
+<p><strong>假设空间</strong>(hypothesis space)：输入到输出的映射由模型来表示。模型属于输入空间到输出空间的映射的集合，这个集合就是假设空间</p>
+<p>监督学习利用<strong>训练数据</strong>学习一个模型，再用模型对<strong>测试样本集</strong>进行预测</p>
+<h2 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h2><p>监督学习的前提是假设输入和输出的随机变量X和Y遵循联合概率分布P(X,Y)。按输入输出不同类型划分回归问题，分类问题，标注问题</p>
+<p><strong>回归问题：</strong>输入输出均为连续变量的预测问题，回归模型表示从输入变量到输出变量之间映射的函数，类似于函数拟合，用一条函数曲线去拟合已知的数据，用来预测未知的数据</p>
+<p><strong>分类问题：</strong>输入输出均为有限个离散变量的预测问题，从数据中学习一个分类决策函数或分类模型，称为分类器。分类器对新的输入进行输出预测的过程即为分类</p>
+<p><strong>标注问题：</strong>输入输出均为变量序列的预测问题，标注可看作是分类问题的推广。标注问题的输入是一个观测序列，输出是一个标记序列或状态序列。分类问题输出是一个值。而标注的输出是一个向量，输出向量的每个值属于一种标记类型。<br>标注常用的机器学习方法：隐性马尔可夫模型(HMM)，条件随机场(CRF)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/09/01/Statistical-learning/" data-id="ckub8byef00031rtr02mk4l4i" data-title="Statistical learning" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-SSL-TLS概述" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time class="dt-published" datetime="2018-08-07T15:30:29.000Z" itemprop="datePublished">2018-08-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <span id="more"></span>
+
+<p>TLS协议分为两层</p>
+<ul>
+<li>底层(Record Layer)</li>
+<li>上层(ChangeCipherSpec Protocol&lt;20&gt;, Alert Protocol&lt;21&gt;, Handshake Protocol&lt;22&gt;, Application Data Protocol&lt;23&gt;)</li>
+</ul>
+<p>Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的连接，为高层协议提供数据封装，压缩，加密等基本功能支持，指定了数据类型，SSL版本以及数据长度(Byte)。由于TLS版本众多，客户端和服务端协商ssl版本时，存在一定的兼容性，具体参照<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5246#appendix-E">TLS 兼容性问题</a>。比如当客户端需要兼容ssl老版本服务端时，会把recordLayer的ssl version设置为{03,XX}(即SSL3.0，TLS 1.0，1.1，1.2)中的任意值，通常是客户端支持的最低版本。<br><img src="https://gitee.com/eightzero/pico/raw/master/RecordLayer.png" alt="RecordLaye"></p>
+<p>Handshake Protocol位于Record Layer之上，为Record Layer的负载，类似TCP层为IP层负载。HandShake Protocol层用于传输加密数据前，客户端与服务端的握手协商<br><img src="https://gitee.com/eightzero/pico/raw/master/handshakelayer.png" alt="handshakelaye"></p>
+<h2 id="协商过程"><a href="#协商过程" class="headerlink" title="协商过程"></a>协商过程</h2><p><img src="https://gitee.com/eightzero/pico/raw/master/15327690442087.jpg" alt="15327690442087"></p>
+<h3 id="1-客户端发出请求（Client-Hello）"><a href="#1-客户端发出请求（Client-Hello）" class="headerlink" title="1. 客户端发出请求（Client Hello）"></a>1. 客户端发出请求（Client Hello）</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/Client%20Hello.png" alt="Client Hello"></p>
+<p>客户端向服务端发送的Client Hello报文中包含以下信息：<br>(1) Version。支持的协议版本，比如TLS 1.2版<br>(2) Random。一个客户端生成的随机数，稍后与服务端产生的随机数生成对话密钥(Master Secret)<br>(3) Cipher Suites。支持的加密方法，比如RSA公钥加密</p>
+<p>Cipher Suite格式：认证算法__密钥协商交换算法__加密算法__摘要算法（TLS, ECDHE_RSA, AES_256_GCM, SHA256）<br><img src="https://gitee.com/eightzero/pico/raw/master/cipherSuites.png" alt="cipherSuites"></p>
+<p>(4) Compression Method。支持的压缩方法，null表示不压缩<br>(5) Session ID。如果之前连过该服务端，可以复用会话，而无需重新进行TLS握手<br>(6) Extension。server_name(请求的服务端域名)，sinature_algorithms等</p>
+<h3 id="2-服务端回应"><a href="#2-服务端回应" class="headerlink" title="2. 服务端回应"></a>2. 服务端回应</h3><p>从Server Hello到Server Hello Done，有些服务端是每条单独发送，有的服务端是合并一起发送。</p>
+<h4 id="2-1-Server-Hello"><a href="#2-1-Server-Hello" class="headerlink" title="2.1 Server Hello"></a>2.1 Server Hello</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/ServerHello.png" alt="ServerHello"></p>
+<p>(1) Version。服务端确认使用的SSL版本，比如TLS 1.2版本。如果浏览器与服务器支持的版本不一致，会进行协商双方都兼容的版本，如果没有则关闭连接。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5246#appendix-E">TLS 兼容性问题</a><br>(2) Random。一个服务端生成的随机数，稍后用于生成对话密钥<br>(3) Cipher Suite。服务端从client hello提供的Cipher Suites列表中选取要使用的加密套件<br>(4) Compression Method。服务端从client hello提供的Compression Method列表中选取要使用的压缩方法<br>(5) Session ID。若服务端允许客户端在以后通信中重用本次会话，则服务端会为本次会话分配Session ID<br>(6) Extension。</p>
+<h4 id="2-2-Certificate"><a href="#2-2-Certificate" class="headerlink" title="2.2 Certificate"></a>2.2 Certificate</h4><p>服务端在收到客户端的Client Hello之后，将服务端的X.509证书发送给客户端，最下层证书在前（用户证书在前，上级证书在后）。发送的证书是二进制格式，并非base64之后的格式。</p>
+<h4 id="2-3-Server-key-Exchange-可选"><a href="#2-3-Server-key-Exchange-可选" class="headerlink" title="2.3 Server key Exchange(可选)"></a>2.3 Server key Exchange(可选)</h4><p>DHE_DSS,DHE_RSA,DH_anon,<br>对于使用DHE/ECDHE非对称密钥协商算法的SSL握手，将发送该类型握手。<br>RSA算法不会继续该握手流程（DH、ECDH也不会发送server key exchange）<br>客户端在收到Server Key Exchange后，首先使用服务端证书中的公钥对签名进行RSA解密并校验散列值。如果解密校验通过，则基于ECDH参数中的Pubkey，通过一定算法算出<em><strong>Pre-Master Secret</strong></em><br><img src="https://gitee.com/eightzero/pico/raw/master/Ske.png" alt="ServerkeyExchange"></p>
+<h4 id="2-4-Certificate-Request-可选"><a href="#2-4-Certificate-Request-可选" class="headerlink" title="2.4 Certificate Request(可选)"></a>2.4 Certificate Request(可选)</h4><p>对于重要的保密数据，服务端还需要对客户端进行验证，服务端可以向客户端发出Certificate Request消息，要求客户端发送证书进行合法性验证</p>
+<h4 id="2-5-Server-Hello-Done"><a href="#2-5-Server-Hello-Done" class="headerlink" title="2.5 Server Hello Done"></a>2.5 Server Hello Done</h4><p>通知客户端Server Hello消息结束</p>
+<h3 id="3-客户端回应"><a href="#3-客户端回应" class="headerlink" title="3. 客户端回应"></a>3. 客户端回应</h3><p>客户端收到服务端的Server Hello Done后，首先验证服务端证书。如果证书不是可信机构颁布、或者证书中的域名与实际域名不一致、或者证书已经过期，就会向访问者显示一个警告，由其选择是否还要继续通信。如果证书没有问题，客户端就会从证书中取出服务器的公钥。然后，向服务器发送下面三项信息。</p>
+<p>（1） 一个随机数。该随机数用服务器公钥加密，防止被窃听。</p>
+<p>（2） 编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。</p>
+<p>（3） 客户端握手结束通知，表示客户端的握手阶段已经结束。这一项同时也是前面发送的所有内容的hash值，用来供服务器校验。</p>
+<p>上面第一项的随机数，是整个握手阶段出现的第三个随机数，又称”pre-master key”。有了它以后，客户端和服务器就同时有了三个随机数，接着双方就用事先商定的加密方法，各自生成本次会话所用的同一把”会话密钥”。</p>
+<p>至于为什么一定要用三个随机数，来生成”会话密钥”</p>
+<h4 id="3-1-Certificate-可选"><a href="#3-1-Certificate-可选" class="headerlink" title="3.1. Certificate(可选)"></a>3.1. Certificate(可选)</h4><p>将客户端证书发送给服务端做合法性校验</p>
+<h4 id="3-2-Client-Key-Exchange"><a href="#3-2-Client-Key-Exchange" class="headerlink" title="3.2. Client Key Exchange"></a>3.2. Client Key Exchange</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/Cke.png" alt="ClientKeyExchange"></p>
+<p>客户端密钥交换并通过随机数生成Master-Key</p>
+<h4 id="3-3-Certificate-Verify"><a href="#3-3-Certificate-Verify" class="headerlink" title="3.3. Certificate Verify"></a>3.3. Certificate Verify</h4><p>客户端发送这个类型报文需要满足两个条件：</p>
+<ul>
+<li>服务端请求了客户端证书</li>
+<li>客户端发送了非0长度的证书</li>
+</ul>
+<h4 id="3-4-Change-Cipher-Spec"><a href="#3-4-Change-Cipher-Spec" class="headerlink" title="3.4. Change Cipher Spec"></a>3.4. Change Cipher Spec</h4><p>告知服务端，客户端已经切换到协商好的的加密套件（Cipher Suite），表示随后的信息都将用双方商定的加密方法和密钥发送。</p>
+<h4 id="3-5-Encrypted-Handshake-Message"><a href="#3-5-Encrypted-Handshake-Message" class="headerlink" title="3.5 Encrypted Handshake Message"></a>3.5 Encrypted Handshake Message</h4><p>客户端使用协商好的对称密钥进行加密的第一个报文，目的一个是告诉服务端整个握手过程收到了什么数据，发送了什么数据，保证中间没人篡改报文，二是确认密钥的正确性，如果这个报文加解密校验成功，那么对称密钥就是正确的</p>
+<h3 id="4-服务端最后回应"><a href="#4-服务端最后回应" class="headerlink" title="4. 服务端最后回应"></a>4. 服务端最后回应</h3><h4 id="4-1-Change-Cipher-Spec"><a href="#4-1-Change-Cipher-Spec" class="headerlink" title="4.1 Change Cipher Spec"></a>4.1 Change Cipher Spec</h4><p>编码改变通知，告知客户端，服务端已经切换到选定的加密套件（Cipher Suite），表示随后的信息都将用双方商定的加密方法和密钥发送。</p>
+<h4 id="4-2-Encrypted-Handshake-Message"><a href="#4-2-Encrypted-Handshake-Message" class="headerlink" title="4.2 Encrypted Handshake Message"></a>4.2 Encrypted Handshake Message</h4><p>服务端使用协商好的对称密钥进行加密的第一个报文，目的一个是告诉客户端整个握手过程收到了什么数据，发送了什么数据，保证中间没人篡改报文，二是确认密钥的正确性，如果这个报文加解密校验成功，那么对称密钥就是正确的</p>
+<h3 id="5-Application-Data"><a href="#5-Application-Data" class="headerlink" title="5. Application Data"></a>5. Application Data</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/ApplicationData.png" alt="ApplicationData"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/" data-id="ckub8byeb00011rtrgupcawq4" data-title="SSL/TLS概述" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-go-http-middleware" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/11/13/go-http-middleware/" class="article-date">
+  <time class="dt-published" datetime="2017-11-13T15:13:35.000Z" itemprop="datePublished">2017-11-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/11/13/go-http-middleware/">go http middleware</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strings&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func buildHandlerChain(apiHandler http.Handler) http.Handler &#123;</span><br><span class="line">	handler := WithAuthorization(apiHandler)</span><br><span class="line">	handler = WithAuthentication(handler)</span><br><span class="line">	return handler</span><br><span class="line">&#125;</span><br><span class="line">func WithAuthentication(handler http.Handler) http.Handler &#123;</span><br><span class="line">	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) &#123;</span><br><span class="line">		fmt.Printf(&quot;----handle Authentication-------\n&quot;)</span><br><span class="line">		handler.ServeHTTP(w, req)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func WithAuthorization(handler http.Handler) http.Handler &#123;</span><br><span class="line">	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) &#123;</span><br><span class="line">		fmt.Printf(&quot;----handle Authorization-------\n&quot;)</span><br><span class="line">		handler.ServeHTTP(w, req)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func baseHandler(w http.ResponseWriter, req *http.Request) &#123;</span><br><span class="line">	fmt.Println(&quot;----base handler----\n&quot;)</span><br><span class="line">	w.Write([]byte(&quot;hello handler!&quot;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	apiHandler := http.HandlerFunc(baseHandler)</span><br><span class="line">	http.Handle(&quot;/&quot;, buildHandlerChain(apiHandler))</span><br><span class="line">	http.ListenAndServe(&quot;:3000&quot;, nil)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">----handle Authentication-------</span><br><span class="line">----handle Authorization-------</span><br><span class="line">----base handler----</span><br><span class="line"></span><br><span class="line">----handle Authentication-------</span><br><span class="line">----handle Authorization-------</span><br><span class="line">----base handler----</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://zenlife.tk/go-http-middleware.md">http://zenlife.tk/go-http-middleware.md</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51311182/how-to-assign-multiple-handlers-to-the-same-uri-in-go">https://stackoverflow.com/questions/51311182/how-to-assign-multiple-handlers-to-the-same-uri-in-go</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/11/13/go-http-middleware/" data-id="ckubdxmbr0004tktrfemxgjh7" data-title="go http middleware" class="article-share-link">Share</a>
       
       
       
@@ -182,10 +429,10 @@
 
 
   
-    <article id="post-deepThinking-dontRepeat" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-pod创建大致流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2016/12/06/deepThinking-dontRepeat/" class="article-date">
-  <time class="dt-published" datetime="2016-12-06T08:08:33.000Z" itemprop="datePublished">2016-12-06</time>
+    <a href="/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2017-11-08T15:10:47.000Z" itemprop="datePublished">2017-11-08</time>
 </a>
     
   </div>
@@ -196,7 +443,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2016/12/06/deepThinking-dontRepeat/">Deep thinking, Don&#39;t repeat</a>
+      <a class="p-name article-title" href="/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/">pod创建大致流程</a>
     </h1>
   
 
@@ -204,23 +451,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>脚踏实地，也要仰望星空，更要停下思考，不忘初心，方得始终</p>
-</blockquote>
-<p>天道不一定酬勤，深度思考比勤奋工作更重要。</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/12/06/deepThinking-dontRepeat/#more">Read More</a>
-          </p>
-        
+        <p><img src="https://gitee.com/eightzero/pico/raw/master/pod.jpg"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2016/12/06/deepThinking-dontRepeat/" data-id="ckub8byek00081rtrh3973ujt" data-title="Deep thinking, Don&#39;t repeat" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/" data-id="ckubdxmbz000ctktrhmwpesbz" data-title="pod创建大致流程" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Read/" rel="tag">Read</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li></ul>
 
     </footer>
   </div>
@@ -230,10 +470,10 @@
 
 
   
-    <article id="post-嫌疑人x的献身" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-go-restful" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/" class="article-date">
-  <time class="dt-published" datetime="2016-11-13T07:52:05.000Z" itemprop="datePublished">2016-11-13</time>
+    <a href="/2017/10/05/go-restful/" class="article-date">
+  <time class="dt-published" datetime="2017-10-05T15:18:50.000Z" itemprop="datePublished">2017-10-05</time>
 </a>
     
   </div>
@@ -244,7 +484,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/">嫌疑人x的献身</a>
+      <a class="p-name article-title" href="/2017/10/05/go-restful/">go restful</a>
     </h1>
   
 
@@ -252,23 +492,50 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>究竟爱一个人，可以爱到什么地步？ 究竟什么样的邂逅，可以舍命不悔？ 逻辑的尽头，不是理性与秩序的理想国，而是我用生命奉献的爱情</p>
-</blockquote>
-        
-          <p class="article-more-link">
-            <a href="/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/#more">Read More</a>
-          </p>
-        
+        <h4 id="go-http-web"><a href="#go-http-web" class="headerlink" title="go http web"></a>go http web</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//基础 web server</span><br><span class="line">func simpleHttpServer()&#123;</span><br><span class="line">	//1. 往serverMux的 map[string]muxEntry 添加路由规则pattern以及封装了handler的muxEntry</span><br><span class="line">	//2. 匹配pattern，Handler被调用</span><br><span class="line">	http.HandleFunc(&quot;/hello&quot;, SayHello)</span><br><span class="line">	//1. 实例化Server</span><br><span class="line">	http.ListenAndServe(&quot;:8000&quot;,nil)</span><br><span class="line">&#125;</span><br><span class="line">func SayHello(w http.ResponseWriter, req *http.Request)  &#123;</span><br><span class="line">	fmt.Println(req)</span><br><span class="line">	w.Write([]byte(&quot;Hello!!!&quot;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="golang-装饰器模式"><a href="#golang-装饰器模式" class="headerlink" title="golang 装饰器模式"></a>golang 装饰器模式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func HandleFunc(pattern string, handler func(ResponseWriter, *Request)) &#123;</span><br><span class="line">	DefaultServeMux.HandleFunc(pattern, handler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="go-restful"><a href="#go-restful" class="headerlink" title="go-restful"></a>go-restful</h4><p>一个 Container 包含多个 WebService，同时container实现了http.handler接口定义的ServeHTTP方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">type Container struct &#123;</span><br><span class="line">   webServicesLock        sync.RWMutex</span><br><span class="line">   webServices            []*WebService //一个Container包含多个webservice</span><br><span class="line">   ServeMux               *http.ServeMux</span><br><span class="line">   isRegisteredOnRoot     bool</span><br><span class="line">   containerFilters       []FilterFunction</span><br><span class="line">   doNotRecover           bool // default is true</span><br><span class="line">   recoverHandleFunc      RecoverHandleFunction</span><br><span class="line">   serviceErrorHandleFunc ServiceErrorHandleFunction</span><br><span class="line">   router                 RouteSelector // default is a CurlyRouter (RouterJSR311 is a slower alternative)</span><br><span class="line">   contentEncodingEnabled bool          // default is false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (c *Container) ServeHTTP(httpwriter http.ResponseWriter, httpRequest *http.Request) &#123;</span><br><span class="line">    c.ServeMux.ServeHTTP(httpwriter, httpRequest)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个 webservice 包含多个Route，webservice里定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">type WebService struct &#123;</span><br><span class="line">    rootPath       string</span><br><span class="line">    pathExpr       *pathExpression</span><br><span class="line">    routes         []Route //一个webservice包含多个Route</span><br><span class="line">    produces       []string</span><br><span class="line">    consumes       []string</span><br><span class="line">    pathParameters []*Parameter</span><br><span class="line">    filters        []FilterFunction</span><br><span class="line">    documentation  string</span><br><span class="line">    apiVersion     string</span><br><span class="line"></span><br><span class="line">    typeNameHandleFunc TypeNameHandleFunction</span><br><span class="line"></span><br><span class="line">    dynamicRoutes bool</span><br><span class="line"></span><br><span class="line">    // protects &#x27;routes&#x27; if dynamic routes are enabled</span><br><span class="line">    routesLock sync.RWMutex</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Path specifies the root URL template path of the WebService.</span><br><span class="line">// All Routes will be relative to this path.</span><br><span class="line">func (w *WebService) Path(root string) *WebService &#123;</span><br><span class="line">	w.rootPath = root</span><br><span class="line">	if len(w.rootPath) == 0 &#123;</span><br><span class="line">		w.rootPath = &quot;/&quot;</span><br><span class="line">	&#125;</span><br><span class="line">	w.compilePathExpression()</span><br><span class="line">	return w</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Route creates a new Route using the RouteBuilder and add to the ordered list of Routes.</span><br><span class="line">func (w *WebService) Route(builder *RouteBuilder) *WebService &#123;</span><br><span class="line">	w.routesLock.Lock()</span><br><span class="line">	defer w.routesLock.Unlock()</span><br><span class="line">	builder.copyDefaults(w.produces, w.consumes)</span><br><span class="line">	w.routes = append(w.routes, builder.Build())</span><br><span class="line">	return w</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个 Route 包含HTTP 协议协议相关的HTTP Request 、HTTP Reponse 、方法等处理。由RouteBuilder传递过来的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">type Route struct &#123;</span><br><span class="line">    Method   string</span><br><span class="line">    Produces []string</span><br><span class="line">    Consumes []string</span><br><span class="line">    Path     string // webservice root path + described path</span><br><span class="line">    Function RouteFunction//具体处理函数</span><br><span class="line">    Filters  []FilterFunction</span><br><span class="line">    If       []RouteSelectionConditionFunction</span><br><span class="line"></span><br><span class="line">    // cached values for dispatching</span><br><span class="line">    relativePath string</span><br><span class="line">    pathParts    []string</span><br><span class="line">    pathExpr     *pathExpression // cached compilation of relativePath as RegExp</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// RouteFunction declares the signature of a function that can be bound to a Route.</span><br><span class="line">type RouteFunction func(*Request, *Response)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// To bind the route to a function.</span><br><span class="line">// If this route is matched with the incoming Http Request then call this function with the *Request,*Response pair. Required.</span><br><span class="line">func (b *RouteBuilder) To(function RouteFunction) *RouteBuilder &#123;</span><br><span class="line">	b.function = function</span><br><span class="line">	return b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-ResourceMethod-and-ResourceMethodContainer"><a href="#1-ResourceMethod-and-ResourceMethodContainer" class="headerlink" title="1. ResourceMethod and ResourceMethodContainer"></a>1. ResourceMethod and ResourceMethodContainer</h3><h3 id="2-Apply-Builder-pattern-to-reduce-clutter"><a href="#2-Apply-Builder-pattern-to-reduce-clutter" class="headerlink" title="2: Apply Builder pattern to reduce clutter"></a>2: Apply Builder pattern to reduce clutter</h3><h3 id="3-Introduce-defaults-on-the-Resource-and-override-per-method-if-needed"><a href="#3-Introduce-defaults-on-the-Resource-and-override-per-method-if-needed" class="headerlink" title="3: Introduce defaults on the Resource and override per method if needed"></a>3: Introduce defaults on the Resource and override per method if needed</h3><h3 id="4-Binding-Routes-to-Functions"><a href="#4-Binding-Routes-to-Functions" class="headerlink" title="4:  Binding Routes to Functions"></a>4:  Binding Routes to Functions</h3><h3 id="5-Document-the-API"><a href="#5-Document-the-API" class="headerlink" title="5: Document the API"></a>5: Document the API</h3><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="http://ernestmicklei.com/2012/11/go-restful-api-design/">http://ernestmicklei.com/2012/11/go-restful-api-design/</a></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2016/11/13/%E5%AB%8C%E7%96%91%E4%BA%BAx%E7%9A%84%E7%8C%AE%E8%BA%AB/" data-id="ckub8byer000l1rtrbfznd5lg" data-title="嫌疑人x的献身" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/10/05/go-restful/" data-id="ckubdxmby000atktrbvbxad3j" data-title="go restful" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
-
     </footer>
   </div>
   
@@ -277,10 +544,10 @@
 
 
   
-    <article id="post-iOS应用签名原理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-go-protobuf" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/" class="article-date">
-  <time class="dt-published" datetime="2016-09-08T14:56:34.000Z" itemprop="datePublished">2016-09-08</time>
+    <a href="/2017/10/03/go-protobuf/" class="article-date">
+  <time class="dt-published" datetime="2017-10-03T15:07:34.000Z" itemprop="datePublished">2017-10-03</time>
 </a>
     
   </div>
@@ -291,7 +558,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/">iOS应用签名原理</a>
+      <a class="p-name article-title" href="/2017/10/03/go-protobuf/">go protobuf</a>
     </h1>
   
 
@@ -299,249 +566,36 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="基本签名原理："><a href="#基本签名原理：" class="headerlink" title="基本签名原理："></a>基本签名原理：</h3><p>App签名使用到了数字签名，通过hash算法提取摘要，使用苹果私钥加密，形成签名，然后将原始数据，加密的的摘要（签名）及相关信息放到一起，形成已签名的数据（数字证书）。</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/#more">Read More</a>
-          </p>
-        
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Protocol buffers通常称为Protobuf，是Google开发的一种协议，允许对结构化数据进行序列化和反序列化。 谷歌开发它的目的是提供一种比XML更好的方式来进行系统间通信。 因此，他们专注于使其比XML更简单，更小，更快，更易于维护。与此同时，该协议甚至超越了JSON，具有更好的性能，更好的可维护性和更小的尺寸。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li><p>下载 <a target="_blank" rel="noopener" href="https://github.com/google/protobuf/releases">protoc</a> 放到 GOPATH/bin</p>
+<p>测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --version</span><br></pre></td></tr></table></figure></li>
+<li><p>proto的go插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/golang/protobuf/protoc-gen-go</span><br></pre></td></tr></table></figure></li>
+<li><p>安装goprotobuf库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/golang/protobuf/proto</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="编写-proto-文件"><a href="#编写-proto-文件" class="headerlink" title="编写*.proto 文件"></a>编写*.proto 文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;  //指定版本，必须要写（proto3、proto2）</span><br><span class="line">package example;</span><br><span class="line"></span><br><span class="line">message MessageInfo&#123;</span><br><span class="line">    string message = 1;   //消息</span><br><span class="line">    int32 length = 2;    //消息大小</span><br><span class="line">    int32 cnt = 3;      //消息计数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果放在 <code>package main</code> 下，运行时会报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># command-line-arguments</span><br><span class="line">./main.go:10:11: undefined: UserInfo</span><br><span class="line">./main.go:17:14: undefined: UserInfo</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成go文件"><a href="#生成go文件" class="headerlink" title="生成go文件"></a>生成go文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --go_out=. *.proto</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	test := &amp;example.MessageInfo&#123;</span><br><span class="line">		Message: &quot;hello world&quot;,</span><br><span class="line">		Length: 100,</span><br><span class="line">		Cnt: 3,</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	data, _ := proto.Marshal(test)</span><br><span class="line">	newTest := &amp;example.MessageInfo&#123;&#125;</span><br><span class="line">	err := proto.Unmarshal(data, newTest)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(&quot;test :%+v\n&quot;, test)</span><br><span class="line">	fmt.Printf(&quot;newTest :%+v\n&quot;,newTest)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test :message:&quot;hello world&quot; length:100 cnt:3 </span><br><span class="line">newTest :message:&quot;hello world&quot; length:100 cnt:3</span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2016/09/08/iOS%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86/" data-id="ckubdxmbw0008tktr043q63i1" data-title="iOS应用签名原理" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2017/10/03/go-protobuf/" data-id="ckubdxmbv0007tktrdjv10i96" data-title="go protobuf" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-MDM-vendor" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2016/07/01/MDM-vendor/" class="article-date">
-  <time class="dt-published" datetime="2016-07-01T14:21:30.000Z" itemprop="datePublished">2016-07-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2016/07/01/MDM-vendor/">申请移动设备管理厂商(MDM Vendor)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="申请移动设备管理厂商-MDM-Vendor"><a href="#申请移动设备管理厂商-MDM-Vendor" class="headerlink" title="申请移动设备管理厂商(MDM Vendor)"></a>申请移动设备管理厂商(MDM Vendor)</h2><p>前提：必须是苹果企业开发者</p>
-<p>前往苹果开发者网站申请成为<a target="_blank" rel="noopener" href="https://developer.apple.com/contact/submit/">MDM Vendor</a>，申请成功后在开发者网站可以看到多出一个MDM CSR选项</p>
-<p>![](<a target="_blank" rel="noopener" href="https://gitee.com/eightzero/pico/raw/master/MDM">https://gitee.com/eightzero/pico/raw/master/MDM</a> CSR.png)</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/07/01/MDM-vendor/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2016/07/01/MDM-vendor/" data-id="ckubdxmbi0001tktrd3euh3zo" data-title="申请移动设备管理厂商(MDM Vendor)" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hexo搭建个人博客" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
-  <time class="dt-published" datetime="2016-06-15T06:40:46.000Z" itemprop="datePublished">2016-06-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">hexo搭建个人博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_hexo0.png"></p>
-        
-          <p class="article-more-link">
-            <a href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="ckub8byeg00041rtr7yw476b8" data-title="hexo搭建个人博客" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-iOS开发-7-UITextField" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/" class="article-date">
-  <time class="dt-published" datetime="2015-12-03T04:48:40.000Z" itemprop="datePublished">2015-12-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/">iOS开发_7_UITextField</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_iOS7.png"></p>
-        
-          <p class="article-more-link">
-            <a href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/" data-id="ckub8byen000d1rtr6kvmas6g" data-title="iOS开发_7_UITextField" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-iOS那些坑-1-tabBar" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/" class="article-date">
-  <time class="dt-published" datetime="2015-11-30T04:39:20.000Z" itemprop="datePublished">2015-11-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/">TabBar中添加UInavigation</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_iOS_nav0.png"></p>
-        
-          <p class="article-more-link">
-            <a href="/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2015/11/30/iOS%E9%82%A3%E4%BA%9B%E5%9D%91-1-tabBar/" data-id="ckub8byep000g1rtratwjg8of" data-title="TabBar中添加UInavigation" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-iOS开发-6-viewCtl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/" class="article-date">
-  <time class="dt-published" datetime="2015-11-25T04:27:42.000Z" itemprop="datePublished">2015-11-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/">iOS开发教程(6)--viewController</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>视图控制器（viewcontroller）是UIViewController类或其子类的对象。每个视图控制器都负责管理一个视图结构，包括创建视图层次结构中的视图并处理相关用户事件，以及将整个视图层次结构添加到应用窗口。</p>
-</blockquote>
-        
-          <p class="article-more-link">
-            <a href="/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2015/11/25/iOS%E5%BC%80%E5%8F%91-6-viewCtl/" data-id="ckub8byel000b1rtrdlzc9gni" data-title="iOS开发教程(6)--viewController" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li></ul>
 
     </footer>
   </div>
@@ -555,7 +609,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -569,7 +623,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Istio/" rel="tag">Istio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" rel="tag">边缘计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
     </div>
   </div>
 
@@ -579,7 +633,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 16.67px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/Istio/" style="font-size: 10px;">Istio</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/golang/" style="font-size: 15px;">golang</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 20px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">边缘计算</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
     </div>
   </div>
 
@@ -588,7 +642,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
     </div>
   </div>
 
@@ -601,23 +655,23 @@
       <ul>
         
           <li>
-            <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/">马拉车算法</a>
+            <a href="/2021/10/08/Openyurt-Superedge/">Openyurt Superedge</a>
           </li>
         
           <li>
-            <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">kubernetes下的DNS</a>
+            <a href="/2021/10/08/Superedge/">Superedge</a>
           </li>
         
           <li>
-            <a href="/2018/09/19/k-NN/">K-NN</a>
+            <a href="/2021/10/08/kubeedge-openyurt-superedge/">kubeedge openyurt superedge</a>
           </li>
         
           <li>
-            <a href="/2018/09/01/Statistical-learning/">Statistical learning</a>
+            <a href="/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/">kubernetes集群安装Flink</a>
           </li>
         
           <li>
-            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">SSL/TLS概述</a>
+            <a href="/2019/11/28/go%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90goroutine/">go深入解析goroutine</a>
           </li>
         
       </ul>

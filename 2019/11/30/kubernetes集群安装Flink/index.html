@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>kubernetes集群安装Flink | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1、创建flink configmap1kubectl create -f flink-configuration-configmap.yaml   flink-configuration-configmap.yaml  1234567891011121314151617181920212223242526apiVersion: v1kind: ConfigMapmetadata:  name:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubernetes集群安装Flink">
+<meta property="og:url" content="http://example.com/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1、创建flink configmap1kubectl create -f flink-configuration-configmap.yaml   flink-configuration-configmap.yaml  1234567891011121314151617181920212223242526apiVersion: v1kind: ConfigMapmetadata:  name:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-30T06:28:11.000Z">
+<meta property="article:modified_time" content="2021-10-08T06:28:46.923Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-kubernetes集群安装Flink" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/" class="article-date">
+  <time class="dt-published" datetime="2019-11-30T06:28:11.000Z" itemprop="datePublished">2019-11-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      kubernetes集群安装Flink
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1、创建flink-configmap"><a href="#1、创建flink-configmap" class="headerlink" title="1、创建flink configmap"></a>1、创建flink configmap</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f flink-configuration-configmap.yaml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>flink-configuration-configmap.yaml</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  name: flink-config</span><br><span class="line">  labels:</span><br><span class="line">    app: flink</span><br><span class="line">data:</span><br><span class="line">  flink-conf.yaml: |+</span><br><span class="line">    jobmanager.rpc.address: flink-jobmanager</span><br><span class="line">    taskmanager.numberOfTaskSlots: 1</span><br><span class="line">    blob.server.port: 6124</span><br><span class="line">    jobmanager.rpc.port: 6123</span><br><span class="line">    taskmanager.rpc.port: 6122</span><br><span class="line">    jobmanager.heap.size: 1024m</span><br><span class="line">    taskmanager.heap.size: 1024m</span><br><span class="line">  log4j.properties: |+</span><br><span class="line">    log4j.rootLogger=INFO, file</span><br><span class="line">    log4j.logger.akka=INFO</span><br><span class="line">    log4j.logger.org.apache.kafka=INFO</span><br><span class="line">    log4j.logger.org.apache.hadoop=INFO</span><br><span class="line">    log4j.logger.org.apache.zookeeper=INFO</span><br><span class="line">    log4j.appender.file=org.apache.log4j.FileAppender</span><br><span class="line">    log4j.appender.file.file=$&#123;log.file&#125;</span><br><span class="line">    log4j.appender.file.layout=org.apache.log4j.PatternLayout</span><br><span class="line">    log4j.appender.file.layout.ConversionPattern=%d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125; %-5p %-60c %x - %m%n</span><br><span class="line">    log4j.logger.org.apache.flink.shaded.akka.org.jboss.netty.channel.DefaultChannelPipeline=ERROR, file</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、创建jobmanager-service"><a href="#2、创建jobmanager-service" class="headerlink" title="2、创建jobmanager service"></a>2、创建jobmanager service</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f jobmanager-service.yaml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>jobmanager-service.yaml</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: flink-jobmanager</span><br><span class="line">spec:</span><br><span class="line">  type: ClusterIP</span><br><span class="line">  ports:</span><br><span class="line">  - name: rpc</span><br><span class="line">    port: 6123</span><br><span class="line">  - name: blob</span><br><span class="line">    port: 6124</span><br><span class="line">  - name: ui</span><br><span class="line">    port: 8081</span><br><span class="line">  selector:</span><br><span class="line">    app: flink</span><br><span class="line">    component: jobmanager</span><br></pre></td></tr></table></figure>
+
+<p>使用NodePort向集群外提供服务：</p>
+<blockquote>
+<p>jobmanager-rest-service.yaml</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: flink-jobmanager-rest</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort</span><br><span class="line">  ports:</span><br><span class="line">  - name: rest</span><br><span class="line">    port: 8081</span><br><span class="line">    targetPort: 8081</span><br><span class="line">  selector:</span><br><span class="line">    app: flink</span><br><span class="line">    component: jobmanager</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3、创建jobmanager-deployment"><a href="#3、创建jobmanager-deployment" class="headerlink" title="3、创建jobmanager deployment"></a>3、创建jobmanager deployment</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f jobmanager-deployment.yaml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>jobmanager-deployment.yaml</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: flink-jobmanager</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: flink</span><br><span class="line">        component: jobmanager</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: jobmanager</span><br><span class="line">        image: flink:latest</span><br><span class="line">        workingDir: /opt/flink</span><br><span class="line">        command: [&quot;/bin/bash&quot;, &quot;-c&quot;, &quot;$FLINK_HOME/bin/jobmanager.sh start;\</span><br><span class="line">          while :;</span><br><span class="line">          do</span><br><span class="line">            if [[ -f $(find log -name &#x27;*jobmanager*.log&#x27; -print -quit) ]];</span><br><span class="line">              then tail -f -n +1 log/*jobmanager*.log;</span><br><span class="line">            fi;</span><br><span class="line">          done&quot;]</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 6123</span><br><span class="line">          name: rpc</span><br><span class="line">        - containerPort: 6124</span><br><span class="line">          name: blob</span><br><span class="line">        - containerPort: 8081</span><br><span class="line">          name: ui</span><br><span class="line">        livenessProbe:</span><br><span class="line">          tcpSocket:</span><br><span class="line">            port: 6123</span><br><span class="line">          initialDelaySeconds: 30</span><br><span class="line">          periodSeconds: 60</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: flink-config-volume</span><br><span class="line">          mountPath: /opt/flink/conf</span><br><span class="line">      volumes:</span><br><span class="line">      - name: flink-config-volume</span><br><span class="line">        configMap:</span><br><span class="line">          name: flink-config</span><br><span class="line">          items:</span><br><span class="line">          - key: flink-conf.yaml</span><br><span class="line">            path: flink-conf.yaml</span><br><span class="line">          - key: log4j.properties</span><br><span class="line">            path: log4j.properties</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、创建taskmanager-deployment"><a href="#4、创建taskmanager-deployment" class="headerlink" title="4、创建taskmanager deployment"></a>4、创建taskmanager deployment</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f taskmanager-deployment.yaml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>taskmanager-deployment.yaml</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions/v1beta1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: flink-taskmanager</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: flink</span><br><span class="line">        component: taskmanager</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: taskmanager</span><br><span class="line">        image: flink:latest</span><br><span class="line">        workingDir: /opt/flink</span><br><span class="line">        command: [&quot;/bin/bash&quot;, &quot;-c&quot;, &quot;$FLINK_HOME/bin/taskmanager.sh start; \</span><br><span class="line">          while :;</span><br><span class="line">          do</span><br><span class="line">            if [[ -f $(find log -name &#x27;*taskmanager*.log&#x27; -print -quit) ]];</span><br><span class="line">              then tail -f -n +1 log/*taskmanager*.log;</span><br><span class="line">            fi;</span><br><span class="line">          done&quot;]</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 6122</span><br><span class="line">          name: rpc</span><br><span class="line">        livenessProbe:</span><br><span class="line">          tcpSocket:</span><br><span class="line">            port: 6122</span><br><span class="line">          initialDelaySeconds: 30</span><br><span class="line">          periodSeconds: 60</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: flink-config-volume</span><br><span class="line">          mountPath: /opt/flink/conf/</span><br><span class="line">      volumes:</span><br><span class="line">      - name: flink-config-volume</span><br><span class="line">        configMap:</span><br><span class="line">          name: flink-config</span><br><span class="line">          items:</span><br><span class="line">          - key: flink-conf.yaml</span><br><span class="line">            path: flink-conf.yaml</span><br><span class="line">          - key: log4j.properties</span><br><span class="line">            path: log4j.properties</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5、访问Flink-Portal管理界面"><a href="#5、访问Flink-Portal管理界面" class="headerlink" title="5、访问Flink Portal管理界面"></a>5、访问Flink Portal管理界面</h2><h4 id="5-1-kubectl-proxy"><a href="#5-1-kubectl-proxy" class="headerlink" title="5.1 kubectl proxy"></a>5.1 kubectl proxy</h4><p>直接使用<code>kubectl proxy </code>，</p>
+<p>然后，通过 <a target="_blank" rel="noopener" href="http://localhost:8001/api/v1/namespaces/default/services/flink-jobmanager:ui/proxy">http://localhost:8001/api/v1/namespaces/default/services/flink-jobmanager:ui/proxy</a> 访问</p>
+<h4 id="5-2-kubectl-port-forward"><a href="#5-2-kubectl-port-forward" class="headerlink" title="5.2 kubectl port-forward"></a>5.2 kubectl port-forward</h4><p>通过kubectl转发</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward $&#123;flink-jobmanager-pod&#125; 8081:8081</span><br></pre></td></tr></table></figure>
+
+<p>然后，通过 <a target="_blank" rel="noopener" href="http://localhost:8081/">http://localhost:8081</a> 访问</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-stable/ops/deployment/kubernetes.html#session-cluster-resource-definitions">https://ci.apache.org/projects/flink/flink-docs-stable/ops/deployment/kubernetes.html#session-cluster-resource-definitions</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/" data-id="ckuiauwj5000hq6tr5xrzgc3i" data-title="kubernetes集群安装Flink" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/10/08/kubeedge-openyurt-superedge/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          kubeedge openyurt superedge
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/28/go%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90goroutine/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">go深入解析goroutine</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/" rel="tag">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Istio/" rel="tag">Istio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MDM-Vendor/" rel="tag">MDM Vendor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Read/" rel="tag">Read</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag">网络协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" rel="tag">边缘计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/Istio/" style="font-size: 10px;">Istio</a> <a href="/tags/MDM-Vendor/" style="font-size: 10px;">MDM Vendor</a> <a href="/tags/Read/" style="font-size: 10px;">Read</a> <a href="/tags/golang/" style="font-size: 15px;">golang</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/k8s/" style="font-size: 20px;">k8s</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">网络协议</a> <a href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">边缘计算</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/10/08/Openyurt-Superedge/">Openyurt Superedge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/08/Superedge/">Superedge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/08/kubeedge-openyurt-superedge/">kubeedge openyurt superedge</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/">kubernetes集群安装Flink</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/28/go%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90goroutine/">go深入解析goroutine</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
