@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="iOS开发教程--学习路线图">
-<meta property="og:url" content="http://example.com/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/index.html">
+  <meta name="description" content="kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy    1helm insta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="测试环境搭建">
+<meta property="og:url" content="http://example.com/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy    1helm insta">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://o8z0mw8i6.bkt.clouddn.com/article_ios.png">
-<meta property="article:published_time" content="2015-08-03T03:42:53.000Z">
-<meta property="article:modified_time" content="2018-10-13T14:06:06.000Z">
+<meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/image-20211012155844618.png">
+<meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/image-20211012160038293.png">
+<meta property="article:published_time" content="2021-10-12T08:01:49.000Z">
+<meta property="article:modified_time" content="2021-10-12T15:17:13.837Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://o8z0mw8i6.bkt.clouddn.com/article_ios.png">
+<meta name="twitter:image" content="https://gitee.com/eightzero/pico/raw/master/image-20211012155844618.png">
 
-<link rel="canonical" href="http://example.com/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/">
+<link rel="canonical" href="http://example.com/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>iOS开发教程--学习路线图 | Hexo</title>
+  <title>测试环境搭建 | Hexo</title>
   
 
 
@@ -151,7 +153,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/08/03/iOS%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +166,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          iOS开发教程--学习路线图
+          测试环境搭建
         </h1>
 
         <div class="post-meta">
@@ -173,16 +175,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2015-08-03 11:42:53" itemprop="dateCreated datePublished" datetime="2015-08-03T11:42:53+08:00">2015-08-03</time>
+              <time title="Created: 2021-10-12 16:01:49 / Modified: 23:17:13" itemprop="dateCreated datePublished" datetime="2021-10-12T16:01:49+08:00">2021-10-12</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-10-13 22:06:06" itemprop="dateModified" datetime="2018-10-13T22:06:06+08:00">2018-10-13</time>
-              </span>
 
           
 
@@ -195,10 +191,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_ios.png"></p>
-<span id="more"></span>
-<br>
-![](http://o8z0mw8i6.bkt.clouddn.com/iOS%E8%AF%A6.jpg)
+        <ul>
+<li><p>kubernetes master + 2 node （使用cilium替代kube-proxy）</p>
+</li>
+<li><p>helm3</p>
+</li>
+<li><p>cilium+hubble</p>
+</li>
+<li><p>切换superedge</p>
+</li>
+<li><p>安装ISTIO</p>
+</li>
+<li><p>安装Karmada</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --pod-network-cidr=10.218.0.0/16 --skip-phases=addon/kube-proxy</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm install cilium cilium/cilium --version 1.10.4 --namespace kube-system --set kubeProxyReplacement=strict --set k8sServiceHost=192.168.92.132 --set k8sServicePort=6443 --set hubble.relay.enabled=true --set hubble.ui.enabled=true</span><br></pre></td></tr></table></figure>
+
+
+
+<p>升级内核</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirrors.nju.edu.cn/elrepo/kernel/el7/x86_64/RPMS/kernel-lt-5.4.151-1.el7.elrepo.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh kernel-lt-5.4.151-1.el7.elrepo.x86_64.rpm</span><br><span class="line"></span><br><span class="line">cat /boot/grub2/grub.cfg | grep menuentry</span><br><span class="line"></span><br><span class="line">grub2-set-default &#x27;CentOS Linux (5.4.151-1.el7.elrepo.x86_64) 7 (Core)&#x27;</span><br><span class="line"></span><br><span class="line">grub2-editenv list</span><br><span class="line"></span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br><span class="line"></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+
+
+<p>遇到问题</p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/image-20211012155844618.png" alt="image-20211012155844618"></p>
+<ul>
+<li><p>Cilium pod CrashLoopBackOff</p>
+<p>内核最低支持4.8.0</p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/image-20211012160038293.png" alt="image-20211012160038293"></p>
+</li>
+<li><p>coredns ContainerCreating</p>
+</li>
+</ul>
+
     </div>
 
     
@@ -206,20 +236,17 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/iOS/" rel="tag"># iOS</a>
-          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2015/10/28/OC-property/" rel="next" title="objective-c -- property">
-      objective-c -- property <i class="fa fa-chevron-right"></i>
+    <a href="/2021/10/11/%E5%A4%9A%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86Karmada/" rel="prev" title="多集群管理Karmada">
+      <i class="fa fa-chevron-left"></i> 多集群管理Karmada
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     

@@ -145,6 +145,171 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">pod创建大致流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-11-08 23:10:47" itemprop="dateCreated datePublished" datetime="2017-11-08T23:10:47+08:00">2017-11-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-03 23:12:38" itemprop="dateModified" datetime="2021-10-03T23:12:38+08:00">2021-10-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="https://gitee.com/eightzero/pico/raw/master/pod.jpg"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/10/05/go-restful/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/10/05/go-restful/" class="post-title-link" itemprop="url">go restful</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-10-05 23:18:50" itemprop="dateCreated datePublished" datetime="2017-10-05T23:18:50+08:00">2017-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-03 23:19:55" itemprop="dateModified" datetime="2021-10-03T23:19:55+08:00">2021-10-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="go-http-web"><a href="#go-http-web" class="headerlink" title="go http web"></a>go http web</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//基础 web server</span><br><span class="line">func simpleHttpServer()&#123;</span><br><span class="line">	//1. 往serverMux的 map[string]muxEntry 添加路由规则pattern以及封装了handler的muxEntry</span><br><span class="line">	//2. 匹配pattern，Handler被调用</span><br><span class="line">	http.HandleFunc(&quot;/hello&quot;, SayHello)</span><br><span class="line">	//1. 实例化Server</span><br><span class="line">	http.ListenAndServe(&quot;:8000&quot;,nil)</span><br><span class="line">&#125;</span><br><span class="line">func SayHello(w http.ResponseWriter, req *http.Request)  &#123;</span><br><span class="line">	fmt.Println(req)</span><br><span class="line">	w.Write([]byte(&quot;Hello!!!&quot;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="golang-装饰器模式"><a href="#golang-装饰器模式" class="headerlink" title="golang 装饰器模式"></a>golang 装饰器模式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func HandleFunc(pattern string, handler func(ResponseWriter, *Request)) &#123;</span><br><span class="line">	DefaultServeMux.HandleFunc(pattern, handler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="go-restful"><a href="#go-restful" class="headerlink" title="go-restful"></a>go-restful</h4><p>一个 Container 包含多个 WebService，同时container实现了http.handler接口定义的ServeHTTP方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">type Container struct &#123;</span><br><span class="line">   webServicesLock        sync.RWMutex</span><br><span class="line">   webServices            []*WebService //一个Container包含多个webservice</span><br><span class="line">   ServeMux               *http.ServeMux</span><br><span class="line">   isRegisteredOnRoot     bool</span><br><span class="line">   containerFilters       []FilterFunction</span><br><span class="line">   doNotRecover           bool // default is true</span><br><span class="line">   recoverHandleFunc      RecoverHandleFunction</span><br><span class="line">   serviceErrorHandleFunc ServiceErrorHandleFunction</span><br><span class="line">   router                 RouteSelector // default is a CurlyRouter (RouterJSR311 is a slower alternative)</span><br><span class="line">   contentEncodingEnabled bool          // default is false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (c *Container) ServeHTTP(httpwriter http.ResponseWriter, httpRequest *http.Request) &#123;</span><br><span class="line">    c.ServeMux.ServeHTTP(httpwriter, httpRequest)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个 webservice 包含多个Route，webservice里定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">type WebService struct &#123;</span><br><span class="line">    rootPath       string</span><br><span class="line">    pathExpr       *pathExpression</span><br><span class="line">    routes         []Route //一个webservice包含多个Route</span><br><span class="line">    produces       []string</span><br><span class="line">    consumes       []string</span><br><span class="line">    pathParameters []*Parameter</span><br><span class="line">    filters        []FilterFunction</span><br><span class="line">    documentation  string</span><br><span class="line">    apiVersion     string</span><br><span class="line"></span><br><span class="line">    typeNameHandleFunc TypeNameHandleFunction</span><br><span class="line"></span><br><span class="line">    dynamicRoutes bool</span><br><span class="line"></span><br><span class="line">    // protects &#x27;routes&#x27; if dynamic routes are enabled</span><br><span class="line">    routesLock sync.RWMutex</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Path specifies the root URL template path of the WebService.</span><br><span class="line">// All Routes will be relative to this path.</span><br><span class="line">func (w *WebService) Path(root string) *WebService &#123;</span><br><span class="line">	w.rootPath = root</span><br><span class="line">	if len(w.rootPath) == 0 &#123;</span><br><span class="line">		w.rootPath = &quot;/&quot;</span><br><span class="line">	&#125;</span><br><span class="line">	w.compilePathExpression()</span><br><span class="line">	return w</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Route creates a new Route using the RouteBuilder and add to the ordered list of Routes.</span><br><span class="line">func (w *WebService) Route(builder *RouteBuilder) *WebService &#123;</span><br><span class="line">	w.routesLock.Lock()</span><br><span class="line">	defer w.routesLock.Unlock()</span><br><span class="line">	builder.copyDefaults(w.produces, w.consumes)</span><br><span class="line">	w.routes = append(w.routes, builder.Build())</span><br><span class="line">	return w</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个 Route 包含HTTP 协议协议相关的HTTP Request 、HTTP Reponse 、方法等处理。由RouteBuilder传递过来的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">type Route struct &#123;</span><br><span class="line">    Method   string</span><br><span class="line">    Produces []string</span><br><span class="line">    Consumes []string</span><br><span class="line">    Path     string // webservice root path + described path</span><br><span class="line">    Function RouteFunction//具体处理函数</span><br><span class="line">    Filters  []FilterFunction</span><br><span class="line">    If       []RouteSelectionConditionFunction</span><br><span class="line"></span><br><span class="line">    // cached values for dispatching</span><br><span class="line">    relativePath string</span><br><span class="line">    pathParts    []string</span><br><span class="line">    pathExpr     *pathExpression // cached compilation of relativePath as RegExp</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// RouteFunction declares the signature of a function that can be bound to a Route.</span><br><span class="line">type RouteFunction func(*Request, *Response)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// To bind the route to a function.</span><br><span class="line">// If this route is matched with the incoming Http Request then call this function with the *Request,*Response pair. Required.</span><br><span class="line">func (b *RouteBuilder) To(function RouteFunction) *RouteBuilder &#123;</span><br><span class="line">	b.function = function</span><br><span class="line">	return b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-ResourceMethod-and-ResourceMethodContainer"><a href="#1-ResourceMethod-and-ResourceMethodContainer" class="headerlink" title="1. ResourceMethod and ResourceMethodContainer"></a>1. ResourceMethod and ResourceMethodContainer</h3><h3 id="2-Apply-Builder-pattern-to-reduce-clutter"><a href="#2-Apply-Builder-pattern-to-reduce-clutter" class="headerlink" title="2: Apply Builder pattern to reduce clutter"></a>2: Apply Builder pattern to reduce clutter</h3><h3 id="3-Introduce-defaults-on-the-Resource-and-override-per-method-if-needed"><a href="#3-Introduce-defaults-on-the-Resource-and-override-per-method-if-needed" class="headerlink" title="3: Introduce defaults on the Resource and override per method if needed"></a>3: Introduce defaults on the Resource and override per method if needed</h3><h3 id="4-Binding-Routes-to-Functions"><a href="#4-Binding-Routes-to-Functions" class="headerlink" title="4:  Binding Routes to Functions"></a>4:  Binding Routes to Functions</h3><h3 id="5-Document-the-API"><a href="#5-Document-the-API" class="headerlink" title="5: Document the API"></a>5: Document the API</h3><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="http://ernestmicklei.com/2012/11/go-restful-api-design/">http://ernestmicklei.com/2012/11/go-restful-api-design/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2017/10/03/go-protobuf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -763,150 +928,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">hexo搭建个人博客</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-06-15 14:40:46" itemprop="dateCreated datePublished" datetime="2016-06-15T14:40:46+08:00">2016-06-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2017-07-23 12:04:09" itemprop="dateModified" datetime="2017-07-23T12:04:09+08:00">2017-07-23</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_hexo0.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/06/15/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/" class="post-title-link" itemprop="url">iOS开发_7_UITextField</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-12-03 12:48:40" itemprop="dateCreated datePublished" datetime="2015-12-03T12:48:40+08:00">2015-12-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-10-13 22:05:25" itemprop="dateModified" datetime="2018-10-13T22:05:25+08:00">2018-10-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="http://o8z0mw8i6.bkt.clouddn.com/article_iOS7.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/12/03/iOS%E5%BC%80%E5%8F%91-7-UITextField/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -976,7 +997,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
