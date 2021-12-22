@@ -1,1116 +1,660 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta property="og:type" content="website">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://example.com/page/2/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'en'
-  };
-</script>
-
-  <title>Hexo</title>
+<meta name="twitter:card" content="summary_large_image">
   
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<link  rel="stylesheet" href="/css/main.css" />
 
-</head>
+<!-- 自定义样式保持在最底部 -->
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
-  <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
-      <span class="logo-line-after"><i></i></span>
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
     </a>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
 </nav>
 
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="An elegant Material-Design theme for Hexo">
+              
+            </span>
 
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/08/Istio%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/08/Istio%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Istio安装与实践</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-08 14:16:48" itemprop="dateCreated datePublished" datetime="2019-09-08T14:16:48+08:00">2019-09-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-08 14:17:58" itemprop="dateModified" datetime="2021-10-08T14:17:58+08:00">2021-10-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><ul>
-<li>Ubuntu 16.04</li>
-<li>安装kubernetes集群（kubeadm/minikube），本次使用的是kubeadm搭建的1.15版本k8s集群</li>
-<li><a target="_blank" rel="noopener" href="https://istio.io/zh/docs/setup/#downloading-the-release">下载 Istio 发行版本</a>，本次安装的是Istio 1.4.0。</li>
-<li>执行任何必要的 <a target="_blank" rel="noopener" href="https://istio.io/zh/docs/setup/platform-setup/">特定于平台的设置</a>。</li>
-<li>检查 <a target="_blank" rel="noopener" href="https://istio.io/zh/docs/setup/additional-setup/requirements/">Pods 和 Services 的要求</a>。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/09/08/Istio%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AE%9E%E8%B7%B5/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/08/kube-apiserver-Aggregation-Layer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/06/08/kube-apiserver-Aggregation-Layer/" class="post-title-link" itemprop="url">kube-apiserver Aggregation Layer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-06-08 14:14:06" itemprop="dateCreated datePublished" datetime="2019-06-08T14:14:06+08:00">2019-06-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-08 14:16:30" itemprop="dateModified" datetime="2021-10-08T14:16:30+08:00">2021-10-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>配置Aggregation Layer允许通过新增一个扩展apiserver服务来扩展非核心api。</p>
-<p>与CRD扩展api的方式不同， Aggregation API需要另一个扩展的apiserver（aggregated apiserver）。扩展apiserver（aggregated apiserver）与kube-apiserver（aggregator）之间需要互相通信。为了保证通信安全，kube-apiserver（aggregator）使用x509证书认证去访问扩展apiserver（aggregated apiserver）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/06/08/kube-apiserver-Aggregation-Layer/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/28/Service-Account-Token-Volume-Projection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/28/Service-Account-Token-Volume-Projection/" class="post-title-link" itemprop="url">Service Account Token Volume Projection</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-05-28 14:12:23" itemprop="dateCreated datePublished" datetime="2019-05-28T14:12:23+08:00">2019-05-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-08 14:13:23" itemprop="dateModified" datetime="2021-10-08T14:13:23+08:00">2021-10-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="特性介绍"><a href="#特性介绍" class="headerlink" title="特性介绍"></a>特性介绍</h4><p>社区实现的pod 通过 volume 方式引用service account 的 token，支持audience和token有效期设置。在1.11引入（Alpha），在1.12为Beta。</p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>ServiceAccountTokenVolumeProjection 在 k8s 1.11版本需要手动设置<code> TokenRequestProjection</code> 这个feature gate 为 true 来启用此功能，在1.12版本 <code>TokenRequestProjection</code>  默认为true</p>
-<p>kubelet可以将service account token挂载到pod中。并且可以指定token的一些期望的属性，例如audience 和expirationSeconds。这些属性在default service account token下无法配置。一旦Pod和ServiceAccount被删除，service account token会跟着变成invalid</p>
-<p>可以在pod的yaml中定义使用：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">kind: Pod</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - image: nginx</span><br><span class="line">    name: nginx</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - mountPath: /var/run/secrets/tokens</span><br><span class="line">      name: vault-token</span><br><span class="line">  serviceAccountName: acct</span><br><span class="line">  volumes:</span><br><span class="line">  - name: vault-token</span><br><span class="line">    projected:</span><br><span class="line">      sources:</span><br><span class="line">      - serviceAccountToken: #名为serviceAccountToken的一种ProjectedVolume</span><br><span class="line">          path: vault-token       </span><br><span class="line">          expirationSeconds: 7200 #指定token过期时间为2小时</span><br><span class="line">          audience: vault # identifier: vault</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>audience字段</p>
-<p>包含token的目标受众（audience）。token的接收者必须使用token的audience中指定的标识符(identifier)来标识自己，否则接收者应该拒绝该token。此参数为可选，默认为api server的identifier（api）</p>
-</li>
-<li><p>expirationSeconds字段</p>
-<p>指定service account token的有效时间。默认1小时，最小需要10分钟</p>
-</li>
-<li><p>path字段</p>
-<p>指定projected volume的挂载点的相对路径</p>
-</li>
-</ul>
-<p>创建pod之后，kubelet会替Pod请求和储存这个token，让pod在可配置的文件路径下访问到此token，并且一旦达到配置的到期时间，就会刷新token。</p>
-<p>一旦token达到总TTL的80%，或者token已经超过24小时，kubelet 将主动更新token（rotate token）</p>
-<h4 id="kubelet实现"><a href="#kubelet实现" class="headerlink" title="kubelet实现"></a>kubelet实现</h4><blockquote>
-<p>pkg\kubelet\kubelet.go</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func NewMainKubelet(...)(*Kubelet, error) &#123;</span><br><span class="line">    ...</span><br><span class="line">    tokenManager := token.NewManager(kubeDeps.KubeClient)</span><br><span class="line">    ...</span><br><span class="line">    klet.volumePluginMgr, err =</span><br><span class="line">		NewInitializedVolumePluginMgr(klet, secretManager, configMapManager, tokenManager, kubeDeps.VolumePlugins, kubeDeps.DynamicPluginProber)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>pkg\kubelet\volume_host.go</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func NewInitializedVolumePluginMgr(</span><br><span class="line">	kubelet *Kubelet,</span><br><span class="line">	secretManager secret.Manager,</span><br><span class="line">	configMapManager configmap.Manager,</span><br><span class="line">	tokenManager *token.Manager,</span><br><span class="line">	plugins []volume.VolumePlugin,</span><br><span class="line">	prober volume.DynamicPluginProber) (*volume.VolumePluginMgr, error) &#123;</span><br><span class="line">    ...</span><br><span class="line">    kvh := &amp;kubeletVolumeHost&#123;</span><br><span class="line">		kubelet:          kubelet,</span><br><span class="line">		volumePluginMgr:  volume.VolumePluginMgr&#123;&#125;,</span><br><span class="line">		secretManager:    secretManager,</span><br><span class="line">		configMapManager: configMapManager,</span><br><span class="line">		tokenManager:     tokenManager,</span><br><span class="line">		mountPodManager:  mountPodManager,</span><br><span class="line">	&#125;</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (kvh *kubeletVolumeHost) GetServiceAccountTokenFunc() func(namespace, name string, tr *authenticationv1.TokenRequest) (*authenticationv1.TokenRequest, error) &#123;</span><br><span class="line">	return kvh.tokenManager.GetServiceAccountToken</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>pkg\kubelet\token\token_manager.go</p>
-</blockquote>
-<p>GetServiceAccountToken 从 cache 或者 TokenRequest API 里获取service account token</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">func (m *Manager) GetServiceAccountToken(namespace, name string, tr *authenticationv1.TokenRequest) (*authenticationv1.TokenRequest, error) &#123;</span><br><span class="line">    //解析TokenRequest，返回name/namespace/tr.Spec.Audiences/expirationSeconds/boundObjectRef 格式的 key</span><br><span class="line">    key := keyFunc(name, namespace, tr)</span><br><span class="line"></span><br><span class="line">    //从cache中获取tokenRequests</span><br><span class="line">	ctr, ok := m.get(key)</span><br><span class="line">    </span><br><span class="line">    //判断token是否需要刷新（一旦token达到总TTL的80%，或者token已经超过24小时），不需要刷新直接返回</span><br><span class="line">    if ok &amp;&amp; !m.requiresRefresh(ctr) &#123;</span><br><span class="line">		return ctr, nil</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    //创建新的token</span><br><span class="line">    //getToken: c.CoreV1().ServiceAccounts(namespace).CreateToken(name, tr)</span><br><span class="line">    tr, err := m.getToken(name, namespace, tr)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		switch &#123;</span><br><span class="line">		case !ok:</span><br><span class="line">			return nil, fmt.Errorf(&quot;failed to fetch token: %v&quot;, err)</span><br><span class="line">		case m.expired(ctr):</span><br><span class="line">			return nil, fmt.Errorf(&quot;token %s expired and refresh failed: %v&quot;, key, err)</span><br><span class="line">		default:</span><br><span class="line">			klog.Errorf(&quot;couldn&#x27;t update token %s: %v&quot;, key, err)</span><br><span class="line">			return ctr, nil</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	m.set(key, tr)</span><br><span class="line">	return tr, nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="相关内容"><a href="#相关内容" class="headerlink" title="相关内容"></a>相关内容</h4><ul>
-<li><p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/storage/volumes/#projected">projected</a></p>
-<p>projected volume 映射多个存在的volume 资源到同一目录。</p>
-<p>所有资源要求必须和pod在同一个namespace。</p>
-<p>当前有四种volume资源可以被映射(projected)：</p>
-<ul>
-<li>secret</li>
-<li>downwardAPI</li>
-<li>configMap</li>
-<li>serviceAccountToken</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/08/default-token/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/08/default-token/" class="post-title-link" itemprop="url">default-token</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-05-08 14:08:13" itemprop="dateCreated datePublished" datetime="2019-05-08T14:08:13+08:00">2019-05-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-08 14:11:46" itemprop="dateModified" datetime="2021-10-08T14:11:46+08:00">2021-10-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>default-token得先从service account说起，Service account是Pod里面的进程调用Kubernetes API或其他外部服务而设计的，每个namespace下有一个名为default的默认的ServiceAccount对象，如下图：</p>
-<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081409513.png" alt="3_4_1_serviceaccount"></p>
-<p>Token controller监测service account的创建，并为它们创建默认token，即每个ServiceAccount都有一个名叫<code>&#123;Service Account name&#125;-token-xxx</code>的default token。在新建pod时，会自动挂载当前namespace的default token到pod的secrets下，用于Pod进程访问API Server。如下图：</p>
-<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410657.png" alt="3_4_1_svc_token-1"></p>
-<p>default-token实际上就是secret，由于每个namespace下有一个名为default的默认的ServiceAccount对象，因此，每个namespaces下都有一个名为<code>default-token-xxx</code>的secret，如下图：</p>
-<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410689.png" alt="3_4_1_ns_token"></p>
-<p>default-token自动刷新就是为每个default-token设置一个过期时间（24小时）。到期后，去IAM重新获取新的token更新到default-token中，如下图：</p>
-<p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410936.png" alt="3_4_1_token_refresh"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">马拉车算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-05-03 23:21:03" itemprop="dateCreated datePublished" datetime="2019-05-03T23:21:03+08:00">2019-05-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-08 19:42:06" itemprop="dateModified" datetime="2021-10-08T19:42:06+08:00">2021-10-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Manacher’s-Algorithm-马拉车算法"><a href="#Manacher’s-Algorithm-马拉车算法" class="headerlink" title="Manacher’s Algorithm 马拉车算法"></a>Manacher’s Algorithm 马拉车算法</h3><p>马拉车算法用来查找一个字符串的最长回文子串的线性方法</p>
-<p>传统查找最长回文串方法：以每个字符为中心，向两边寻找回文子串，遍历完整数组后，就可以找到最长回文子串，但是复杂度为O(n*n)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/" class="post-title-link" itemprop="url">kubernetes下的DNS</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-10-03 23:16:25" itemprop="dateCreated datePublished" datetime="2018-10-03T23:16:25+08:00">2018-10-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-08 19:42:42" itemprop="dateModified" datetime="2021-10-08T19:42:42+08:00">2021-10-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Kubernetes中的DNS主要用作服务发现，在集群中调度Pod和Service，并且配置kubelet使得容器可以使用DNS Service的IP解析域名</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/09/19/k-NN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/09/19/k-NN/" class="post-title-link" itemprop="url">K-NN</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-09-19 00:27:31" itemprop="dateCreated datePublished" datetime="2018-09-19T00:27:31+08:00">2018-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-10-13 21:56:59" itemprop="dateModified" datetime="2018-10-13T21:56:59+08:00">2018-10-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>k近邻法(k-nearest neighbor)在一个训练集中，对于新的实例，从训练数据集中找到与该实例<strong>最邻近</strong>的k个实例，如果这k个实例属于某个类，就把该实例分为这个类。k近邻法没有显式的学习过程</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/09/19/k-NN/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/09/01/Statistical-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/09/01/Statistical-learning/" class="post-title-link" itemprop="url">Statistical learning</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-09-01 22:04:24" itemprop="dateCreated datePublished" datetime="2018-09-01T22:04:24+08:00">2018-09-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-10-13 22:00:07" itemprop="dateModified" datetime="2018-10-13T22:00:07+08:00">2018-10-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <span id="more"></span>
-
-
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>输入空间：</strong>输入所有可能取值的集合，每个具体的输入是一个实例(instance)，通常由特征向量(feature vector)表示。<br><strong>特征空间</strong>：所有的特征向量存在的空间成为特征空间(feature space)。特征空间的每一维对应于一个特征，特征空间相当于输入空间的抽象，二者不一定相等。模型实际上都是定义在特征空间上的<br><strong>输出空间：</strong>输出所有可能取值的集合<br>表示：X Y， xi=（xi1,xi2,….）</p>
-<p>机器学习分为：<strong>监督学习，非监督学习，强化学习</strong></p>
-<p><strong>假设空间</strong>(hypothesis space)：输入到输出的映射由模型来表示。模型属于输入空间到输出空间的映射的集合，这个集合就是假设空间</p>
-<p>监督学习利用<strong>训练数据</strong>学习一个模型，再用模型对<strong>测试样本集</strong>进行预测</p>
-<h2 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h2><p>监督学习的前提是假设输入和输出的随机变量X和Y遵循联合概率分布P(X,Y)。按输入输出不同类型划分回归问题，分类问题，标注问题</p>
-<p><strong>回归问题：</strong>输入输出均为连续变量的预测问题，回归模型表示从输入变量到输出变量之间映射的函数，类似于函数拟合，用一条函数曲线去拟合已知的数据，用来预测未知的数据</p>
-<p><strong>分类问题：</strong>输入输出均为有限个离散变量的预测问题，从数据中学习一个分类决策函数或分类模型，称为分类器。分类器对新的输入进行输出预测的过程即为分类</p>
-<p><strong>标注问题：</strong>输入输出均为变量序列的预测问题，标注可看作是分类问题的推广。标注问题的输入是一个观测序列，输出是一个标记序列或状态序列。分类问题输出是一个值。而标注的输出是一个向量，输出向量的每个值属于一种标记类型。<br>标注常用的机器学习方法：隐性马尔可夫模型(HMM)，条件随机场(CRF)</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">SSL/TLS概述</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-08-07 23:30:29" itemprop="dateCreated datePublished" datetime="2018-08-07T23:30:29+08:00">2018-08-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-03 22:38:08" itemprop="dateModified" datetime="2021-10-03T22:38:08+08:00">2021-10-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <span id="more"></span>
-
-<p>TLS协议分为两层</p>
-<ul>
-<li>底层(Record Layer)</li>
-<li>上层(ChangeCipherSpec Protocol&lt;20&gt;, Alert Protocol&lt;21&gt;, Handshake Protocol&lt;22&gt;, Application Data Protocol&lt;23&gt;)</li>
-</ul>
-<p>Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的连接，为高层协议提供数据封装，压缩，加密等基本功能支持，指定了数据类型，SSL版本以及数据长度(Byte)。由于TLS版本众多，客户端和服务端协商ssl版本时，存在一定的兼容性，具体参照<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5246#appendix-E">TLS 兼容性问题</a>。比如当客户端需要兼容ssl老版本服务端时，会把recordLayer的ssl version设置为{03,XX}(即SSL3.0，TLS 1.0，1.1，1.2)中的任意值，通常是客户端支持的最低版本。<br><img src="https://gitee.com/eightzero/pico/raw/master/RecordLayer.png" alt="RecordLaye"></p>
-<p>Handshake Protocol位于Record Layer之上，为Record Layer的负载，类似TCP层为IP层负载。HandShake Protocol层用于传输加密数据前，客户端与服务端的握手协商<br><img src="https://gitee.com/eightzero/pico/raw/master/handshakelayer.png" alt="handshakelaye"></p>
-<h2 id="协商过程"><a href="#协商过程" class="headerlink" title="协商过程"></a>协商过程</h2><p><img src="https://gitee.com/eightzero/pico/raw/master/15327690442087.jpg" alt="15327690442087"></p>
-<h3 id="1-客户端发出请求（Client-Hello）"><a href="#1-客户端发出请求（Client-Hello）" class="headerlink" title="1. 客户端发出请求（Client Hello）"></a>1. 客户端发出请求（Client Hello）</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/Client%20Hello.png" alt="Client Hello"></p>
-<p>客户端向服务端发送的Client Hello报文中包含以下信息：<br>(1) Version。支持的协议版本，比如TLS 1.2版<br>(2) Random。一个客户端生成的随机数，稍后与服务端产生的随机数生成对话密钥(Master Secret)<br>(3) Cipher Suites。支持的加密方法，比如RSA公钥加密</p>
-<p>Cipher Suite格式：认证算法__密钥协商交换算法__加密算法__摘要算法（TLS, ECDHE_RSA, AES_256_GCM, SHA256）<br><img src="https://gitee.com/eightzero/pico/raw/master/cipherSuites.png" alt="cipherSuites"></p>
-<p>(4) Compression Method。支持的压缩方法，null表示不压缩<br>(5) Session ID。如果之前连过该服务端，可以复用会话，而无需重新进行TLS握手<br>(6) Extension。server_name(请求的服务端域名)，sinature_algorithms等</p>
-<h3 id="2-服务端回应"><a href="#2-服务端回应" class="headerlink" title="2. 服务端回应"></a>2. 服务端回应</h3><p>从Server Hello到Server Hello Done，有些服务端是每条单独发送，有的服务端是合并一起发送。</p>
-<h4 id="2-1-Server-Hello"><a href="#2-1-Server-Hello" class="headerlink" title="2.1 Server Hello"></a>2.1 Server Hello</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/ServerHello.png" alt="ServerHello"></p>
-<p>(1) Version。服务端确认使用的SSL版本，比如TLS 1.2版本。如果浏览器与服务器支持的版本不一致，会进行协商双方都兼容的版本，如果没有则关闭连接。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5246#appendix-E">TLS 兼容性问题</a><br>(2) Random。一个服务端生成的随机数，稍后用于生成对话密钥<br>(3) Cipher Suite。服务端从client hello提供的Cipher Suites列表中选取要使用的加密套件<br>(4) Compression Method。服务端从client hello提供的Compression Method列表中选取要使用的压缩方法<br>(5) Session ID。若服务端允许客户端在以后通信中重用本次会话，则服务端会为本次会话分配Session ID<br>(6) Extension。</p>
-<h4 id="2-2-Certificate"><a href="#2-2-Certificate" class="headerlink" title="2.2 Certificate"></a>2.2 Certificate</h4><p>服务端在收到客户端的Client Hello之后，将服务端的X.509证书发送给客户端，最下层证书在前（用户证书在前，上级证书在后）。发送的证书是二进制格式，并非base64之后的格式。</p>
-<h4 id="2-3-Server-key-Exchange-可选"><a href="#2-3-Server-key-Exchange-可选" class="headerlink" title="2.3 Server key Exchange(可选)"></a>2.3 Server key Exchange(可选)</h4><p>DHE_DSS,DHE_RSA,DH_anon,<br>对于使用DHE/ECDHE非对称密钥协商算法的SSL握手，将发送该类型握手。<br>RSA算法不会继续该握手流程（DH、ECDH也不会发送server key exchange）<br>客户端在收到Server Key Exchange后，首先使用服务端证书中的公钥对签名进行RSA解密并校验散列值。如果解密校验通过，则基于ECDH参数中的Pubkey，通过一定算法算出<em><strong>Pre-Master Secret</strong></em><br><img src="https://gitee.com/eightzero/pico/raw/master/Ske.png" alt="ServerkeyExchange"></p>
-<h4 id="2-4-Certificate-Request-可选"><a href="#2-4-Certificate-Request-可选" class="headerlink" title="2.4 Certificate Request(可选)"></a>2.4 Certificate Request(可选)</h4><p>对于重要的保密数据，服务端还需要对客户端进行验证，服务端可以向客户端发出Certificate Request消息，要求客户端发送证书进行合法性验证</p>
-<h4 id="2-5-Server-Hello-Done"><a href="#2-5-Server-Hello-Done" class="headerlink" title="2.5 Server Hello Done"></a>2.5 Server Hello Done</h4><p>通知客户端Server Hello消息结束</p>
-<h3 id="3-客户端回应"><a href="#3-客户端回应" class="headerlink" title="3. 客户端回应"></a>3. 客户端回应</h3><p>客户端收到服务端的Server Hello Done后，首先验证服务端证书。如果证书不是可信机构颁布、或者证书中的域名与实际域名不一致、或者证书已经过期，就会向访问者显示一个警告，由其选择是否还要继续通信。如果证书没有问题，客户端就会从证书中取出服务器的公钥。然后，向服务器发送下面三项信息。</p>
-<p>（1） 一个随机数。该随机数用服务器公钥加密，防止被窃听。</p>
-<p>（2） 编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。</p>
-<p>（3） 客户端握手结束通知，表示客户端的握手阶段已经结束。这一项同时也是前面发送的所有内容的hash值，用来供服务器校验。</p>
-<p>上面第一项的随机数，是整个握手阶段出现的第三个随机数，又称”pre-master key”。有了它以后，客户端和服务器就同时有了三个随机数，接着双方就用事先商定的加密方法，各自生成本次会话所用的同一把”会话密钥”。</p>
-<p>至于为什么一定要用三个随机数，来生成”会话密钥”</p>
-<h4 id="3-1-Certificate-可选"><a href="#3-1-Certificate-可选" class="headerlink" title="3.1. Certificate(可选)"></a>3.1. Certificate(可选)</h4><p>将客户端证书发送给服务端做合法性校验</p>
-<h4 id="3-2-Client-Key-Exchange"><a href="#3-2-Client-Key-Exchange" class="headerlink" title="3.2. Client Key Exchange"></a>3.2. Client Key Exchange</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/Cke.png" alt="ClientKeyExchange"></p>
-<p>客户端密钥交换并通过随机数生成Master-Key</p>
-<h4 id="3-3-Certificate-Verify"><a href="#3-3-Certificate-Verify" class="headerlink" title="3.3. Certificate Verify"></a>3.3. Certificate Verify</h4><p>客户端发送这个类型报文需要满足两个条件：</p>
-<ul>
-<li>服务端请求了客户端证书</li>
-<li>客户端发送了非0长度的证书</li>
-</ul>
-<h4 id="3-4-Change-Cipher-Spec"><a href="#3-4-Change-Cipher-Spec" class="headerlink" title="3.4. Change Cipher Spec"></a>3.4. Change Cipher Spec</h4><p>告知服务端，客户端已经切换到协商好的的加密套件（Cipher Suite），表示随后的信息都将用双方商定的加密方法和密钥发送。</p>
-<h4 id="3-5-Encrypted-Handshake-Message"><a href="#3-5-Encrypted-Handshake-Message" class="headerlink" title="3.5 Encrypted Handshake Message"></a>3.5 Encrypted Handshake Message</h4><p>客户端使用协商好的对称密钥进行加密的第一个报文，目的一个是告诉服务端整个握手过程收到了什么数据，发送了什么数据，保证中间没人篡改报文，二是确认密钥的正确性，如果这个报文加解密校验成功，那么对称密钥就是正确的</p>
-<h3 id="4-服务端最后回应"><a href="#4-服务端最后回应" class="headerlink" title="4. 服务端最后回应"></a>4. 服务端最后回应</h3><h4 id="4-1-Change-Cipher-Spec"><a href="#4-1-Change-Cipher-Spec" class="headerlink" title="4.1 Change Cipher Spec"></a>4.1 Change Cipher Spec</h4><p>编码改变通知，告知客户端，服务端已经切换到选定的加密套件（Cipher Suite），表示随后的信息都将用双方商定的加密方法和密钥发送。</p>
-<h4 id="4-2-Encrypted-Handshake-Message"><a href="#4-2-Encrypted-Handshake-Message" class="headerlink" title="4.2 Encrypted Handshake Message"></a>4.2 Encrypted Handshake Message</h4><p>服务端使用协商好的对称密钥进行加密的第一个报文，目的一个是告诉客户端整个握手过程收到了什么数据，发送了什么数据，保证中间没人篡改报文，二是确认密钥的正确性，如果这个报文加解密校验成功，那么对称密钥就是正确的</p>
-<h3 id="5-Application-Data"><a href="#5-Application-Data" class="headerlink" title="5. Application Data"></a>5. Application Data</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/ApplicationData.png" alt="ApplicationData"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/11/13/go-http-middleware/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/11/13/go-http-middleware/" class="post-title-link" itemprop="url">go http middleware</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-11-13 23:13:35" itemprop="dateCreated datePublished" datetime="2017-11-13T23:13:35+08:00">2017-11-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-03 23:15:08" itemprop="dateModified" datetime="2021-10-03T23:15:08+08:00">2021-10-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strings&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func buildHandlerChain(apiHandler http.Handler) http.Handler &#123;</span><br><span class="line">	handler := WithAuthorization(apiHandler)</span><br><span class="line">	handler = WithAuthentication(handler)</span><br><span class="line">	return handler</span><br><span class="line">&#125;</span><br><span class="line">func WithAuthentication(handler http.Handler) http.Handler &#123;</span><br><span class="line">	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) &#123;</span><br><span class="line">		fmt.Printf(&quot;----handle Authentication-------\n&quot;)</span><br><span class="line">		handler.ServeHTTP(w, req)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func WithAuthorization(handler http.Handler) http.Handler &#123;</span><br><span class="line">	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) &#123;</span><br><span class="line">		fmt.Printf(&quot;----handle Authorization-------\n&quot;)</span><br><span class="line">		handler.ServeHTTP(w, req)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func baseHandler(w http.ResponseWriter, req *http.Request) &#123;</span><br><span class="line">	fmt.Println(&quot;----base handler----\n&quot;)</span><br><span class="line">	w.Write([]byte(&quot;hello handler!&quot;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	apiHandler := http.HandlerFunc(baseHandler)</span><br><span class="line">	http.Handle(&quot;/&quot;, buildHandlerChain(apiHandler))</span><br><span class="line">	http.ListenAndServe(&quot;:3000&quot;, nil)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">----handle Authentication-------</span><br><span class="line">----handle Authorization-------</span><br><span class="line">----base handler----</span><br><span class="line"></span><br><span class="line">----handle Authentication-------</span><br><span class="line">----handle Authorization-------</span><br><span class="line">----base handler----</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a target="_blank" rel="noopener" href="http://zenlife.tk/go-http-middleware.md">http://zenlife.tk/go-http-middleware.md</a></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51311182/how-to-assign-multiple-handlers-to-the-same-uri-in-go">https://stackoverflow.com/questions/51311182/how-to-assign-multiple-handlers-to-the-same-uri-in-go</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
           </div>
+
           
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
       </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
 
 
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/17/Node-operator/" target="_self">
+          Node  operator
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/17/Node-operator/" target="_self">
+          
+          
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-17 16:03" pubdate>
+              2021-11-17
+            </time>
+          </div>
+        
+        
+        
       </div>
-    </main>
+    </article>
+  </div>
 
-    <footer class="footer">
-      <div class="footer-inner">
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
+        <a href="/2021/11/17/kubernetes-on-kubernetes-operator/" target="_self">
+          kubernetes on kubernetes operator
+        </a>
+      </h1>
 
+      <p class="index-excerpt">
+        <a href="/2021/11/17/kubernetes-on-kubernetes-operator/" target="_self">
+          
+          
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
         
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-17 16:02" pubdate>
+              2021-11-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
 
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/17/Operator%E5%BC%80%E5%8F%91/" target="_self">
+          Operator开发
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/17/Operator%E5%BC%80%E5%8F%91/" target="_self">
+          
+          Kubebuilder和operator sdk 区别There’s not a huge difference between the Go projects that kubebuilder and operator-sdk scaffold. Both use controller-tools and controller-runtime and both scaffold substant
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-17 16:02" pubdate>
+              2021-11-17
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/kubernetes/">kubernetes</a>
+            
+              <a href="/tags/operator/">operator</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/03/K8s-Operator-club/" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/03/K8s-Operator-club/" target="_self">
+          
+          Cluster Operator  Node Operator  节点故障自愈   物理机硬件存在一定的故障概率，随着集群节点规模的增加，集群中会常态出现故障节点，如果不及时修复上线，这部分物理机的资源将会被闲置。 为解决这一问题，设计了一套故障发现、隔离、修复的闭环自愈系统 如下图所示，故障发现方面，采取 Agent 上报和监控系统主动探测相结合的方式，保证了故障发现的实时性和可靠性（Agen
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-03 15:57" pubdate>
+              2021-11-03
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/03/%E5%8D%95%E9%9B%86%E7%BE%A4%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/03/%E5%8D%95%E9%9B%86%E7%BE%A4%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" target="_self">
+          
+          大规模集群的挑战 随着集群规模增大，故障的爆炸半径也将扩大 用户大量的 list 操作，包括 list all，list by namespace，list by label 等，均会随着集群的规模增大而开销变大。这些合理或者不合理的 list 请求，将让 apiserver 的内存在短时间内快速增长，出现 OOM 异常，无法对外响应请求。此外，业务方的 list 请求也会因为 apiserver
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-03 10:20" pubdate>
+              2021-11-03
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/01/kube-apiserver%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/01/kube-apiserver%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
+          
+          Kube-apiserver性能优化
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-01 10:42" pubdate>
+              2021-11-01
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/01/Etcd%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/01/Etcd%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
+          
+          Etcd性能测试 写入测试 12345.&#x2F;benchmark --endpoints&#x3D;&quot;https:&#x2F;&#x2F;183.131.145.84:2379,https:&#x2F;&#x2F;183.131.145.85:2379,https:&#x2F;&#x2F;61.153.100.147:2379&quot; \--cacert&#x3D;&#x2F;etc&#x2F;kubernetes&#x2F;pki&#x2F;etcd&#x2F;ca.crt \--cert&#x3D;&#x2F;etc&#x2F;kubern
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-01 10:41" pubdate>
+              2021-11-01
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/27/kubernetes%E4%B8%87%E7%BA%A7%E8%A7%84%E6%A8%A1%E9%AB%98%E5%8F%AF%E7%94%A8/" target="_self">
+          kubernetes万级规模高可用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/27/kubernetes%E4%B8%87%E7%BA%A7%E8%A7%84%E6%A8%A1%E9%AB%98%E5%8F%AF%E7%94%A8/" target="_self">
+          
+          当集群节点超过5000时  问题  etcd 出现大量的读写延迟。 kube-apiserver 查询 pods&#x2F;nodes 延时很高，甚至导致 etcd oom。 控制器无法及时感知数据变化，如出现 watch 数据延迟。  解决方案： 100 节点增长到 4 千节点：  从 apiserver 客户端的角度优先访问本地 cache，在客户端去做负载均衡 apiserver 服务端主要做了 wa
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-27 19:06" pubdate>
+              2021-10-27
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/26/kubernetes-HPA/" target="_self">
+          kubernetes资源利用率提升
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/26/kubernetes-HPA/" target="_self">
+          
+          带宽，CPU资源监控度量前后使用率，对业务的影响 工具：  Linux 实时性能测试工具——Cyclictest  Prometheus Adapter，接入现有的监控系统 ebpf MetricServer自动扩缩容HPA HPA(Horizontal Pod Autoscaler)：维持应用的期望状态（通过调节应用副本数） request和limit   所有容器都应该设置 request r
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-26 16:01" pubdate>
+              2021-10-26
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_self">
+          测试环境搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_self">
+          
+          kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy  1kubeadm init
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-12 16:01" pubdate>
+              2021-10-12
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
   </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
 
   
 
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
-
-
-
-
-
-
-
-
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
   
 
-  
+
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
 
 </body>
 </html>

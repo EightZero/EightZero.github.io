@@ -1,197 +1,246 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy    1helm insta">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy  1kubeadm init">
 <meta property="og:type" content="article">
 <meta property="og:title" content="测试环境搭建">
 <meta property="og:url" content="http://example.com/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy    1helm insta">
-<meta property="og:locale" content="en_US">
+<meta property="og:description" content="kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy  1kubeadm init">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/image-20211012155844618.png">
 <meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/image-20211012160038293.png">
 <meta property="article:published_time" content="2021-10-12T08:01:49.000Z">
-<meta property="article:modified_time" content="2021-10-12T15:17:13.837Z">
+<meta property="article:modified_time" content="2021-11-19T09:21:16.268Z">
 <meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://gitee.com/eightzero/pico/raw/master/image-20211012155844618.png">
+  
+  
+  <title>测试环境搭建 - Hexo</title>
 
-<link rel="canonical" href="http://example.com/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
 
-  <title>测试环境搭建 | Hexo</title>
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
+<link  rel="stylesheet" href="/css/main.css" />
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<!-- 自定义样式保持在最底部 -->
 
-</head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
 
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
-      <span class="logo-line-after"><i></i></span>
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
     </a>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
 </nav>
 
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          测试环境搭建
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="测试环境搭建">
               
-
-              <time title="Created: 2021-10-12 16:01:49 / Modified: 23:17:13" itemprop="dateCreated datePublished" datetime="2021-10-12T16:01:49+08:00">2021-10-12</time>
             </span>
 
-          
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-12 16:01" pubdate>
+        2021年10月12日 下午
+      </time>
+    </span>
+  
+</div>
 
-        </div>
-      </header>
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      15k 字
+    </span>
+  
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
       
-        <ul>
+      
+      124 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">测试环境搭建</h1>
+            
+            <div class="markdown-body">
+              <ul>
 <li><p>kubernetes master + 2 node （使用cilium替代kube-proxy）</p>
 </li>
 <li><p>helm3</p>
@@ -205,188 +254,402 @@
 <li><p>安装Karmada</p>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --pod-network-cidr=10.218.0.0/16 --skip-phases=addon/kube-proxy</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">kubeadm init --pod-network-cidr=10.218.0.0/16 --skip-phases=addon/kube-proxy<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">kubeadm init --kubernetes-version=1.18.20  --image-repository registry.aliyuncs.com/google_containers  --service-cidr=10.10.0.0/16 --pod-network-cidr=10.218.0.0/16   --skip-phases=addon/kube-proxy<br></code></pre></td></tr></table></figure>
 
 
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm install cilium cilium/cilium --version 1.10.4 --namespace kube-system --set kubeProxyReplacement=strict --set k8sServiceHost=192.168.92.132 --set k8sServicePort=6443 --set hubble.relay.enabled=true --set hubble.ui.enabled=true</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs routeros">helm install cilium cilium/cilium --version 1.10.4 \<br>--namespace kube-system \<br>--<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">kubeProxyReplacement</span>=strict \<br>--<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">k8sServiceHost</span>=192.168.92.132 \<br>--<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">k8sServicePort</span>=6443 \<br>--<span class="hljs-builtin-name">set</span> hubble.relay.<span class="hljs-attribute">enabled</span>=<span class="hljs-literal">true</span> \<br>--<span class="hljs-builtin-name">set</span> hubble.ui.<span class="hljs-attribute">enabled</span>=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs routeros">helm install cilium cilium/cilium --version 1.10.4 \<br>--namespace kube-system \<br>--<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">kubeProxyReplacement</span>=strict \<br>--<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">k8sServiceHost</span>=183.131.145.82 \<br>--<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">k8sServicePort</span>=6443 \<br>--<span class="hljs-builtin-name">set</span> hubble.relay.<span class="hljs-attribute">enabled</span>=<span class="hljs-literal">true</span> \<br>--<span class="hljs-builtin-name">set</span> hubble.ui.<span class="hljs-attribute">enabled</span>=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>将 Hubble UI 改为 NodePort 访问</li>
+</ul>
+<figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scilab">kubectl -n kube-<span class="hljs-built_in">system</span> patch svc hubble-ui -p <span class="hljs-string">&#x27;&#123;&quot;</span>spec<span class="hljs-string">&quot;: &#123;&quot;</span><span class="hljs-built_in">type</span><span class="hljs-string">&quot;: &quot;</span>NodePort<span class="hljs-string">&quot;&#125;&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">kubectl</span> -n kube-system <span class="hljs-meta">get</span> <span class="hljs-keyword">svc</span> hubble-ui<br></code></pre></td></tr></table></figure>
 
 
 
 <p>升级内核</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirrors.nju.edu.cn/elrepo/kernel/el7/x86_64/RPMS/kernel-lt-5.4.151-1.el7.elrepo.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh kernel-lt-5.4.151-1.el7.elrepo.x86_64.rpm</span><br><span class="line"></span><br><span class="line">cat /boot/grub2/grub.cfg | grep menuentry</span><br><span class="line"></span><br><span class="line">grub2-set-default &#x27;CentOS Linux (5.4.151-1.el7.elrepo.x86_64) 7 (Core)&#x27;</span><br><span class="line"></span><br><span class="line">grub2-editenv list</span><br><span class="line"></span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br><span class="line"></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">wget</span> https://mirrors.nju.edu.cn/elrepo/kernel/el<span class="hljs-number">7</span>/x<span class="hljs-number">86</span>_<span class="hljs-number">64</span>/RPMS/kernel-lt-<span class="hljs-number">5</span>.<span class="hljs-number">4</span>.<span class="hljs-number">151</span>-<span class="hljs-number">1</span>.el<span class="hljs-number">7</span>.elrepo.x<span class="hljs-number">86</span>_<span class="hljs-number">64</span>.rpm<br><br><span class="hljs-attribute">rpm</span> -ivh kernel-lt-<span class="hljs-number">5</span>.<span class="hljs-number">4</span>.<span class="hljs-number">151</span>-<span class="hljs-number">1</span>.el<span class="hljs-number">7</span>.elrepo.x<span class="hljs-number">86</span>_<span class="hljs-number">64</span>.rpm<br><br><span class="hljs-attribute">cat</span> /boot/grub<span class="hljs-number">2</span>/grub.cfg | grep menuentry<br><br><span class="hljs-attribute">grub2</span>-set-default &#x27;CentOS Linux (<span class="hljs-number">5</span>.<span class="hljs-number">4</span>.<span class="hljs-number">151</span>-<span class="hljs-number">1</span>.el<span class="hljs-number">7</span>.elrepo.x<span class="hljs-number">86</span>_<span class="hljs-number">64</span>) <span class="hljs-number">7</span> (Core)&#x27;<br><br><span class="hljs-attribute">grub2</span>-editenv list<br><br><span class="hljs-attribute">grub2</span>-mkconfig -o /boot/grub<span class="hljs-number">2</span>/grub.cfg<br><br><span class="hljs-attribute">reboot</span><br></code></pre></td></tr></table></figure>
 
 
 
 <p>遇到问题</p>
-<p><img src="https://gitee.com/eightzero/pico/raw/master/image-20211012155844618.png" alt="image-20211012155844618"></p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/image-20211012155844618.png" srcset="/img/loading.gif" lazyload alt="image-20211012155844618"></p>
 <ul>
 <li><p>Cilium pod CrashLoopBackOff</p>
 <p>内核最低支持4.8.0</p>
-<p><img src="https://gitee.com/eightzero/pico/raw/master/image-20211012160038293.png" alt="image-20211012160038293"></p>
+<p><img src="https://gitee.com/eightzero/pico/raw/master/image-20211012160038293.png" srcset="/img/loading.gif" lazyload alt="image-20211012160038293"></p>
 </li>
 <li><p>coredns ContainerCreating</p>
 </li>
 </ul>
+<h2 id="多公网集群搭建"><a href="#多公网集群搭建" class="headerlink" title="多公网集群搭建"></a>多公网集群搭建</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">kubeadm init <span class="hljs-attribute">--kubernetes-version</span>=1.18.20  <span class="hljs-attribute">--apiserver-advertise-address</span>=机器Ip  --image-repository registry.aliyuncs.com/google_containers  <span class="hljs-attribute">--service-cidr</span>=10.10.0.0/16 <span class="hljs-attribute">--pod-network-cidr</span>=10.122.0.0/16<br></code></pre></td></tr></table></figure>
 
-    </div>
+<p>#在kubeadm-config.yml设置好镜像源，版本，集群网段，–apiserver-advertise-address为外网ip 等</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat &lt;&lt;EOF &gt; kubeadm-init.yaml<br>apiVersion: kubeadm.k8s.io/v1beta2<br>bootstrapTokens:<br>- groups:<br>  - system:bootstrappers:kubeadm:default-node-token<br>  token: abcdef.66wcf1rc5wk6637f            ## token 建议重新生成别用默认的<br>  ttl: 24h0m0s<br>  usages:<br>  - signing<br>  - authentication<br>kind: InitConfiguration<br>localAPIEndpoint:<br>  advertiseAddress: &quot;IPADDRESS&quot;     # 公网IP地址<br>  bindPort: 6443            # API 端口<br>nodeRegistration:<br>  criSocket: /var/run/dockershim.sock<br>  name: master001<br>  taints:<br>  - effect: NoSchedule<br>    key: node-role.kubernetes.io/master<br>---<br>apiServer:<br>  extraArgs:<br>    advertise-address: &quot;IPADDRESS&quot;    ## 公网机器互联需要<br>  certSANs:<br>  - &quot;IPADDRESS&quot;<br>  timeoutForControlPlane: 10m0s<br>apiVersion: kubeadm.k8s.io/v1beta2<br>certificatesDir: /etc/kubernetes/pki<br>clusterName: kubernetes<br>controllerManager: &#123;&#125;<br>dns:<br>  type: CoreDNS<br>etcd:<br>  local:<br>    dataDir: /var/lib/etcd<br>imageRepository: registry.aliyuncs.com/google_containers       # image的仓库源<br>kind: ClusterConfiguration<br>kubernetesVersion: v1.16.0<br>networking:<br>  dnsDomain: cluster.local<br>  serviceSubnet: 10.96.0.0/12<br>  podSubnet: 192.168.0.0/16<br>scheduler: &#123;&#125;<br>EOF<br></code></pre></td></tr></table></figure>
 
-    
-    
-    
-
-      <footer class="post-footer">
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/10/11/%E5%A4%9A%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86Karmada/" rel="prev" title="多集群管理Karmada">
-      <i class="fa fa-chevron-left"></i> 多集群管理Karmada
-    </a></div>
-      <div class="post-nav-item"></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
+<p>以上配置文件中的IPADDRESS作为占位符,可以通过以下命令替换成<strong>公网IP</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ip=$(curl -s -4 ip.sb)<br>sed -i &quot;s/IPADDRESS/$ip/g&quot; kubeadm-init.yaml<br></code></pre></td></tr></table></figure>
 
 
 
-          </div>
-          
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">kubeadm init phase preflight --config myKubeadmConfig.yaml  --ignore-preflight-errors NumCPU<br>kubeadm init phase certs all --config myKubeadmConfig.yaml<br>kubeadm init phase kubeconfig all --config myKubeadmConfig.yaml<br>kubeadm init phase kubelet-start --config myKubeadmConfig.yaml<br>kubeadm init phase control-plane all --config myKubeadmConfig.yaml<br>kubeadm init phase etcd local --config myKubeadmConfig.yaml<br></code></pre></td></tr></table></figure>
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">vi <span class="hljs-regexp">/etc/</span>kubernetes<span class="hljs-regexp">/manifests/</span>etcd.yaml<br><span class="hljs-comment">#把--listen-client-urls 和 --listen-peer-urls 都改成0.0.0.0:xxx</span><br></code></pre></td></tr></table></figure>
 
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">kubeadm</span> <span class="hljs-comment">init</span> --<span class="hljs-comment">skip</span><span class="hljs-literal">-</span><span class="hljs-comment">phases=preflight</span><span class="hljs-string">,</span><span class="hljs-comment">certs</span><span class="hljs-string">,</span><span class="hljs-comment">kubeconfig</span><span class="hljs-string">,</span><span class="hljs-comment">kubelet</span><span class="hljs-literal">-</span><span class="hljs-comment">start</span><span class="hljs-string">,</span><span class="hljs-comment">control</span><span class="hljs-literal">-</span><span class="hljs-comment">plane</span><span class="hljs-string">,</span><span class="hljs-comment">etcd</span><span class="hljs-string">,</span><span class="hljs-comment">addon/kube</span><span class="hljs-literal">-</span><span class="hljs-comment">proxy</span> --<span class="hljs-comment">config</span> <span class="hljs-comment">myKubeadmConfig</span><span class="hljs-string">.</span><span class="hljs-comment">yaml</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">kubeadm join 172.25.156.55:6443 --token y9ohc0.77zro9ruyyub4t0w \<br>    --discovery-token-ca-cert-hash sha256:b84e69459da3ee0e1c26a4b8ffa4f778040bd93511a0465d83596edef7bcb56a<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dns">iptables -t nat -<span class="hljs-keyword">A</span> OUTPUT -d <span class="hljs-number">172.25.156.55</span> -j DNAT --to-destination <span class="hljs-number">120.79.141.184</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="高可用实验环境搭建"><a href="#高可用实验环境搭建" class="headerlink" title="高可用实验环境搭建"></a>高可用实验环境搭建</h2><h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h3><p>安装所需的软件包。yum-utils 提供了 yum-config-manager ，并且 device mapper 存储驱动程序需要 device-mapper-persistent-data 和 lvm2</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">sudo</span> yum install -y yum-utils \<br>  device-mapper-persistent-<span class="hljs-class"><span class="hljs-keyword">data</span> \</span><br>  lvm2<br></code></pre></td></tr></table></figure>
+
+<p>设置国内仓库</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo yum-config-manager \<br>    --add-repo \<br>    http:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/docker-ce/</span>linux<span class="hljs-regexp">/centos/</span>docker-ce.repo<br></code></pre></td></tr></table></figure>
+
+<p>安装最新版本的 Docker Engine-Community 和 containerd</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">sudo yum install docker-<span class="hljs-keyword">ce</span> docker-<span class="hljs-keyword">ce</span>-cli containerd.io<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>配置 Docker 守护程序，尤其是使用 systemd 来管理容器的 cgroup。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo mkdir /etc/docker<br>cat &lt;&lt;EOF | sudo tee /etc/docker/daemon.json<br>&#123;<br>  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],<br>  &quot;log-driver&quot;: &quot;json-file&quot;,<br>  &quot;log-opts&quot;: &#123;<br>    &quot;max-size&quot;: &quot;100m&quot;<br>  &#125;,<br>  &quot;storage-driver&quot;: &quot;overlay2&quot;<br>&#125;<br>EOF<br></code></pre></td></tr></table></figure>
+
+
+
+<p>启动docker</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">sudo systemctl <span class="hljs-keyword">start</span> docker &amp;&amp; systemctl <span class="hljs-keyword">enable</span> docker<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">sudo systemctl <span class="hljs-keyword">start</span> kubelet &amp;&amp; systemctl <span class="hljs-keyword">enable</span> kubelet<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="安装kubeadm"><a href="#安装kubeadm" class="headerlink" title="安装kubeadm"></a>安装kubeadm</h3><h4 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h4><p>节点之中不可以有重复的主机名、MAC 地址或 product_uuid</p>
+<h4 id="允许-iptables-检查桥接流量"><a href="#允许-iptables-检查桥接流量" class="headerlink" title="允许 iptables 检查桥接流量"></a>允许 iptables 检查桥接流量</h4><p>确保 <code>br_netfilter</code> 模块被加载。这一操作可以通过运行 <code>lsmod | grep br_netfilter</code> 来完成。若要显式加载该模块，可执行 <code>sudo modprobe br_netfilter</code>。</p>
+<p>为了让你的 Linux 节点上的 iptables 能够正确地查看桥接流量，你需要确保在你的 <code>sysctl</code> 配置中将 <code>net.bridge.bridge-nf-call-iptables</code> 设置为 1。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">cat &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/modules-load.d/k8s.conf</span><br><span class="hljs-string">br_netfilter</span><br><span class="hljs-string">EOF</span><br><br>cat &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/sysctl.d/k8s.conf</span><br><span class="hljs-string">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="hljs-string">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="hljs-string">EOF</span><br>sudo sysctl --system<br></code></pre></td></tr></table></figure>
+
+<h4 id="开启包转发"><a href="#开启包转发" class="headerlink" title="开启包转发"></a>开启包转发</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">vi /etc/sysctl<span class="hljs-selector-class">.conf</span><br>添加：<br>net<span class="hljs-selector-class">.ipv4</span><span class="hljs-selector-class">.ip_forward</span> = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="开放指定端口"><a href="#开放指定端口" class="headerlink" title="开放指定端口"></a>开放指定端口</h4><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">permanent</span> --<span class="hljs-comment">add</span><span class="hljs-literal">-</span><span class="hljs-comment">port=6443/tcp</span><br><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">permanent</span> --<span class="hljs-comment">add</span><span class="hljs-literal">-</span><span class="hljs-comment">port=2379</span><span class="hljs-literal">-</span><span class="hljs-comment">2380/tcp</span><br><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">permanent</span> --<span class="hljs-comment">add</span><span class="hljs-literal">-</span><span class="hljs-comment">port=10250/tcp</span><br><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">permanent</span> --<span class="hljs-comment">add</span><span class="hljs-literal">-</span><span class="hljs-comment">port=10251/tcp</span><br><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">permanent</span> --<span class="hljs-comment">add</span><span class="hljs-literal">-</span><span class="hljs-comment">port=10252/tcp</span><br><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">permanent</span> --<span class="hljs-comment">add</span><span class="hljs-literal">-</span><span class="hljs-comment">port=8443/tcp</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">systemctl restart firewalld</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">firewall-cmd <span class="hljs-comment">--list-ports</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="控制平面节点"><a href="#控制平面节点" class="headerlink" title="控制平面节点"></a>控制平面节点</h3><table>
+<thead>
+<tr>
+<th>协议</th>
+<th>方向</th>
+<th>端口范围</th>
+<th>作用</th>
+<th>使用者</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TCP</td>
+<td>入站</td>
+<td>6443</td>
+<td>Kubernetes API 服务器</td>
+<td>所有组件</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>入站</td>
+<td>2379-2380</td>
+<td>etcd 服务器客户端 API</td>
+<td>kube-apiserver, etcd</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>入站</td>
+<td>10250</td>
+<td>Kubelet API</td>
+<td>kubelet 自身、控制平面组件</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>入站</td>
+<td>10251</td>
+<td>kube-scheduler</td>
+<td>kube-scheduler 自身</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>入站</td>
+<td>10252</td>
+<td>kube-controller-manager</td>
+<td>kube-controller-manager 自身</td>
+</tr>
+</tbody></table>
+<h3 id="工作节点"><a href="#工作节点" class="headerlink" title="工作节点"></a>工作节点</h3><table>
+<thead>
+<tr>
+<th>协议</th>
+<th>方向</th>
+<th>端口范围</th>
+<th>作用</th>
+<th>使用者</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TCP</td>
+<td>入站</td>
+<td>10250</td>
+<td>Kubelet API</td>
+<td>kubelet 自身、控制平面组件</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>入站</td>
+<td>30000-32767</td>
+<td>NodePort 服务†</td>
+<td>所有组件</td>
+</tr>
+</tbody></table>
+<h4 id="设置内核、K8S的yum源"><a href="#设置内核、K8S的yum源" class="headerlink" title="设置内核、K8S的yum源"></a>设置内核、K8S的yum源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">cat &lt;&lt;<span class="hljs-string">EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="hljs-string">[kubernetes]</span><br><span class="hljs-string">name=Kubernetes</span><br><span class="hljs-string">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/</span><br><span class="hljs-string">enabled=1</span><br><span class="hljs-string">gpgcheck=1</span><br><span class="hljs-string">repo_gpgcheck=1</span><br><span class="hljs-string">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="hljs-string">EOF</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 将 SELinux 设置为 permissive 模式（相当于将其禁用）</span><br>sudo setenforce 0<br>sudo sed -i <span class="hljs-string">&#x27;s/^SELINUX=enforcing$/SELINUX=permissive/&#x27;</span> /etc/selinux/config<br><br>sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes<br><br>sudo systemctl <span class="hljs-built_in">enable</span> --now kubelet<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#关闭swap</span><br>swapoff -a <br>sed -i <span class="hljs-string">&#x27;s/.*swap.*/#&amp;/&#x27;</span> <span class="hljs-regexp">/etc/</span>fstab<br></code></pre></td></tr></table></figure>
+
+<h4 id="查找指定版本"><a href="#查找指定版本" class="headerlink" title="查找指定版本"></a>查找指定版本</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">yum list kubelet  --showduplicates <span class="hljs-string">| sort -r</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="安装kubernetes1-18-20"><a href="#安装kubernetes1-18-20" class="headerlink" title="安装kubernetes1.18.20"></a>安装kubernetes1.18.20</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> yum install -y kubeadm-<span class="hljs-number">1</span>.<span class="hljs-number">18</span>.<span class="hljs-number">20</span>-<span class="hljs-number">0</span> kubectl-<span class="hljs-number">1</span>.<span class="hljs-number">18</span>.<span class="hljs-number">20</span>-<span class="hljs-number">0</span> kubelet-<span class="hljs-number">1</span>.<span class="hljs-number">18</span>.<span class="hljs-number">20</span>-<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="keepalived"><a href="#keepalived" class="headerlink" title="keepalived"></a>keepalived</h4><p>Master </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash">! /etc/keepalived/keepalived.conf<br>! Configuration File <span class="hljs-keyword">for</span> keepalived<br>global_defs &#123;<br>    router_id LVS_DEVEL<br>&#125;<br>vrrp_script check_apiserver &#123;<br>  script <span class="hljs-string">&quot;/etc/keepalived/check_apiserver.sh&quot;</span><br>  interval 3<br>  weight -2<br>  fall 10<br>  rise 2<br>&#125;<br><br>vrrp_instance VI_1 &#123;<br>    state MASTER<br>    interface em1.101@em1<br>    virtual_router_id 51<br>    priority 100<br>    authentication &#123;<br>        auth_type PASS<br>        auth_pass keepalive<br>    &#125;<br>    virtual_ipaddress &#123;<br>        183.131.145.10<br>    &#125;<br>    track_script &#123;<br>        check_apiserver<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>backup</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash">! /etc/keepalived/keepalived.conf<br>! Configuration File <span class="hljs-keyword">for</span> keepalived<br>global_defs &#123;<br>    router_id LVS_DEVEL<br>&#125;<br>vrrp_script check_apiserver &#123;<br>  script <span class="hljs-string">&quot;/etc/keepalived/check_apiserver.sh&quot;</span><br>  interval 3<br>  weight -2<br>  fall 10<br>  rise 2<br>&#125;<br><br>vrrp_instance VI_1 &#123;<br>    state BACKUP<br>    interface <span class="hljs-variable">$&#123;INTERFACE&#125;</span><br>    virtual_router_id 51<br>    priority 50<br>    authentication &#123;<br>        auth_type PASS<br>        auth_pass keepalive<br>    &#125;<br>    virtual_ipaddress &#123;<br>        183.131.145.10<br>    &#125;<br>    track_script &#123;<br>        check_apiserver<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>/etc/keepalived/check_apiserver.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment">#!/bin/sh</span><br><br><span class="hljs-function"><span class="hljs-title">errorExit</span></span>() &#123;<br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*** $*&quot;</span> 1&gt;&amp;2<br>    <span class="hljs-built_in">exit</span> 1<br>&#125;<br><br>curl --silent --max-time 2 --insecure https://localhost:8443/ -o /dev/null || errorExit <span class="hljs-string">&quot;Error GET https://localhost:8443/&quot;</span><br><span class="hljs-keyword">if</span> ip addr | grep -q 183.131.145.10; <span class="hljs-keyword">then</span><br>    curl --silent --max-time 2 --insecure https://183.131.145.10:8443/ -o /dev/null || errorExit <span class="hljs-string">&quot;Error GET https://183.131.145.10:8443/&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>haproxy</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># /etc/haproxy/haproxy.cfg</span><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br><span class="hljs-comment"># Global settings</span><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br>global<br>    <span class="hljs-built_in">log</span> /dev/<span class="hljs-built_in">log</span> local0<br>    <span class="hljs-built_in">log</span> /dev/<span class="hljs-built_in">log</span> local1 notice<br>    daemon<br><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br><span class="hljs-comment"># common defaults that all the &#x27;listen&#x27; and &#x27;backend&#x27; sections will</span><br><span class="hljs-comment"># use if not designated in their block</span><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br>defaults<br>    mode                    http<br>    <span class="hljs-built_in">log</span>                     global<br>    option                  httplog<br>    option                  dontlognull<br>    option http-server-close<br>    option forwardfor       except 127.0.0.0/8<br>    option                  redispatch<br>    retries                 1<br>    timeout http-request    10s<br>    timeout queue           20s<br>    timeout connect         5s<br>    timeout client          20s<br>    timeout server          20s<br>    timeout http-keep-alive 10s<br>    timeout check           10s<br><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br><span class="hljs-comment"># apiserver frontend which proxys to the control plane nodes</span><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br>frontend apiserver<br>    <span class="hljs-built_in">bind</span> *:8443<br>    mode tcp<br>    option tcplog<br>    default_backend apiserver<br><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br><span class="hljs-comment"># round robin balancing for apiserver</span><br><span class="hljs-comment">#---------------------------------------------------------------------</span><br>backend apiserver<br>    option httpchk GET /healthz<br>    http-check expect status 200<br>    mode tcp<br>    option ssl-hello-chk<br>    balance     roundrobin<br>        server master01 183.131.145.85:6443 check<br>        server master02 183.131.145.84:6443 check<br>        server master03 61.153.100.147:6443 check<br>        <span class="hljs-comment"># [...]</span><br></code></pre></td></tr></table></figure>
+
+<p>keepalive static pod</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">creationTimestamp:</span> <span class="hljs-literal">null</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">keepalived</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">kube-system</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">osixia/keepalived:2.0.17</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">keepalived</span><br>    <span class="hljs-attr">resources:</span> &#123;&#125;<br>    <span class="hljs-attr">securityContext:</span><br>      <span class="hljs-attr">capabilities:</span><br>        <span class="hljs-attr">add:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">NET_ADMIN</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">NET_BROADCAST</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">NET_RAW</span><br>    <span class="hljs-attr">volumeMounts:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/usr/local/etc/keepalived/keepalived.conf</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">config</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/etc/keepalived/check_apiserver.sh</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">check</span><br>  <span class="hljs-attr">hostNetwork:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">volumes:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">hostPath:</span><br>      <span class="hljs-attr">path:</span> <span class="hljs-string">/etc/keepalived/keepalived.conf</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">config</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">hostPath:</span><br>      <span class="hljs-attr">path:</span> <span class="hljs-string">/etc/keepalived/check_apiserver.sh</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">check</span><br><span class="hljs-attr">status:</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>haproxy</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">haproxy</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">kube-system</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">haproxy:2.1.4</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">haproxy</span><br>    <span class="hljs-attr">livenessProbe:</span><br>      <span class="hljs-attr">failureThreshold:</span> <span class="hljs-number">8</span><br>      <span class="hljs-attr">httpGet:</span><br>        <span class="hljs-attr">host:</span> <span class="hljs-string">localhost</span><br>        <span class="hljs-attr">path:</span> <span class="hljs-string">/healthz</span><br>        <span class="hljs-attr">port:</span> <span class="hljs-number">8443</span><br>        <span class="hljs-attr">scheme:</span> <span class="hljs-string">HTTPS</span><br>    <span class="hljs-attr">volumeMounts:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/usr/local/etc/haproxy/haproxy.cfg</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">haproxyconf</span><br>      <span class="hljs-attr">readOnly:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">hostNetwork:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">volumes:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">hostPath:</span><br>      <span class="hljs-attr">path:</span> <span class="hljs-string">/etc/haproxy/haproxy.cfg</span><br>      <span class="hljs-attr">type:</span> <span class="hljs-string">FileOrCreate</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">haproxyconf</span><br><span class="hljs-attr">status:</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>/etc/kubernetes/manifests/kube-vip.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">creationTimestamp:</span> <span class="hljs-literal">null</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">kube-vip</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">kube-system</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">command:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">/kube-vip</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">start</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">-c</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">/vip.yaml</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">&#x27;plndr/kube-vip:0.3.1&#x27;</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">kube-vip</span><br>    <span class="hljs-attr">resources:</span> &#123;&#125;<br>    <span class="hljs-attr">securityContext:</span><br>      <span class="hljs-attr">capabilities:</span><br>        <span class="hljs-attr">add:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">NET_ADMIN</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">SYS_TIME</span><br>    <span class="hljs-attr">volumeMounts:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/vip.yaml</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">config</span><br>  <span class="hljs-attr">hostNetwork:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">volumes:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">hostPath:</span><br>      <span class="hljs-attr">path:</span> <span class="hljs-string">/etc/kube-vip/config.yaml</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">config</span><br><span class="hljs-attr">status:</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">sudo docker run <span class="hljs-params">--network</span> host <span class="hljs-params">--rm</span> plndr/kube-vip<span class="hljs-function">:v0.3.7</span> manifest pod \<br><span class="hljs-params">--interface</span> em1.101 \<br><span class="hljs-params">--vip</span> 183.131.145.82 \<br><span class="hljs-params">--controlplane</span> \<br><span class="hljs-params">--services</span> \<br><span class="hljs-params">--arp</span> \<br><span class="hljs-params">--leaderElection</span> | sudo tee <span class="hljs-string">/etc/kubernetes/manifests/kube-vip.yaml</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo kubeadm init \<br>    --kubernetes-version=1.18.20 \<br>    --control-plane-endpoint=183.131.145.82 \<br>    --image-repository=registry.aliyuncs.com/google_containers \<br>    --pod-network-cidr=10.218.0.0/16 \<br>    --skip-phases=addon/kube-proxy \<br>    --upload-certs<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">sudo</span> <span class="hljs-comment">kubeadm</span> <span class="hljs-comment">init</span> --<span class="hljs-comment">config</span> <span class="hljs-comment">kubeadm</span><span class="hljs-literal">-</span><span class="hljs-comment">config</span><span class="hljs-string">.</span><span class="hljs-comment">yml</span> --<span class="hljs-comment">upload</span><span class="hljs-literal">-</span><span class="hljs-comment">certs</span> --<span class="hljs-comment">skip</span><span class="hljs-literal">-</span><span class="hljs-comment">phases=addon/kube</span><span class="hljs-literal">-</span><span class="hljs-comment">proxy</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>SUCCESS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs shell">Your Kubernetes control-plane has initialized successfully!<br><br>To start using your cluster, you need to run the following as a regular user:<br><br>  mkdir -p $HOME/.kube<br>  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config<br>  sudo chown $(id -u):$(id -g) $HOME/.kube/config<br><br>You should now deploy a pod network to the cluster.<br>Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:<br>  https://kubernetes.io/docs/concepts/cluster-administration/addons/<br><br>You can now join any number of the control-plane node running the following command on each as root:<br><br>  kubeadm join 183.131.145.82:6443 --token hxduyw.e7pm2u32wcffr652 \<br>    --discovery-token-ca-cert-hash sha256:53aea6bf8eeefca7a672021c80e203da459f1655a43127ab557ed5a7d3275eec \<br>    --control-plane --certificate-key 273b46dcea4ecff30ebed45812b99ecb7d02cc493a88ea60bb547e95c14a4ff8<br><br>Please note that the certificate-key gives access to cluster sensitive data, keep it secret!<br>As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use<br>&quot;kubeadm init phase upload-certs --upload-certs&quot; to reload certs afterward.<br><br>Then you can join any number of worker nodes by running the following on each as root:<br><br>kubeadm join 183.131.145.82:6443 --token hxduyw.e7pm2u32wcffr652 \<br>    --discovery-token-ca-cert-hash sha256:53aea6bf8eeefca7a672021c80e203da459f1655a43127ab557ed5a7d3275eec<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">This node has joined <span class="hljs-keyword">the</span> cluster <span class="hljs-keyword">and</span> <span class="hljs-keyword">a</span> <span class="hljs-built_in">new</span> control plane instance was created:<br><br>* Certificate signing request was sent <span class="hljs-built_in">to</span> apiserver <span class="hljs-keyword">and</span> approval was received.<br>* The Kubelet was informed <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">new</span> secure connection details.<br>* Control plane (master) label <span class="hljs-keyword">and</span> taint were applied <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">new</span> node.<br>* The Kubernetes control plane instances scaled up.<br>* A <span class="hljs-built_in">new</span> etcd member was added <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">local</span>/stacked etcd cluster.<br><br>To <span class="hljs-built_in">start</span> administering your cluster <span class="hljs-built_in">from</span> this node, you need <span class="hljs-built_in">to</span> run <span class="hljs-keyword">the</span> following <span class="hljs-keyword">as</span> <span class="hljs-keyword">a</span> regular user:<br><br>	mkdir -p $HOME/.kube<br>	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config<br>	sudo chown $(id -u):$(id -g) $HOME/.kube/config<br><br>Run <span class="hljs-string">&#x27;kubectl get nodes&#x27;</span> <span class="hljs-built_in">to</span> see this node join <span class="hljs-keyword">the</span> cluster.<br></code></pre></td></tr></table></figure>
+
+
+
+<p>刚才加入集群的 master 节点，不要忘记将 <code>kube-vip</code> 的静态 pod 进行创建，这样才能确保集群拥有了 <code>HA</code> 属性 。执行上面的 kube-vip 部署步骤</p>
+<p>其他节点部署kube-vip static pod</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo docker run --network host --rm plndr/kube-vip:v0.3.7 manifest pod \<br>--interface bond0.101 \<br>--vip 183.131.145.82 \<br>--controlplane \<br>--services \<br>--arp \<br>--leaderElection | sudo tee /etc/kubernetes/manifests/kube-vip.yaml<br></code></pre></td></tr></table></figure>
+
+
+
+<p>ERROR1</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Oct</span> <span class="hljs-number">21</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span> master<span class="hljs-number">01</span>-<span class="hljs-number">183</span>-<span class="hljs-number">131</span>-<span class="hljs-number">145</span>-<span class="hljs-number">85</span> kubelet[<span class="hljs-number">23679</span>]: E<span class="hljs-number">1021</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span>.<span class="hljs-number">664374</span>   <span class="hljs-number">23679</span> kubelet.go:<span class="hljs-number">2292</span>] node <span class="hljs-string">&quot;master01-183-131-145-85&quot;</span> not found<br><span class="hljs-attribute">Oct</span> <span class="hljs-number">21</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span> master<span class="hljs-number">01</span>-<span class="hljs-number">183</span>-<span class="hljs-number">131</span>-<span class="hljs-number">145</span>-<span class="hljs-number">85</span> kubelet[<span class="hljs-number">23679</span>]: E<span class="hljs-number">1021</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span>.<span class="hljs-number">764481</span>   <span class="hljs-number">23679</span> kubelet.go:<span class="hljs-number">2292</span>] node <span class="hljs-string">&quot;master01-183-131-145-85&quot;</span> not found<br><span class="hljs-attribute">Oct</span> <span class="hljs-number">21</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span> master<span class="hljs-number">01</span>-<span class="hljs-number">183</span>-<span class="hljs-number">131</span>-<span class="hljs-number">145</span>-<span class="hljs-number">85</span> kubelet[<span class="hljs-number">23679</span>]: E<span class="hljs-number">1021</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span>.<span class="hljs-number">864582</span>   <span class="hljs-number">23679</span> kubelet.go:<span class="hljs-number">2292</span>] node <span class="hljs-string">&quot;master01-183-131-145-85&quot;</span> not found<br><span class="hljs-attribute">Oct</span> <span class="hljs-number">21</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span> master<span class="hljs-number">01</span>-<span class="hljs-number">183</span>-<span class="hljs-number">131</span>-<span class="hljs-number">145</span>-<span class="hljs-number">85</span> kubelet[<span class="hljs-number">23679</span>]: E<span class="hljs-number">1021</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">01</span>.<span class="hljs-number">964685</span>   <span class="hljs-number">23679</span> kubelet.go:<span class="hljs-number">2292</span>] node <span class="hljs-string">&quot;master01-183-131-145-85&quot;</span> not found<br><span class="hljs-attribute">Oct</span> <span class="hljs-number">21</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">02</span> master<span class="hljs-number">01</span>-<span class="hljs-number">183</span>-<span class="hljs-number">131</span>-<span class="hljs-number">145</span>-<span class="hljs-number">85</span> kubelet[<span class="hljs-number">23679</span>]: E<span class="hljs-number">1021</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">02</span>.<span class="hljs-number">064796</span>   <span class="hljs-number">23679</span> kubelet.go:<span class="hljs-number">2292</span>] node <span class="hljs-string">&quot;master01-183-131-145-85&quot;</span> not found<br><span class="hljs-attribute">Oct</span> <span class="hljs-number">21</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">02</span> master<span class="hljs-number">01</span>-<span class="hljs-number">183</span>-<span class="hljs-number">131</span>-<span class="hljs-number">145</span>-<span class="hljs-number">85</span> kubelet[<span class="hljs-number">23679</span>]: E<span class="hljs-number">1021</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">02</span>.<span class="hljs-number">164907</span>   <span class="hljs-number">23679</span> kubelet.go:<span class="hljs-number">2292</span>] node <span class="hljs-string">&quot;master01-183-131-145-85&quot;</span> not found<br><span class="hljs-attribute">Oct</span> <span class="hljs-number">21</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">02</span> master<span class="hljs-number">01</span>-<span class="hljs-number">183</span>-<span class="hljs-number">131</span>-<span class="hljs-number">145</span>-<span class="hljs-number">85</span> kubelet[<span class="hljs-number">23679</span>]: E<span class="hljs-number">1021</span> <span class="hljs-number">10</span>:<span class="hljs-number">44</span>:<span class="hljs-number">02</span>.<span class="hljs-number">265034</span>   <span class="hljs-number">23679</span> kubelet.go:<span class="hljs-number">2292</span>] node <span class="hljs-string">&quot;master01-183-131-145-85&quot;</span> not found<br></code></pre></td></tr></table></figure>
+
+<p>ERROR2</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Unable <span class="hljs-keyword">to</span> <span class="hljs-keyword">connect</span> <span class="hljs-keyword">to</span> the <span class="hljs-keyword">server</span>: x509: certificate signed <span class="hljs-keyword">by</span> <span class="hljs-type">unknown</span> authority (possibly because <span class="hljs-keyword">of</span> &quot;crypto/rsa: verification error&quot; <span class="hljs-keyword">while</span> trying <span class="hljs-keyword">to</span> verify candidate authority certificate &quot;kubernetes&quot;)<br></code></pre></td></tr></table></figure>
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/26/kubernetes-HPA/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">kubernetes资源利用率提升</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/11/%E5%A4%9A%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86Karmada/">
+                        <span class="hidden-mobile">多集群管理Karmada</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
       </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
-
-
 
       </div>
-    </footer>
+    
   </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
+  
+</footer>
 
 
-<script src="/js/schemes/muse.js"></script>
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
-<script src="/js/next-boot.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
@@ -394,21 +657,52 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
   
 
-  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
 
 </body>
 </html>

@@ -1,32 +1,28 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="TLS协议分为两层  底层(Record Layer) 上层(ChangeCipherSpec Protocol&lt;20&gt;, Alert Protocol&lt;21&gt;, Handshake Protocol&lt;22&gt;, Application Data Protocol&lt;23&gt;)  Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="TLS协议分为两层  底层(Record Layer) 上层(ChangeCipherSpec Protocol&lt;20&gt;, Alert Protocol&lt;21&gt;, Handshake Protocol&lt;22&gt;, Application Data Protocol&lt;23&gt;)  Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSL&#x2F;TLS概述">
 <meta property="og:url" content="http://example.com/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="TLS协议分为两层  底层(Record Layer) 上层(ChangeCipherSpec Protocol&lt;20&gt;, Alert Protocol&lt;21&gt;, Handshake Protocol&lt;22&gt;, Application Data Protocol&lt;23&gt;)  Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/RecordLayer.png">
 <meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/handshakelayer.png">
 <meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/15327690442087.jpg">
@@ -40,190 +36,237 @@
 <meta property="article:modified_time" content="2021-10-03T14:38:08.693Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="网络协议">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://gitee.com/eightzero/pico/raw/master/RecordLayer.png">
+  
+  
+  <title>SSL/TLS概述 - Hexo</title>
 
-<link rel="canonical" href="http://example.com/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
 
-  <title>SSL/TLS概述 | Hexo</title>
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
+<link  rel="stylesheet" href="/css/main.css" />
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<!-- 自定义样式保持在最底部 -->
 
-</head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
 
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
-      <span class="logo-line-after"><i></i></span>
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
     </a>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
 </nav>
 
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/08/07/SSL-TLS%E6%A6%82%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          SSL/TLS概述
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-08-07 23:30:29" itemprop="dateCreated datePublished" datetime="2018-08-07T23:30:29+08:00">2018-08-07</time>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="SSL/TLS概述">
+              
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-03 22:38:08" itemprop="dateModified" datetime="2021-10-03T22:38:08+08:00">2021-10-03</time>
-              </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-08-07 23:30" pubdate>
+        2018年8月7日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      undefined 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      NaN 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
 
           
-
         </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-        <span id="more"></span>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SSL/TLS概述</h1>
+            
+            <div class="markdown-body">
+              <span id="more"></span>
 
 <p>TLS协议分为两层</p>
 <ul>
 <li>底层(Record Layer)</li>
 <li>上层(ChangeCipherSpec Protocol&lt;20&gt;, Alert Protocol&lt;21&gt;, Handshake Protocol&lt;22&gt;, Application Data Protocol&lt;23&gt;)</li>
 </ul>
-<p>Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的连接，为高层协议提供数据封装，压缩，加密等基本功能支持，指定了数据类型，SSL版本以及数据长度(Byte)。由于TLS版本众多，客户端和服务端协商ssl版本时，存在一定的兼容性，具体参照<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5246#appendix-E">TLS 兼容性问题</a>。比如当客户端需要兼容ssl老版本服务端时，会把recordLayer的ssl version设置为{03,XX}(即SSL3.0，TLS 1.0，1.1，1.2)中的任意值，通常是客户端支持的最低版本。<br><img src="https://gitee.com/eightzero/pico/raw/master/RecordLayer.png" alt="RecordLaye"></p>
-<p>Handshake Protocol位于Record Layer之上，为Record Layer的负载，类似TCP层为IP层负载。HandShake Protocol层用于传输加密数据前，客户端与服务端的握手协商<br><img src="https://gitee.com/eightzero/pico/raw/master/handshakelayer.png" alt="handshakelaye"></p>
-<h2 id="协商过程"><a href="#协商过程" class="headerlink" title="协商过程"></a>协商过程</h2><p><img src="https://gitee.com/eightzero/pico/raw/master/15327690442087.jpg" alt="15327690442087"></p>
-<h3 id="1-客户端发出请求（Client-Hello）"><a href="#1-客户端发出请求（Client-Hello）" class="headerlink" title="1. 客户端发出请求（Client Hello）"></a>1. 客户端发出请求（Client Hello）</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/Client%20Hello.png" alt="Client Hello"></p>
+<p>Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的连接，为高层协议提供数据封装，压缩，加密等基本功能支持，指定了数据类型，SSL版本以及数据长度(Byte)。由于TLS版本众多，客户端和服务端协商ssl版本时，存在一定的兼容性，具体参照<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5246#appendix-E">TLS 兼容性问题</a>。比如当客户端需要兼容ssl老版本服务端时，会把recordLayer的ssl version设置为{03,XX}(即SSL3.0，TLS 1.0，1.1，1.2)中的任意值，通常是客户端支持的最低版本。<br><img src="https://gitee.com/eightzero/pico/raw/master/RecordLayer.png" srcset="/img/loading.gif" lazyload alt="RecordLaye"></p>
+<p>Handshake Protocol位于Record Layer之上，为Record Layer的负载，类似TCP层为IP层负载。HandShake Protocol层用于传输加密数据前，客户端与服务端的握手协商<br><img src="https://gitee.com/eightzero/pico/raw/master/handshakelayer.png" srcset="/img/loading.gif" lazyload alt="handshakelaye"></p>
+<h2 id="协商过程"><a href="#协商过程" class="headerlink" title="协商过程"></a>协商过程</h2><p><img src="https://gitee.com/eightzero/pico/raw/master/15327690442087.jpg" srcset="/img/loading.gif" lazyload alt="15327690442087"></p>
+<h3 id="1-客户端发出请求（Client-Hello）"><a href="#1-客户端发出请求（Client-Hello）" class="headerlink" title="1. 客户端发出请求（Client Hello）"></a>1. 客户端发出请求（Client Hello）</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/Client%20Hello.png" srcset="/img/loading.gif" lazyload alt="Client Hello"></p>
 <p>客户端向服务端发送的Client Hello报文中包含以下信息：<br>(1) Version。支持的协议版本，比如TLS 1.2版<br>(2) Random。一个客户端生成的随机数，稍后与服务端产生的随机数生成对话密钥(Master Secret)<br>(3) Cipher Suites。支持的加密方法，比如RSA公钥加密</p>
-<p>Cipher Suite格式：认证算法__密钥协商交换算法__加密算法__摘要算法（TLS, ECDHE_RSA, AES_256_GCM, SHA256）<br><img src="https://gitee.com/eightzero/pico/raw/master/cipherSuites.png" alt="cipherSuites"></p>
+<p>Cipher Suite格式：认证算法__密钥协商交换算法__加密算法__摘要算法（TLS, ECDHE_RSA, AES_256_GCM, SHA256）<br><img src="https://gitee.com/eightzero/pico/raw/master/cipherSuites.png" srcset="/img/loading.gif" lazyload alt="cipherSuites"></p>
 <p>(4) Compression Method。支持的压缩方法，null表示不压缩<br>(5) Session ID。如果之前连过该服务端，可以复用会话，而无需重新进行TLS握手<br>(6) Extension。server_name(请求的服务端域名)，sinature_algorithms等</p>
 <h3 id="2-服务端回应"><a href="#2-服务端回应" class="headerlink" title="2. 服务端回应"></a>2. 服务端回应</h3><p>从Server Hello到Server Hello Done，有些服务端是每条单独发送，有的服务端是合并一起发送。</p>
-<h4 id="2-1-Server-Hello"><a href="#2-1-Server-Hello" class="headerlink" title="2.1 Server Hello"></a>2.1 Server Hello</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/ServerHello.png" alt="ServerHello"></p>
+<h4 id="2-1-Server-Hello"><a href="#2-1-Server-Hello" class="headerlink" title="2.1 Server Hello"></a>2.1 Server Hello</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/ServerHello.png" srcset="/img/loading.gif" lazyload alt="ServerHello"></p>
 <p>(1) Version。服务端确认使用的SSL版本，比如TLS 1.2版本。如果浏览器与服务器支持的版本不一致，会进行协商双方都兼容的版本，如果没有则关闭连接。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5246#appendix-E">TLS 兼容性问题</a><br>(2) Random。一个服务端生成的随机数，稍后用于生成对话密钥<br>(3) Cipher Suite。服务端从client hello提供的Cipher Suites列表中选取要使用的加密套件<br>(4) Compression Method。服务端从client hello提供的Compression Method列表中选取要使用的压缩方法<br>(5) Session ID。若服务端允许客户端在以后通信中重用本次会话，则服务端会为本次会话分配Session ID<br>(6) Extension。</p>
 <h4 id="2-2-Certificate"><a href="#2-2-Certificate" class="headerlink" title="2.2 Certificate"></a>2.2 Certificate</h4><p>服务端在收到客户端的Client Hello之后，将服务端的X.509证书发送给客户端，最下层证书在前（用户证书在前，上级证书在后）。发送的证书是二进制格式，并非base64之后的格式。</p>
-<h4 id="2-3-Server-key-Exchange-可选"><a href="#2-3-Server-key-Exchange-可选" class="headerlink" title="2.3 Server key Exchange(可选)"></a>2.3 Server key Exchange(可选)</h4><p>DHE_DSS,DHE_RSA,DH_anon,<br>对于使用DHE/ECDHE非对称密钥协商算法的SSL握手，将发送该类型握手。<br>RSA算法不会继续该握手流程（DH、ECDH也不会发送server key exchange）<br>客户端在收到Server Key Exchange后，首先使用服务端证书中的公钥对签名进行RSA解密并校验散列值。如果解密校验通过，则基于ECDH参数中的Pubkey，通过一定算法算出<em><strong>Pre-Master Secret</strong></em><br><img src="https://gitee.com/eightzero/pico/raw/master/Ske.png" alt="ServerkeyExchange"></p>
+<h4 id="2-3-Server-key-Exchange-可选"><a href="#2-3-Server-key-Exchange-可选" class="headerlink" title="2.3 Server key Exchange(可选)"></a>2.3 Server key Exchange(可选)</h4><p>DHE_DSS,DHE_RSA,DH_anon,<br>对于使用DHE/ECDHE非对称密钥协商算法的SSL握手，将发送该类型握手。<br>RSA算法不会继续该握手流程（DH、ECDH也不会发送server key exchange）<br>客户端在收到Server Key Exchange后，首先使用服务端证书中的公钥对签名进行RSA解密并校验散列值。如果解密校验通过，则基于ECDH参数中的Pubkey，通过一定算法算出<em><strong>Pre-Master Secret</strong></em><br><img src="https://gitee.com/eightzero/pico/raw/master/Ske.png" srcset="/img/loading.gif" lazyload alt="ServerkeyExchange"></p>
 <h4 id="2-4-Certificate-Request-可选"><a href="#2-4-Certificate-Request-可选" class="headerlink" title="2.4 Certificate Request(可选)"></a>2.4 Certificate Request(可选)</h4><p>对于重要的保密数据，服务端还需要对客户端进行验证，服务端可以向客户端发出Certificate Request消息，要求客户端发送证书进行合法性验证</p>
 <h4 id="2-5-Server-Hello-Done"><a href="#2-5-Server-Hello-Done" class="headerlink" title="2.5 Server Hello Done"></a>2.5 Server Hello Done</h4><p>通知客户端Server Hello消息结束</p>
 <h3 id="3-客户端回应"><a href="#3-客户端回应" class="headerlink" title="3. 客户端回应"></a>3. 客户端回应</h3><p>客户端收到服务端的Server Hello Done后，首先验证服务端证书。如果证书不是可信机构颁布、或者证书中的域名与实际域名不一致、或者证书已经过期，就会向访问者显示一个警告，由其选择是否还要继续通信。如果证书没有问题，客户端就会从证书中取出服务器的公钥。然后，向服务器发送下面三项信息。</p>
@@ -233,7 +276,7 @@
 <p>上面第一项的随机数，是整个握手阶段出现的第三个随机数，又称”pre-master key”。有了它以后，客户端和服务器就同时有了三个随机数，接着双方就用事先商定的加密方法，各自生成本次会话所用的同一把”会话密钥”。</p>
 <p>至于为什么一定要用三个随机数，来生成”会话密钥”</p>
 <h4 id="3-1-Certificate-可选"><a href="#3-1-Certificate-可选" class="headerlink" title="3.1. Certificate(可选)"></a>3.1. Certificate(可选)</h4><p>将客户端证书发送给服务端做合法性校验</p>
-<h4 id="3-2-Client-Key-Exchange"><a href="#3-2-Client-Key-Exchange" class="headerlink" title="3.2. Client Key Exchange"></a>3.2. Client Key Exchange</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/Cke.png" alt="ClientKeyExchange"></p>
+<h4 id="3-2-Client-Key-Exchange"><a href="#3-2-Client-Key-Exchange" class="headerlink" title="3.2. Client Key Exchange"></a>3.2. Client Key Exchange</h4><p><img src="https://gitee.com/eightzero/pico/raw/master/Cke.png" srcset="/img/loading.gif" lazyload alt="ClientKeyExchange"></p>
 <p>客户端密钥交换并通过随机数生成Master-Key</p>
 <h4 id="3-3-Certificate-Verify"><a href="#3-3-Certificate-Verify" class="headerlink" title="3.3. Certificate Verify"></a>3.3. Certificate Verify</h4><p>客户端发送这个类型报文需要满足两个条件：</p>
 <ul>
@@ -244,173 +287,151 @@
 <h4 id="3-5-Encrypted-Handshake-Message"><a href="#3-5-Encrypted-Handshake-Message" class="headerlink" title="3.5 Encrypted Handshake Message"></a>3.5 Encrypted Handshake Message</h4><p>客户端使用协商好的对称密钥进行加密的第一个报文，目的一个是告诉服务端整个握手过程收到了什么数据，发送了什么数据，保证中间没人篡改报文，二是确认密钥的正确性，如果这个报文加解密校验成功，那么对称密钥就是正确的</p>
 <h3 id="4-服务端最后回应"><a href="#4-服务端最后回应" class="headerlink" title="4. 服务端最后回应"></a>4. 服务端最后回应</h3><h4 id="4-1-Change-Cipher-Spec"><a href="#4-1-Change-Cipher-Spec" class="headerlink" title="4.1 Change Cipher Spec"></a>4.1 Change Cipher Spec</h4><p>编码改变通知，告知客户端，服务端已经切换到选定的加密套件（Cipher Suite），表示随后的信息都将用双方商定的加密方法和密钥发送。</p>
 <h4 id="4-2-Encrypted-Handshake-Message"><a href="#4-2-Encrypted-Handshake-Message" class="headerlink" title="4.2 Encrypted Handshake Message"></a>4.2 Encrypted Handshake Message</h4><p>服务端使用协商好的对称密钥进行加密的第一个报文，目的一个是告诉客户端整个握手过程收到了什么数据，发送了什么数据，保证中间没人篡改报文，二是确认密钥的正确性，如果这个报文加解密校验成功，那么对称密钥就是正确的</p>
-<h3 id="5-Application-Data"><a href="#5-Application-Data" class="headerlink" title="5. Application Data"></a>5. Application Data</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/ApplicationData.png" alt="ApplicationData"></p>
+<h3 id="5-Application-Data"><a href="#5-Application-Data" class="headerlink" title="5. Application Data"></a>5. Application Data</h3><p><img src="https://gitee.com/eightzero/pico/raw/master/ApplicationData.png" srcset="/img/loading.gif" lazyload alt="ApplicationData"></p>
 
-    </div>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/01/Statistical-learning/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Statistical learning</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/11/13/go-http-middleware/">
+                        <span class="hidden-mobile">go http middleware</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag"># 网络协议</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2017/11/13/go-http-middleware/" rel="prev" title="go http middleware">
-      <i class="fa fa-chevron-left"></i> go http middleware
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2018/09/01/Statistical-learning/" rel="next" title="Statistical learning">
-      Statistical learning <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
+            
+          </article>
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E5%95%86%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">协商过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E5%87%BA%E8%AF%B7%E6%B1%82%EF%BC%88Client-Hello%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">1. 客户端发出请求（Client Hello）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%9B%9E%E5%BA%94"><span class="nav-number">1.2.</span> <span class="nav-text">2. 服务端回应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Server-Hello"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Server Hello</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Certificate"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Certificate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Server-key-Exchange-%E5%8F%AF%E9%80%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Server key Exchange(可选)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Certificate-Request-%E5%8F%AF%E9%80%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Certificate Request(可选)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Server-Hello-Done"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 Server Hello Done</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E5%BA%94"><span class="nav-number">1.3.</span> <span class="nav-text">3. 客户端回应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-Certificate-%E5%8F%AF%E9%80%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1. Certificate(可选)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Client-Key-Exchange"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. Client Key Exchange</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-Certificate-Verify"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3. Certificate Verify</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-Change-Cipher-Spec"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4. Change Cipher Spec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-Encrypted-Handshake-Message"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 Encrypted Handshake Message</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%9C%80%E5%90%8E%E5%9B%9E%E5%BA%94"><span class="nav-number">1.4.</span> <span class="nav-text">4. 服务端最后回应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Change-Cipher-Spec"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Change Cipher Spec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-Encrypted-Handshake-Message"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Encrypted Handshake Message</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Application-Data"><span class="nav-number">1.5.</span> <span class="nav-text">5. Application Data</span></a></li></ol></li></ol></div>
       </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
-
-
 
       </div>
-    </footer>
+    
   </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
+  
+</footer>
 
 
-<script src="/js/schemes/muse.js"></script>
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
-<script src="/js/next-boot.js"></script>
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
@@ -418,21 +439,52 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
   
 
-  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
 
 </body>
 </html>
