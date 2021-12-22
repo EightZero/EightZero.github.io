@@ -198,7 +198,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      2.4k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      21 分钟
     </span>
   
 
@@ -248,11 +248,11 @@
 </ul>
 <span id="more"></span>
 
-<h2 id="安装Istio"><a href="#安装Istio" class="headerlink" title="安装Istio"></a>安装Istio</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/istio/istio/releases/download/1.4.0/istio-1.4.0-linux.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="安装Istio"><a href="#安装Istio" class="headerlink" title="安装Istio"></a>安装Istio</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/istio/i</span>stio<span class="hljs-regexp">/releases/</span>download<span class="hljs-regexp">/1.4.0/i</span>stio-<span class="hljs-number">1.4</span>.<span class="hljs-number">0</span>-linux.tar.gz<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxf istio-1.4.0-linux.tar.gz</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tar</span> -zxf istio-<span class="hljs-number">1</span>.<span class="hljs-number">4</span>.<span class="hljs-number">0</span>-linux.tar.gz<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@dggphicprc11349 ]# cd istio-1.4.0/</span><br><span class="line">[root@dggphicprc11349 istio-1.4.0]# ll</span><br><span class="line">total 40</span><br><span class="line">drwxr-x---  2 root root  4096 11 14 07:13 bin</span><br><span class="line">drwxr-xr-x  6 root root  4096 11 14 07:13 install</span><br><span class="line">-rw-r--r--  1 root root 11348 11 14 07:13 LICENSE</span><br><span class="line">-rw-r-----  1 root root   675 11 14 07:13 manifest.yaml</span><br><span class="line">-rw-r--r--  1 root root  6080 11 14 07:13 README.md</span><br><span class="line">drwxr-xr-x 19 root root  4096 11 14 07:13 samples</span><br><span class="line">drwxr-x---  3 root root  4096 11 14 07:13 tools</span><br></pre></td></tr></table></figure>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs tap">[root@dggphicprc11349 ]<span class="hljs-comment"># cd istio-1.4.0/</span><br>[root@dggphicprc11349 istio-1.4.0]<span class="hljs-comment"># ll</span><br>total 40<br>drwxr-x--- <span class="hljs-number"> 2 </span>root root <span class="hljs-number"> 4096 </span>11<span class="hljs-number"> 14 </span>07:13 bin<br>drwxr-xr-x <span class="hljs-number"> 6 </span>root root <span class="hljs-number"> 4096 </span>11<span class="hljs-number"> 14 </span>07:13 install<br>-rw-r--r-- <span class="hljs-number"> 1 </span>root root<span class="hljs-number"> 11348 </span>11<span class="hljs-number"> 14 </span>07:13 LICENSE<br>-rw-r----- <span class="hljs-number"> 1 </span>root root  <span class="hljs-number"> 675 </span>11<span class="hljs-number"> 14 </span>07:13 manifest.yaml<br>-rw-r--r-- <span class="hljs-number"> 1 </span>root root <span class="hljs-number"> 6080 </span>11<span class="hljs-number"> 14 </span>07:13 README.md<br>drwxr-xr-x<span class="hljs-number"> 19 </span>root root <span class="hljs-number"> 4096 </span>11<span class="hljs-number"> 14 </span>07:13 samples<br>drwxr-x--- <span class="hljs-number"> 3 </span>root root <span class="hljs-number"> 4096 </span>11<span class="hljs-number"> 14 </span>07:13 tools<br></code></pre></td></tr></table></figure>
 
 <p>安装istio方式：</p>
 <ul>
@@ -303,32 +303,32 @@
 <p>使用Istioctl安装方式安装步骤：</p>
 <ol>
 <li><p>将istioctl放到系统PATH目录下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv bin/istioctl /usr/local/bin</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">mv bin<span class="hljs-regexp">/istioctl /u</span>sr<span class="hljs-regexp">/local/</span>bin<br></code></pre></td></tr></table></figure></li>
 <li><p>使用Istio demo配置文件安装</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">istioctl manifest apply --set profile=demo</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">istioctl manifest apply --<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">profile</span>=demo<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h2><p>以天气应用为例</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/cloudnativebooks/cloud-native-istio.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/cloudnativebooks/</span>cloud-native-istio.git<br></code></pre></td></tr></table></figure>
 
 <ol>
 <li><p>创建weather这个namespace并且给此namespace打上<code>istio-injection=enabled</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns weather</span><br><span class="line">kubectl label namespace weather istio-injection=enabled</span><br></pre></td></tr></table></figure>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">kubectl <span class="hljs-keyword">create</span> ns weather<br>kubectl label <span class="hljs-keyword">namespace</span> weather istio-injection=enabled<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p> 当 Kubernetes 调用 webhook 时，<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#mutatingwebhookconfiguration-v1beta1-admissionregistration-k8s-io"><code>admissionregistration</code></a> 配置被应用。默认配置将 sidecar 注入到所有拥有 <code>istio-injection=enabled</code> 标签的 namespace 下的 pod 中。 <code>istio-sidecar-injector</code> 配置字典指定了注入 sidecar 的配置。如需更改指定哪些 namespace 被注入，你可以使用以下命令编辑 <code>MutatingWebhookConfiguration</code>：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl edit mutatingwebhookconfiguration istio-sidecar-injector</span><br></pre></td></tr></table></figure>
+ <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">$ kubectl <span class="hljs-builtin-name">edit</span> mutatingwebhookconfiguration istio-sidecar-injector<br></code></pre></td></tr></table></figure>
 
 <p> 修改 <code>MutatingWebhookConfiguration</code> 之后，您应该重启 sidecar 注入器的 pod</p>
 </blockquote>
 </li>
 <li><p>创建应用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f install/weather-v1.yaml -n weather</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">kubectl</span> apply -f install/weather-v<span class="hljs-number">1</span>.yaml -n weather<br></code></pre></td></tr></table></figure></li>
 <li><p>确认所有服务和pod均已创建并启动成功</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@dggphicprc11349 cloud-native-istio]# kubectl get service -n weather</span><br><span class="line">NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE</span><br><span class="line">advertisement   ClusterIP   10.99.241.73    &lt;none&gt;        3003/TCP   2m12s</span><br><span class="line">forecast        ClusterIP   10.100.154.32   &lt;none&gt;        3002/TCP   2m12s</span><br><span class="line">frontend        ClusterIP   10.109.157.96   &lt;none&gt;        3000/TCP   2m12s</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[root@dggphicprc11349 cloud-native-istio]# kubectl <span class="hljs-keyword">get</span> service -n weather<br><span class="hljs-type">NAME</span>            <span class="hljs-keyword">TYPE</span>        <span class="hljs-keyword">CLUSTER</span>-IP      <span class="hljs-keyword">EXTERNAL</span>-IP   PORT(S)    AGE<br>advertisement   ClusterIP   <span class="hljs-number">10.99</span><span class="hljs-number">.241</span><span class="hljs-number">.73</span>    &lt;<span class="hljs-keyword">none</span>&gt;        <span class="hljs-number">3003</span>/TCP   <span class="hljs-number">2</span>m12s<br>forecast        ClusterIP   <span class="hljs-number">10.100</span><span class="hljs-number">.154</span><span class="hljs-number">.32</span>   &lt;<span class="hljs-keyword">none</span>&gt;        <span class="hljs-number">3002</span>/TCP   <span class="hljs-number">2</span>m12s<br>frontend        ClusterIP   <span class="hljs-number">10.109</span><span class="hljs-number">.157</span><span class="hljs-number">.96</span>   &lt;<span class="hljs-keyword">none</span>&gt;        <span class="hljs-number">3000</span>/TCP   <span class="hljs-number">2</span>m12s<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@dggphicprc11349 cloud-native-istio]# kubectl get pod -n weather</span><br><span class="line">NAME                                READY   STATUS    RESTARTS   AGE</span><br><span class="line">advertisement-v1-6d69d9cff8-fgfnt   2/2     Running   0          2m59s</span><br><span class="line">forecast-v1-ff98f99f7-5rk5c         2/2     Running   0          2m59s</span><br><span class="line">frontend-v1-68d57cf9d8-kmlnp        2/2     Running   0          2m59s</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">[root<span class="hljs-variable">@dggphicprc11349</span> cloud<span class="hljs-operator">-</span>native<span class="hljs-operator">-</span>istio]# kubectl <span class="hljs-keyword">get</span> pod <span class="hljs-operator">-</span>n weather<br>NAME                                READY   STATUS    RESTARTS   AGE<br>advertisement<span class="hljs-operator">-</span>v1<span class="hljs-number">-6</span>d69d9cff8<span class="hljs-operator">-</span>fgfnt   <span class="hljs-number">2</span><span class="hljs-operator">/</span><span class="hljs-number">2</span>     <span class="hljs-keyword">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-number">2</span>m59s<br>forecast<span class="hljs-operator">-</span>v1<span class="hljs-operator">-</span>ff98f99f7<span class="hljs-number">-5</span>rk5c         <span class="hljs-number">2</span><span class="hljs-operator">/</span><span class="hljs-number">2</span>     <span class="hljs-keyword">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-number">2</span>m59s<br>frontend<span class="hljs-operator">-</span>v1<span class="hljs-number">-68</span>d57cf9d8<span class="hljs-operator">-</span>kmlnp        <span class="hljs-number">2</span><span class="hljs-operator">/</span><span class="hljs-number">2</span>     <span class="hljs-keyword">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-number">2</span>m59s<br></code></pre></td></tr></table></figure></li>
 <li><p>配置Gateway和frontend服务的VirtualService，使应用可以被外部请求访问</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f install/weather-gateway.yaml</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">kubectl apply -f <span class="hljs-keyword">install</span>/weather-gateway.yaml<br></code></pre></td></tr></table></figure></li>
 <li><p>通过浏览器访问外部地址</p>
 <p><code>http://xx.xx.xx.xx</code></p>
 </li>

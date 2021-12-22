@@ -196,7 +196,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      339 字
     </span>
   
 
@@ -205,7 +205,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      3 分钟
     </span>
   
 
@@ -237,20 +237,20 @@
             <h1 style="display: none">docker抓包方法</h1>
             
             <div class="markdown-body">
-              <h3 id="1-确认容器网络模式"><a href="#1-确认容器网络模式" class="headerlink" title="1. 确认容器网络模式"></a>1. 确认容器网络模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect container_name | grep NetworkMode</span><br></pre></td></tr></table></figure>
+              <h3 id="1-确认容器网络模式"><a href="#1-确认容器网络模式" class="headerlink" title="1. 确认容器网络模式"></a>1. 确认容器网络模式</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">docker <span class="hljs-keyword">inspect</span> container_name | <span class="hljs-keyword">grep</span> NetworkMode<br></code></pre></td></tr></table></figure>
 
 <p>回显：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;NetworkMode&quot;: &quot;default&quot;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-string">&quot;NetworkMode&quot;</span>: <span class="hljs-string">&quot;default&quot;</span>,<br></code></pre></td></tr></table></figure>
 
-<h3 id="2-host模式抓包"><a href="#2-host模式抓包" class="headerlink" title="2. host模式抓包"></a>2. host模式抓包</h3><h3 id="3-default模式抓包"><a href="#3-default模式抓包" class="headerlink" title="3. default模式抓包"></a>3. default模式抓包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format &#x27;&#123;&#123;.State.Pid&#125;&#125;&#x27; container_name</span><br></pre></td></tr></table></figure>
+<h3 id="2-host模式抓包"><a href="#2-host模式抓包" class="headerlink" title="2. host模式抓包"></a>2. host模式抓包</h3><h3 id="3-default模式抓包"><a href="#3-default模式抓包" class="headerlink" title="3. default模式抓包"></a>3. default模式抓包</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="xml">docker inspect --format &#x27;</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">.State.Pid</span>&#125;&#125;</span><span class="xml">&#x27; container_name</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">73602</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">73602<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/run/netns</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">mkdir</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">run</span>/netns<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /proc/73602/ns/net /var/run/netns/container_name</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ln -s <span class="hljs-regexp">/proc/</span><span class="hljs-number">73602</span><span class="hljs-regexp">/ns/</span>net <span class="hljs-regexp">/var/</span>run<span class="hljs-regexp">/netns/</span>container_name<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ip netns exec container_name tcpdump -i eth0 -s0 -w 1.pcap</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> ip netns exec container_name tcpdump -i eth<span class="hljs-number">0</span> -s<span class="hljs-number">0</span> -w <span class="hljs-number">1</span>.pcap<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>

@@ -197,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      undefined 字
+      1.1k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      NaN 分钟
+      10 分钟
     </span>
   
 
@@ -242,23 +242,23 @@
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
 <li><p>下载 <a target="_blank" rel="noopener" href="https://github.com/google/protobuf/releases">protoc</a> 放到 GOPATH/bin</p>
 <p>测试</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --version</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">protoc <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure></li>
 <li><p>proto的go插件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/golang/protobuf/protoc-gen-go</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> github.<span class="hljs-keyword">com</span>/golang/protobuf/protoc-gen-<span class="hljs-keyword">go</span><br></code></pre></td></tr></table></figure></li>
 <li><p>安装goprotobuf库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/golang/protobuf/proto</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> github.<span class="hljs-keyword">com</span>/golang/protobuf/proto<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="编写-proto-文件"><a href="#编写-proto-文件" class="headerlink" title="编写*.proto 文件"></a>编写*.proto 文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;  //指定版本，必须要写（proto3、proto2）</span><br><span class="line">package example;</span><br><span class="line"></span><br><span class="line">message MessageInfo&#123;</span><br><span class="line">    string message = 1;   //消息</span><br><span class="line">    int32 length = 2;    //消息大小</span><br><span class="line">    int32 cnt = 3;      //消息计数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="编写-proto-文件"><a href="#编写-proto-文件" class="headerlink" title="编写*.proto 文件"></a>编写*.proto 文件</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;  <span class="hljs-regexp">//</span>指定版本，必须要写（proto3、proto2）<br>package example;<br><br>message MessageInfo&#123;<br>    string message = <span class="hljs-number">1</span>;   <span class="hljs-regexp">//</span>消息<br>    int32 length = <span class="hljs-number">2</span>;    <span class="hljs-regexp">//</span>消息大小<br>    int32 cnt = <span class="hljs-number">3</span>;      <span class="hljs-regexp">//</span>消息计数<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>如果放在 <code>package main</code> 下，运行时会报错</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># command-line-arguments</span><br><span class="line">./main.go:10:11: undefined: UserInfo</span><br><span class="line">./main.go:17:14: undefined: UserInfo</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta"># command-<span class="hljs-meta-keyword">line</span>-arguments</span><br>./main.go:<span class="hljs-number">10</span>:<span class="hljs-number">11</span>: undefined: UserInfo<br>./main.go:<span class="hljs-number">17</span>:<span class="hljs-number">14</span>: undefined: UserInfo<br></code></pre></td></tr></table></figure>
 
-<h3 id="生成go文件"><a href="#生成go文件" class="headerlink" title="生成go文件"></a>生成go文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --go_out=. *.proto</span><br></pre></td></tr></table></figure>
+<h3 id="生成go文件"><a href="#生成go文件" class="headerlink" title="生成go文件"></a>生成go文件</h3><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">protoc <span class="hljs-params">--go_out=</span>. *<span class="hljs-string">.proto</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">	test := &amp;example.MessageInfo&#123;</span><br><span class="line">		Message: &quot;hello world&quot;,</span><br><span class="line">		Length: 100,</span><br><span class="line">		Cnt: 3,</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	data, _ := proto.Marshal(test)</span><br><span class="line">	newTest := &amp;example.MessageInfo&#123;&#125;</span><br><span class="line">	err := proto.Unmarshal(data, newTest)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(&quot;test :%+v\n&quot;, test)</span><br><span class="line">	fmt.Printf(&quot;newTest :%+v\n&quot;,newTest)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	test := &amp;example.MessageInfo&#123;<br>		Message: <span class="hljs-string">&quot;hello world&quot;</span>,<br>		Length: <span class="hljs-number">100</span>,<br>		Cnt: <span class="hljs-number">3</span>,<br>	&#125;<br>	<br>	data, _ := proto.Marshal(test)<br>	newTest := &amp;example.MessageInfo&#123;&#125;<br>	err := proto.Unmarshal(data, newTest)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		log.Fatal(err)<br>	&#125;<br>	fmt.Printf(<span class="hljs-string">&quot;test :%+v\n&quot;</span>, test)<br>	fmt.Printf(<span class="hljs-string">&quot;newTest :%+v\n&quot;</span>,newTest)<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test :message:&quot;hello world&quot; length:100 cnt:3 </span><br><span class="line">newTest :message:&quot;hello world&quot; length:100 cnt:3</span><br></pre></td></tr></table></figure>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs subunit"><span class="hljs-keyword">test </span>:message:&quot;hello world&quot; length:100 cnt:3 <br>newTest :message:&quot;hello world&quot; length:100 cnt:3<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>

@@ -191,15 +191,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/11/17/Node-operator/" target="_self">
-          Node  operator
+        <a href="/2019/10/30/go%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" target="_self">
+          go并发控制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/11/17/Node-operator/" target="_self">
+        <a href="/2019/10/30/go%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" target="_self">
           
-          
+          go实现对并发控制的几种方式  WaitGroup Channel + Select Context  WaitGroup123456789101112131415func main() &amp;#123;	var wg sync.WaitGroup	wg.Add(2)	go func() &amp;#123;		time.Sleep(3 * time.Second)		fmt.Println(&quot;&amp;l
         </a>
       </p>
 
@@ -207,74 +207,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-17 16:03" pubdate>
-              2021-11-17
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/11/17/kubernetes-on-kubernetes-operator/" target="_self">
-          kubernetes on kubernetes operator
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/17/kubernetes-on-kubernetes-operator/" target="_self">
-          
-          
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-17 16:02" pubdate>
-              2021-11-17
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/11/17/Operator%E5%BC%80%E5%8F%91/" target="_self">
-          Operator开发
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/17/Operator%E5%BC%80%E5%8F%91/" target="_self">
-          
-          Kubebuilder和operator sdk 区别There’s not a huge difference between the Go projects that kubebuilder and operator-sdk scaffold. Both use controller-tools and controller-runtime and both scaffold substant
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-17 16:02" pubdate>
-              2021-11-17
+            <time datetime="2019-10-30 14:18" pubdate>
+              2019-10-30
             </time>
           </div>
         
@@ -283,9 +217,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/kubernetes/">kubernetes</a>
-            
-              <a href="/tags/operator/">operator</a>
+              <a href="/tags/golang/">golang</a>
             
           </div>
         
@@ -299,15 +231,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/11/03/K8s-Operator-club/" target="_self">
-          
+        <a href="/2019/09/08/Istio%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AE%9E%E8%B7%B5/" target="_self">
+          Istio安装与实践
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/11/03/K8s-Operator-club/" target="_self">
+        <a href="/2019/09/08/Istio%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AE%9E%E8%B7%B5/" target="_self">
           
-          Cluster Operator  Node Operator  节点故障自愈   物理机硬件存在一定的故障概率，随着集群节点规模的增加，集群中会常态出现故障节点，如果不及时修复上线，这部分物理机的资源将会被闲置。 为解决这一问题，设计了一套故障发现、隔离、修复的闭环自愈系统 如下图所示，故障发现方面，采取 Agent 上报和监控系统主动探测相结合的方式，保证了故障发现的实时性和可靠性（Agen
+          前提 Ubuntu 16.04 安装kubernetes集群（kubeadm&#x2F;minikube），本次使用的是kubeadm搭建的1.15版本k8s集群 下载 Istio 发行版本，本次安装的是Istio 1.4.0。 执行任何必要的 特定于平台的设置。 检查 Pods 和 Services 的要求。
         </a>
       </p>
 
@@ -315,8 +247,130 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-03 15:57" pubdate>
-              2021-11-03
+            <time datetime="2019-09-08 14:16" pubdate>
+              2019-09-08
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/k8s/">k8s</a>
+            
+              <a href="/tags/Istio/">Istio</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/06/08/kube-apiserver-Aggregation-Layer/" target="_self">
+          kube-apiserver Aggregation Layer
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/06/08/kube-apiserver-Aggregation-Layer/" target="_self">
+          
+          配置Aggregation Layer允许通过新增一个扩展apiserver服务来扩展非核心api。 与CRD扩展api的方式不同， Aggregation API需要另一个扩展的apiserver（aggregated apiserver）。扩展apiserver（aggregated apiserver）与kube-apiserver（aggregator）之间需要互相通信。为了保证通信安全，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-06-08 14:14" pubdate>
+              2019-06-08
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/k8s/">k8s</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/05/28/Service-Account-Token-Volume-Projection/" target="_self">
+          Service Account Token Volume Projection
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/05/28/Service-Account-Token-Volume-Projection/" target="_self">
+          
+          特性介绍社区实现的pod 通过 volume 方式引用service account 的 token，支持audience和token有效期设置。在1.11引入（Alpha），在1.12为Beta。 使用ServiceAccountTokenVolumeProjection 在 k8s 1.11版本需要手动设置 TokenRequestProjection 这个feature gate 为 tru
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-05-28 14:12" pubdate>
+              2019-05-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/k8s/">k8s</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/05/08/default-token/" target="_self">
+          default-token
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/05/08/default-token/" target="_self">
+          
+          default-token得先从service account说起，Service account是Pod里面的进程调用Kubernetes API或其他外部服务而设计的，每个namespace下有一个名为default的默认的ServiceAccount对象，如下图：  Token controller监测service account的创建，并为它们创建默认token，即每个ServiceAc
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-05-08 14:08" pubdate>
+              2019-05-08
             </time>
           </div>
         
@@ -332,15 +386,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/11/03/%E5%8D%95%E9%9B%86%E7%BE%A4%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" target="_self">
-          
+        <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/" target="_self">
+          马拉车算法
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/11/03/%E5%8D%95%E9%9B%86%E7%BE%A4%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" target="_self">
+        <a href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/" target="_self">
           
-          大规模集群的挑战 随着集群规模增大，故障的爆炸半径也将扩大 用户大量的 list 操作，包括 list all，list by namespace，list by label 等，均会随着集群的规模增大而开销变大。这些合理或者不合理的 list 请求，将让 apiserver 的内存在短时间内快速增长，出现 OOM 异常，无法对外响应请求。此外，业务方的 list 请求也会因为 apiserver
+          Manacher’s Algorithm 马拉车算法马拉车算法用来查找一个字符串的最长回文子串的线性方法 传统查找最长回文串方法：以每个字符为中心，向两边寻找回文子串，遍历完整数组后，就可以找到最长回文子串，但是复杂度为O(n*n)
         </a>
       </p>
 
@@ -348,8 +402,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-03 10:20" pubdate>
-              2021-11-03
+            <time datetime="2019-05-03 23:21" pubdate>
+              2019-05-03
             </time>
           </div>
         
@@ -365,15 +419,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/11/01/kube-apiserver%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
-          
+        <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/" target="_self">
+          kubernetes下的DNS
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/11/01/kube-apiserver%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
+        <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/" target="_self">
           
-          Kube-apiserver性能优化
+          Kubernetes中的DNS主要用作服务发现，在集群中调度Pod和Service，并且配置kubelet使得容器可以使用DNS Service的IP解析域名
         </a>
       </p>
 
@@ -381,8 +435,88 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-01 10:42" pubdate>
-              2021-11-01
+            <time datetime="2018-10-03 23:16" pubdate>
+              2018-10-03
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/k8s/">k8s</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2018/08/07/SSL-TLS%E5%8E%9F%E7%90%86/" target="_self">
+          SSL/TLS原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/08/07/SSL-TLS%E5%8E%9F%E7%90%86/" target="_self">
+          
+          TLS协议分为两层  底层(Record Layer) 上层(ChangeCipherSpec Protocol&lt;20&gt;, Alert Protocol&lt;21&gt;, Handshake Protocol&lt;22&gt;, Application Data Protocol&lt;23&gt;)  Record Layer处于TLS协议最底层，为TLS协议提供安全可靠的
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-07 23:30" pubdate>
+              2018-08-07
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2017/11/13/go-http-middleware/" target="_self">
+          go http middleware
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2017/11/13/go-http-middleware/" target="_self">
+          
+          12345678910111213141516171819202122232425262728293031323334353637package mainimport (	&quot;fmt&quot;	&quot;net&#x2F;http&quot;	&quot;strings&quot;)func buildHandlerChain(apiHandler http.Handler) http.Hand
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-11-13 23:13" pubdate>
+              2017-11-13
             </time>
           </div>
         
@@ -398,15 +532,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/11/01/Etcd%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
-          
+        <a href="/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/" target="_self">
+          pod创建大致流程
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/11/01/Etcd%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
+        <a href="/2017/11/08/pod%E5%88%9B%E5%BB%BA%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B/" target="_self">
           
-          Etcd性能测试 写入测试 12345.&#x2F;benchmark --endpoints&#x3D;&quot;https:&#x2F;&#x2F;183.131.145.84:2379,https:&#x2F;&#x2F;183.131.145.85:2379,https:&#x2F;&#x2F;61.153.100.147:2379&quot; \--cacert&#x3D;&#x2F;etc&#x2F;kubernetes&#x2F;pki&#x2F;etcd&#x2F;ca.crt \--cert&#x3D;&#x2F;etc&#x2F;kubern
+          
         </a>
       </p>
 
@@ -414,111 +548,19 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-11-01 10:41" pubdate>
-              2021-11-01
+            <time datetime="2017-11-08 23:10" pubdate>
+              2017-11-08
             </time>
           </div>
         
         
         
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/27/kubernetes%E4%B8%87%E7%BA%A7%E8%A7%84%E6%A8%A1%E9%AB%98%E5%8F%AF%E7%94%A8/" target="_self">
-          kubernetes万级规模高可用
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/27/kubernetes%E4%B8%87%E7%BA%A7%E8%A7%84%E6%A8%A1%E9%AB%98%E5%8F%AF%E7%94%A8/" target="_self">
-          
-          当集群节点超过5000时  问题  etcd 出现大量的读写延迟。 kube-apiserver 查询 pods&#x2F;nodes 延时很高，甚至导致 etcd oom。 控制器无法及时感知数据变化，如出现 watch 数据延迟。  解决方案： 100 节点增长到 4 千节点：  从 apiserver 客户端的角度优先访问本地 cache，在客户端去做负载均衡 apiserver 服务端主要做了 wa
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-27 19:06" pubdate>
-              2021-10-27
-            </time>
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/k8s/">k8s</a>
+            
           </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/26/kubernetes-HPA/" target="_self">
-          kubernetes资源利用率提升
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/26/kubernetes-HPA/" target="_self">
-          
-          带宽，CPU资源监控度量前后使用率，对业务的影响 工具：  Linux 实时性能测试工具——Cyclictest  Prometheus Adapter，接入现有的监控系统 ebpf MetricServer自动扩缩容HPA HPA(Horizontal Pod Autoscaler)：维持应用的期望状态（通过调节应用副本数） request和limit   所有容器都应该设置 request r
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-26 16:01" pubdate>
-              2021-10-26
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_self">
-          测试环境搭建
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/12/%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_self">
-          
-          kubernetes master + 2 node （使用cilium替代kube-proxy）  helm3  cilium+hubble  切换superedge  安装ISTIO  安装Karmada   1kubeadm init --pod-network-cidr&#x3D;10.218.0.0&#x2F;16 --skip-phases&#x3D;addon&#x2F;kube-proxy  1kubeadm init
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-12 16:01" pubdate>
-              2021-10-12
-            </time>
-          </div>
-        
-        
         
       </div>
     </article>
@@ -528,7 +570,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
