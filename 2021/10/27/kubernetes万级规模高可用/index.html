@@ -8,30 +8,30 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="Flynn">
   <meta name="keywords" content="">
   
     <meta name="description" content="当集群节点超过5000时  问题  etcd 出现大量的读写延迟。 kube-apiserver 查询 pods&#x2F;nodes 延时很高，甚至导致 etcd oom。 控制器无法及时感知数据变化，如出现 watch 数据延迟。  解决方案： 100 节点增长到 4 千节点：  从 apiserver 客户端的角度优先访问本地 cache，在客户端去做负载均衡 apiserver 服务端主要做了 wa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kubernetes万级规模高可用">
-<meta property="og:url" content="http://example.com/2021/10/27/kubernetes%E4%B8%87%E7%BA%A7%E8%A7%84%E6%A8%A1%E9%AB%98%E5%8F%AF%E7%94%A8/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://eightzero.site/2021/10/27/kubernetes%E4%B8%87%E7%BA%A7%E8%A7%84%E6%A8%A1%E9%AB%98%E5%8F%AF%E7%94%A8/index.html">
+<meta property="og:site_name" content="EightZERO">
 <meta property="og:description" content="当集群节点超过5000时  问题  etcd 出现大量的读写延迟。 kube-apiserver 查询 pods&#x2F;nodes 延时很高，甚至导致 etcd oom。 控制器无法及时感知数据变化，如出现 watch 数据延迟。  解决方案： 100 节点增长到 4 千节点：  从 apiserver 客户端的角度优先访问本地 cache，在客户端去做负载均衡 apiserver 服务端主要做了 wa">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/8cf1d986cfb040998d715ded91f56e2f.png">
 <meta property="article:published_time" content="2021-10-27T11:06:34.000Z">
 <meta property="article:modified_time" content="2021-10-27T11:14:03.181Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Flynn">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://gitee.com/eightzero/pico/raw/master/8cf1d986cfb040998d715ded91f56e2f.png">
   
   
-  <title>kubernetes万级规模高可用 - Hexo</title>
+  <title>kubernetes万级规模高可用 - EightZERO</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -68,7 +68,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"eightzero.site","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
