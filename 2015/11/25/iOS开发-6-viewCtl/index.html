@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
   <link rel="icon" href="/img/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -70,7 +70,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"eightzero.site","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"eightzero.site","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -152,6 +152,98 @@
                 <i class="iconfont icon-user-fill"></i>
                 关于
               </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                slides
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/notebook/">
+                    
+                    学习笔记
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">
+                    
+                    配置指南
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/icon/">
+                    
+                    图标用法
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-notebook"></i>
+                文档
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/notebook/">
+                    
+                    学习笔记
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/rust-handbook/">
+                    
+                    Rust教程
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/leetcode/">
+                    
+                    LeetCode笔记
+                  </a>
+                
+              </div>
             </li>
           
         
@@ -252,7 +344,7 @@
 <p>视图控制器不会在其被创建出来的那一刻马上创建并载入相应的视图。只有当应用需要将某个视图控制器的视图显示到屏幕上时，相应的控制器才会创建其视图。这种延迟加载（lazy loading）视图的做法能提高内存使用效率。<br>视图控制器可以通过两种方式创建视图层次结构：</p>
 <p>代码方式：覆盖UIViewcontroller中的loadView方法<br>NIB文件方式：使用interface Builder创建一个NIB文件，然后加入所需的视图层次结构，最后视图控制器会在运行时加载由该NIB文件编译而成的XIB文件（应用在运行时，会按需载入XIB文件并激活文件中的视图）。</p>
 <h3 id="1-创建Hypnotize视图"><a href="#1-创建Hypnotize视图" class="headerlink" title="1. 创建Hypnotize视图"></a>1. 创建Hypnotize视图</h3><h4 id="1-1-代码方式创建视图"><a href="#1-1-代码方式创建视图" class="headerlink" title="1.1 代码方式创建视图"></a>1.1 代码方式创建视图</h4><p>BNRHypnosisViewController.m文件</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><br><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">BNRHypnosisViewController</span></span><br><br>- (<span class="hljs-keyword">id</span>)initWithNibName:(<span class="hljs-built_in">NSString</span> *)nibNameOrNil bundle:(<span class="hljs-built_in">NSBundle</span> *)nibBundleOrNil<br>&#123;<br>    <span class="hljs-keyword">self</span> = [<span class="hljs-keyword">super</span> initWithNibName:nibNameOrNil bundle:nibBundleOrNil];<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>) &#123;<br><br>        <span class="hljs-comment">// Set the tab bar item&#x27;s title</span><br>        <span class="hljs-keyword">self</span>.tabBarItem.title = <span class="hljs-string">@&quot;Hypnotize&quot;</span>;<br><br>        <span class="hljs-comment">// Create a UIImage from a file</span><br>        <span class="hljs-comment">// This will use Hypno@2x on retina display devices</span><br>        <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageNamed:<span class="hljs-string">@&quot;Hypno.png&quot;</span>];<br><br>        <span class="hljs-comment">// Put that image on the tab bar item</span><br>        <span class="hljs-keyword">self</span>.tabBarItem.image = image;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;<br>&#125;<br><br>- (<span class="hljs-keyword">void</span>)loadView<br>&#123;<br>    <span class="hljs-comment">// Create a view</span><br>    <span class="hljs-built_in">CGRect</span> frame = [<span class="hljs-built_in">UIScreen</span> mainScreen].bounds;<br>    BNRHypnosisView *backgroundView = [[BNRHypnosisView alloc] initWithFrame:frame];<br><br>    <span class="hljs-comment">// Set it as *the* view of this view controller</span><br>    <span class="hljs-keyword">self</span>.view = backgroundView;<br>&#125;<br><br>- (<span class="hljs-keyword">void</span>)viewDidLoad<br>&#123;<br>    <span class="hljs-comment">// Always call the super implementation of viewDidLoad</span><br>    [<span class="hljs-keyword">super</span> viewDidLoad];<br><br>    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;BNRHypnosisViewController loaded its view&quot;</span>);<br>&#125;<br><br><span class="hljs-keyword">@end</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></div></td><td class="code"><pre><code class="hljs objectivec"><br><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">BNRHypnosisViewController</span></span><br><br>- (<span class="hljs-keyword">id</span>)initWithNibName:(<span class="hljs-built_in">NSString</span> *)nibNameOrNil bundle:(<span class="hljs-built_in">NSBundle</span> *)nibBundleOrNil<br>&#123;<br>    <span class="hljs-keyword">self</span> = [<span class="hljs-keyword">super</span> initWithNibName:nibNameOrNil bundle:nibBundleOrNil];<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>) &#123;<br><br>        <span class="hljs-comment">// Set the tab bar item&#x27;s title</span><br>        <span class="hljs-keyword">self</span>.tabBarItem.title = <span class="hljs-string">@&quot;Hypnotize&quot;</span>;<br><br>        <span class="hljs-comment">// Create a UIImage from a file</span><br>        <span class="hljs-comment">// This will use Hypno@2x on retina display devices</span><br>        <span class="hljs-built_in">UIImage</span> *image = [<span class="hljs-built_in">UIImage</span> imageNamed:<span class="hljs-string">@&quot;Hypno.png&quot;</span>];<br><br>        <span class="hljs-comment">// Put that image on the tab bar item</span><br>        <span class="hljs-keyword">self</span>.tabBarItem.image = image;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;<br>&#125;<br><br>- (<span class="hljs-keyword">void</span>)loadView<br>&#123;<br>    <span class="hljs-comment">// Create a view</span><br>    <span class="hljs-built_in">CGRect</span> frame = [<span class="hljs-built_in">UIScreen</span> mainScreen].bounds;<br>    BNRHypnosisView *backgroundView = [[BNRHypnosisView alloc] initWithFrame:frame];<br><br>    <span class="hljs-comment">// Set it as *the* view of this view controller</span><br>    <span class="hljs-keyword">self</span>.view = backgroundView;<br>&#125;<br><br>- (<span class="hljs-keyword">void</span>)viewDidLoad<br>&#123;<br>    <span class="hljs-comment">// Always call the super implementation of viewDidLoad</span><br>    [<span class="hljs-keyword">super</span> viewDidLoad];<br><br>    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;BNRHypnosisViewController loaded its view&quot;</span>);<br>&#125;<br><br><span class="hljs-keyword">@end</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="1-2-设置根视图控制器"><a href="#1-2-设置根视图控制器" class="headerlink" title="1.2 设置根视图控制器"></a>1.2 设置根视图控制器</h4><p>为了将视图控制器的视图层次结构加入应用窗口，UIWindow对象提供了一个方法：setRootViewController：。当程序将某个视图控制器设置为UIWindow对象的rootViewController时，UIWindow对象会将该视图控制器的view作为子视图加入窗口，并且还会自动调整view的大小，将其设置为与窗口的大小相同。</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">BNRAppDelegate</span></span><br><br>- (<span class="hljs-built_in">BOOL</span>)application:(<span class="hljs-built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="hljs-built_in">NSDictionary</span> *)launchOptions<br>&#123;<br>    <span class="hljs-keyword">self</span>.window = [[<span class="hljs-built_in">UIWindow</span> alloc] initWithFrame:[[<span class="hljs-built_in">UIScreen</span> mainScreen] bounds]];<br>    <span class="hljs-comment">// Override point for customization after application launch.</span><br><br><br>    BNRHypnosisViewController *hvc = [[BNRHypnosisViewController alloc] init];<br><br>    <span class="hljs-comment">// Look in the appBundle for the file BNRReminderViewController.xib</span><br>    BNRReminderViewController *rvc = [[BNRReminderViewController alloc] init];<br><br>    <span class="hljs-built_in">UITabBarController</span> *tabBarController = [[<span class="hljs-built_in">UITabBarController</span> alloc] init];<br>    tabBarController.viewControllers = @[hvc, rvc];<br><br>    <span class="hljs-keyword">self</span>.window.rootViewController = tabBarController;<br><br>    <span class="hljs-keyword">self</span>.window.backgroundColor = [<span class="hljs-built_in">UIColor</span> whiteColor];<br>    [<span class="hljs-keyword">self</span>.window makeKeyAndVisible];<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">YES</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
