@@ -109,9 +109,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
               </a>
             </li>
           
@@ -133,9 +133,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
               </a>
             </li>
           
@@ -172,46 +172,6 @@
               <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="iconfont icon-books"></i>
-                slides
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" href="https://eightzero.site/notebook/">
-                    
-                    学习笔记
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">
-                    
-                    配置指南
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/icon/">
-                    
-                    图标用法
-                  </a>
-                
-              </div>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="iconfont icon-notebook"></i>
                 文档
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -361,7 +321,7 @@
 <p>多个对象可能具有相同的委托，当委托收到消息时，需要根据该参数判断发送给该消息的对象。例如，某个控制器中包含多个UITextField对象，他们的委托都是该控制器，那么控制器要根据TextField参数获取相应的UITextField对象并执行不同操作。</p>
 <h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>凡是支持委托的对象，其背后都有一个相应的协议，声明可以向该对象的委托对象发送的消息。被委托对象需要根据这个协议为其“感兴趣”的事件实现相应的方法。如果一个类实现了某个协议中规定的方法，称这个类遵守协议。</p>
 <p>UITextField的协议：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@protocol</span> UITextFieldDelegate &lt;NSObject&gt;<br><br><span class="hljs-variable">@optional</span><br><br>- (BOOL)<span class="hljs-attribute">textFieldShouldBeginEditing</span>:(UITextField *)textField;        <span class="hljs-comment">// return NO to disallow editing.</span><br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">textFieldDidBeginEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;           <span class="hljs-comment">// became first responder</span><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textFieldShouldEndEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;          <span class="hljs-comment">// return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end</span><br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">textFieldDidEndEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;             <span class="hljs-comment">// may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called</span><br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">textFieldDidEndEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span> <span class="hljs-selector-tag">reason</span>:(UITextFieldDidEndEditingReason)<span class="hljs-selector-tag">reason</span> <span class="hljs-selector-tag">NS_AVAILABLE_IOS</span>(<span class="hljs-number">10</span>_0); <span class="hljs-comment">// if implemented, called in place of textFieldDidEndEditing:</span><br><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textField</span>:(UITextField *)<span class="hljs-selector-tag">textField</span> <span class="hljs-selector-tag">shouldChangeCharactersInRange</span>:(NSRange)<span class="hljs-selector-tag">range</span> <span class="hljs-selector-tag">replacementString</span>:(NSString *)<span class="hljs-selector-tag">string</span>;   <span class="hljs-comment">// return NO to not change text</span><br><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textFieldShouldClear</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;               <span class="hljs-comment">// called when clear button pressed. return NO to ignore (no notifications)</span><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textFieldShouldReturn</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;              <span class="hljs-comment">// called when &#x27;return&#x27; key pressed. return NO to ignore.</span><br><br>@<span class="hljs-selector-tag">end</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@protocol</span> UITextFieldDelegate &lt;NSObject&gt;<br><br><span class="hljs-variable">@optional</span><br><br>- (BOOL)<span class="hljs-attribute">textFieldShouldBeginEditing</span>:(UITextField *)textField;        <span class="hljs-comment">// return NO to disallow editing.</span><br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">textFieldDidBeginEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;           <span class="hljs-comment">// became first responder</span><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textFieldShouldEndEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;          <span class="hljs-comment">// return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end</span><br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">textFieldDidEndEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;             <span class="hljs-comment">// may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called</span><br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">textFieldDidEndEditing</span>:(UITextField *)<span class="hljs-selector-tag">textField</span> <span class="hljs-selector-tag">reason</span>:(UITextFieldDidEndEditingReason)<span class="hljs-selector-tag">reason</span> <span class="hljs-selector-tag">NS_AVAILABLE_IOS</span>(<span class="hljs-number">10</span>_0); <span class="hljs-comment">// if implemented, called in place of textFieldDidEndEditing:</span><br><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textField</span>:(UITextField *)<span class="hljs-selector-tag">textField</span> <span class="hljs-selector-tag">shouldChangeCharactersInRange</span>:(NSRange)<span class="hljs-selector-tag">range</span> <span class="hljs-selector-tag">replacementString</span>:(NSString *)<span class="hljs-selector-tag">string</span>;   <span class="hljs-comment">// return NO to not change text</span><br><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textFieldShouldClear</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;               <span class="hljs-comment">// called when clear button pressed. return NO to ignore (no notifications)</span><br><span class="hljs-selector-tag">-</span> (BOOL)<span class="hljs-selector-tag">textFieldShouldReturn</span>:(UITextField *)<span class="hljs-selector-tag">textField</span>;              <span class="hljs-comment">// called when &#x27;return&#x27; key pressed. return NO to ignore.</span><br><br>@<span class="hljs-selector-tag">end</span><br></code></pre></td></tr></table></figure>
 
 <p>发送方在发送可选方法前，会先向其委托发送另一个名为respondsToSelector：方法。</p>
 <p>所有objective-c对象都从NSObject继承了respondToSelector：方法，该方法能在运行时检查对象是否实现了指定的方法。</p>
@@ -421,6 +381,15 @@
               
             </div>
 
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
             
           </article>
         </div>

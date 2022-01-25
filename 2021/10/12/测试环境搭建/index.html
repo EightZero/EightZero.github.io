@@ -111,9 +111,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
               </a>
             </li>
           
@@ -135,9 +135,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
               </a>
             </li>
           
@@ -174,46 +174,6 @@
               <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="iconfont icon-books"></i>
-                slides
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" href="https://eightzero.site/notebook/">
-                    
-                    学习笔记
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">
-                    
-                    配置指南
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/icon/">
-                    
-                    图标用法
-                  </a>
-                
-              </div>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="iconfont icon-notebook"></i>
                 文档
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -346,7 +306,7 @@
 <li><p>安装Karmada</p>
 </li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">kubeadm init --pod-network-cidr=10.218.0.0/16 --skip-phases=addon/kube-proxy<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">kubeadm init --pod-network-cidr=10.218.0.0/16 --skip-phases=addon/kube-proxy<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">kubeadm init --kubernetes-version=1.18.20  --image-repository registry.aliyuncs.com/google_containers  --service-cidr=10.10.0.0/16 --pod-network-cidr=10.218.0.0/16   --skip-phases=addon/kube-proxy<br></code></pre></td></tr></table></figure>
 
@@ -646,6 +606,15 @@
               
             </div>
 
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
             
           </article>
         </div>

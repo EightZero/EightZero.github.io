@@ -110,9 +110,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
               </a>
             </li>
           
@@ -134,9 +134,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
               </a>
             </li>
           
@@ -173,46 +173,6 @@
               <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="iconfont icon-books"></i>
-                slides
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" href="https://eightzero.site/notebook/">
-                    
-                    学习笔记
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">
-                    
-                    配置指南
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/icon/">
-                    
-                    图标用法
-                  </a>
-                
-              </div>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="iconfont icon-notebook"></i>
                 文档
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -334,7 +294,7 @@
               <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
 <li><p>往未初始化的Channel写数据，会发生什么？</p>
 <p>nil channel会永远阻塞对该channel的读写操作</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">  <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-keyword">var</span> cc <span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span><br>  	cc &lt;- <span class="hljs-number">1</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs go">  <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-keyword">var</span> cc <span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span><br>  	cc &lt;- <span class="hljs-number">1</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>运行后，报错：</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">fatal</span> <span class="hljs-selector-tag">error</span>: <span class="hljs-keyword">all</span> <span class="hljs-selector-tag">goroutines</span> <span class="hljs-selector-tag">are</span> <span class="hljs-selector-tag">asleep</span> <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">deadlock</span>!<br><span class="hljs-selector-tag">goroutine</span> <span class="hljs-selector-tag">1</span> <span class="hljs-selector-attr">[chan send (nil chan)]</span>:<br><span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.main</span>()<br></code></pre></td></tr></table></figure>
@@ -411,6 +371,15 @@
               
             </div>
 
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
             
           </article>
         </div>

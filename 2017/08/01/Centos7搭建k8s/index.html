@@ -109,9 +109,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
               </a>
             </li>
           
@@ -133,9 +133,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
               </a>
             </li>
           
@@ -172,46 +172,6 @@
               <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="iconfont icon-books"></i>
-                slides
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" href="https://eightzero.site/notebook/">
-                    
-                    学习笔记
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">
-                    
-                    配置指南
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/icon/">
-                    
-                    图标用法
-                  </a>
-                
-              </div>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="iconfont icon-notebook"></i>
                 文档
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -330,7 +290,7 @@
             <h1 style="display: none">Centos7搭建k8s</h1>
             
             <div class="markdown-body">
-              <h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl stop firewalld<br>systemctl disable firewalld<br></code></pre></td></tr></table></figure>
+              <h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">systemctl stop firewalld<br>systemctl disable firewalld<br></code></pre></td></tr></table></figure>
 
 
 
@@ -354,8 +314,8 @@
 
 <h2 id="设置docker加速器"><a href="#设置docker加速器" class="headerlink" title="设置docker加速器"></a>设置docker加速器</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo mkdir -p <span class="hljs-regexp">/etc/</span>docker<br>sudo tee <span class="hljs-regexp">/etc/</span>docker/daemon.json &lt;&lt;-<span class="hljs-string">&#x27;EOF&#x27;</span><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://registry.docker-cn.com&quot;</span>]<br>&#125;<br>EOF<br></code></pre></td></tr></table></figure>
 
-<h2 id="docker代理设置-amp-cgroupfs设置"><a href="#docker代理设置-amp-cgroupfs设置" class="headerlink" title="docker代理设置 &amp; cgroupfs设置"></a>docker代理设置 &amp; cgroupfs设置</h2><pre><code>vi /usr/lib/systemd/system/docker.service
-</code></pre>
+<h2 id="docker代理设置-amp-cgroupfs设置"><a href="#docker代理设置-amp-cgroupfs设置" class="headerlink" title="docker代理设置 &amp; cgroupfs设置"></a>docker代理设置 &amp; cgroupfs设置</h2><div class="code-wrapper"><pre><code class="hljs">vi /usr/lib/systemd/system/docker.service
+</code></pre></div>
 <p> 修改cgroup driver：native.cgroupdriver=systemd修改为native.cgroupdriver=cgroupfs</p>
 <p> 启动docker并设置开启自启<br>systemctl enable docker &amp; systemctl daemon-reload &amp; systemctl restart docker</p>
 
@@ -406,6 +366,15 @@
               
             </div>
 
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
             
           </article>
         </div>
