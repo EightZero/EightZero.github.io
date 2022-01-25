@@ -124,7 +124,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
-                分类
+                合集
               </a>
             </li>
           
@@ -304,7 +304,7 @@
 <li>Kubebuilder has recently improved its support for admission and CRD conversion webhooks, which has not yet made it into SDK.</li>
 </ul>
 <p>The SDK and Kubebuilder teams work closely together, and we’re planning to increase our efforts to help the kubebuilder team maintain controller-tools and controller-runtime so that the entire community has access to the latest features and bug fixes.</p>
-<h2 id="Kubebuilder"><a href="#Kubebuilder" class="headerlink" title="Kubebuilder"></a>Kubebuilder</h2><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> kubebuilder init --domain test.com</span><br>Writing kustomize manifests for you to edit...<br>Writing scaffold for you to edit...<br>Get controller runtime:<br><span class="hljs-meta">$</span><span class="bash"> go get sigs.k8s.io/controller-runtime@v0.10.0</span><br>Update dependencies:<br><span class="hljs-meta">$</span><span class="bash"> go mod tidy</span><br>Next: define a resource with:<br><span class="hljs-meta">$</span><span class="bash"> kubebuilder create api</span><br></code></pre></td></tr></table></figure>
+<h2 id="Kubebuilder"><a href="#Kubebuilder" class="headerlink" title="Kubebuilder"></a>Kubebuilder</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> kubebuilder init --domain test.com</span><br>Writing kustomize manifests for you to edit...<br>Writing scaffold for you to edit...<br>Get controller runtime:<br><span class="hljs-meta">$</span><span class="bash"> go get sigs.k8s.io/controller-runtime@v0.10.0</span><br>Update dependencies:<br><span class="hljs-meta">$</span><span class="bash"> go mod tidy</span><br>Next: define a resource with:<br><span class="hljs-meta">$</span><span class="bash"> kubebuilder create api</span><br></code></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">kubebuilder edit --multigroup=true<br></code></pre></td></tr></table></figure>
 

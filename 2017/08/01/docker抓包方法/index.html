@@ -122,7 +122,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
-                分类
+                合集
               </a>
             </li>
           
@@ -289,7 +289,7 @@
             <h1 style="display: none">docker抓包方法</h1>
             
             <div class="markdown-body">
-              <h3 id="1-确认容器网络模式"><a href="#1-确认容器网络模式" class="headerlink" title="1. 确认容器网络模式"></a>1. 确认容器网络模式</h3><figure class="highlight gradle"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs gradle">docker <span class="hljs-keyword">inspect</span> container_name | <span class="hljs-keyword">grep</span> NetworkMode<br></code></pre></td></tr></table></figure>
+              <h3 id="1-确认容器网络模式"><a href="#1-确认容器网络模式" class="headerlink" title="1. 确认容器网络模式"></a>1. 确认容器网络模式</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">docker <span class="hljs-keyword">inspect</span> container_name | <span class="hljs-keyword">grep</span> NetworkMode<br></code></pre></td></tr></table></figure>
 
 <p>回显：</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-string">&quot;NetworkMode&quot;</span>: <span class="hljs-string">&quot;default&quot;</span>,<br></code></pre></td></tr></table></figure>

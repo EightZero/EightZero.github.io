@@ -124,7 +124,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
-                分类
+                合集
               </a>
             </li>
           
@@ -295,7 +295,7 @@
 <span id="more"></span>
 
 <p>上图是UInavigation view的层次结构。在有tab bar的情况下，给UITabbarController 指定viewcontrollers属性的时候，将需要展示的视图控制器用UINavigationController封装。</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><pre><code class="hljs inform7">BNRHypnosisViewController *hvc = <span class="hljs-comment">[<span class="hljs-comment">[BNRHypnosisViewController alloc]</span> init]</span>;<br>BNRReminderViewController *hvc = <span class="hljs-comment">[<span class="hljs-comment">[BNRReminderViewController alloc]</span> init]</span>;<br><br>UITabBarController *tabBarController = <span class="hljs-comment">[<span class="hljs-comment">[UITabBarController alloc]</span> init]</span>;<br><br>UINavigationController *navCtl = <span class="hljs-comment">[<span class="hljs-comment">[UINavigationController alloc]</span>initWithRootViewController:hvc]</span>;<br><br>tabBarController.viewControllers = @<span class="hljs-comment">[navCtl, rvc]</span>;<br><br>self.window.rootViewController = tabBarController;<br></code></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs inform7">BNRHypnosisViewController *hvc = <span class="hljs-comment">[<span class="hljs-comment">[BNRHypnosisViewController alloc]</span> init]</span>;<br>BNRReminderViewController *hvc = <span class="hljs-comment">[<span class="hljs-comment">[BNRReminderViewController alloc]</span> init]</span>;<br><br>UITabBarController *tabBarController = <span class="hljs-comment">[<span class="hljs-comment">[UITabBarController alloc]</span> init]</span>;<br><br>UINavigationController *navCtl = <span class="hljs-comment">[<span class="hljs-comment">[UINavigationController alloc]</span>initWithRootViewController:hvc]</span>;<br><br>tabBarController.viewControllers = @<span class="hljs-comment">[navCtl, rvc]</span>;<br><br>self.window.rootViewController = tabBarController;<br></code></pre></td></tr></table></figure>
 
 <p>同时，iOS7之后，由于navigation的存在，视图会被半透明的导航栏遮盖，此时可以在控制器加载试图前用self.edgesForExtendedLayout = UIRectEdgeNone;来将视图边界设为当前屏幕</p>
 <p>最后是效果图：</p>
