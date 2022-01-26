@@ -88,11 +88,31 @@
           
           
           
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-category-fill"></i>
+                文章分类
               </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+              </div>
             </li>
           
         
@@ -102,20 +122,8 @@
           
             <li class="nav-item">
               <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
+                <i class="iconfont icon-books"></i>
                 合集
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
               </a>
             </li>
           
@@ -151,18 +159,10 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="iconfont icon-books"></i>
-                文档
+                <i class="iconfont icon-book"></i>
+                电子书
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" href="https://eightzero.site/notebook/">
-                    
-                    学习笔记
-                  </a>
                 
                   
                   
@@ -178,6 +178,14 @@
                   <a class="dropdown-item" href="https://eightzero.site/leetcode/">
                     
                     LeetCode笔记
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/prometheus/">
+                    
+                    Prometheus指南
                   </a>
                 
               </div>
@@ -233,19 +241,13 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 2 篇文章</p>
+  <p class="h4">共计 1 篇文章</p>
   <hr>
   
   
     
       
       <p class="h5">2021</p>
-    
-    <a href="/2021/12/01/k8s%E5%A4%9A%E7%A7%9F%E6%88%B7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">k8s多租户</span>
-      <time style="float: right;">12-01</time>
-    </a>
-  
     
     <a href="/2021/11/17/Operator%E5%BC%80%E5%8F%91/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">Operator开发</span>
