@@ -4,27 +4,17 @@
   
   
   <entry>
-    <title>casbin教程</title>
-    <link href="/2022/01/26/casbin/"/>
-    <url>/2022/01/26/casbin/</url>
+    <title>eBPF应用开发</title>
+    <link href="/2022/02/18/ebpf-01/"/>
+    <url>/2022/02/18/ebpf-01/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="1-eBPF应用开发流程"><a href="#1-eBPF应用开发流程" class="headerlink" title="1. eBPF应用开发流程"></a>1. eBPF应用开发流程</h1><ol><li>使用 C 语言开发一个 eBPF 程序</li><li>借助 LLVM 把 eBPF 程序编译成 BPF bytecode</li><li>通过 bpf 系统调用，把 BPF bytecode提交给内核</li><li>内核验证并运行 BPF bytecode，并把相应的状态保存到 BPF maps中</li><li>用户程序通过 BPF maps查询 BPF bytecode的运行状态</li></ol><p><img src="https://gitee.com/eightzero/pico/raw/master/ebpf-dev-01.png" alt="ebpf-dev-01"></p><h1 id="2-开发实践"><a href="#2-开发实践" class="headerlink" title="2. 开发实践"></a>2. 开发实践</h1><p>BCC 是一个 BPF 编译器集合，包含了用于构建 BPF 程序的编程框架和库，并提供了大量可以直接使用的工具。使用 BCC 的好处是，<strong>它把上述的 eBPF 执行过程通过内置框架抽象了起来，并提供了 Python、C++ 等编程语言接口</strong>。这样，就可以直接通过 Python 语言去跟 eBPF 的各种事件和数据进行交互。</p><p>以跟踪 <a href="https://man7.org/linux/man-pages/man2/open.2.html">openat()</a>（即打开文件）这个系统调用为例，看看如何开发并运行第一个 eBPF 程序。</p><h2 id="2-1-使用-C-开发一个-eBPF-程序"><a href="#2-1-使用-C-开发一个-eBPF-程序" class="headerlink" title="2.1 使用 C 开发一个 eBPF 程序"></a>2.1 使用 C 开发一个 eBPF 程序</h2><p>新建一个 <code>hello.c</code> 文件:</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hello_world</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *ctx)</span></span><br><span class="hljs-function"></span>&#123;<br>    bpf_trace_printk(<span class="hljs-string">&quot;Hello, World!&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><p> <code>bpf_trace_printk()</code> 是一个最常用的 BPF 辅助函数，它的作用是输出一段字符串。不过，由于 eBPF 运行在内核中，它的输出并不是通常的标准输出（stdout），而是内核调试文件 <code>/sys/kernel/debug/tracing/trace_pipe</code> ，可以直接使用 <code>cat</code> 命令来查看这个文件的内容</p><h2 id="2-2-使用-Python-和-BCC-库开发一个用户态程序"><a href="#2-2-使用-Python-和-BCC-库开发一个用户态程序" class="headerlink" title="2.2 使用 Python 和 BCC 库开发一个用户态程序"></a>2.2 使用 Python 和 BCC 库开发一个用户态程序</h2><p>新建一个 <code>hello.py</code> 文件:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-comment"># 1) 导入了 BCC 库的 BPF 模块，以便接下来调用</span><br><span class="hljs-keyword">from</span> bcc <span class="hljs-keyword">import</span> BPF<br><br><span class="hljs-comment"># 2) 调用 BPF() 加载第一步开发的 BPF 源代码</span><br>b = BPF(src_file=<span class="hljs-string">&quot;hello.c&quot;</span>)<br><span class="hljs-comment"># 3) 将 BPF 程序挂载到内核探针(kprobe)其中 do_sys_openat2() 是系统调用 openat() 在内核中的实现</span><br>b.attach_kprobe(event=<span class="hljs-string">&quot;do_sys_openat2&quot;</span>, fn_name=<span class="hljs-string">&quot;hello_world&quot;</span>)<br><span class="hljs-comment"># 4) 读取内核调试文件 /sys/kernel/debug/tracing/trace_pipe 的内容，并打印到标准输出中</span><br>b.trace_print()<br></code></pre></td></tr></table></figure><h2 id="2-3-执行-eBPF-程序"><a href="#2-3-执行-eBPF-程序" class="headerlink" title="2.3 执行 eBPF 程序"></a>2.3 执行 eBPF 程序</h2><p>用户态程序开发完成之后，最后一步就是执行它了。需要注意的是， eBPF 程序需要以 root 用户来运行，非 root 用户需要加上 sudo 来执行：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">$ chmod +x hello.py<br>$ sudo ./hello.py<br></code></pre></td></tr></table></figure>]]></content>
     
-    
-    <categories>
-      
-      <category>访问控制</category>
-      
-    </categories>
     
     
     <tags>
       
-      <tag>access control</tag>
-      
-      <tag>access control model</tag>
-      
-      <tag>casbin</tag>
+      <tag>ebpf</tag>
       
     </tags>
     
@@ -33,27 +23,25 @@
   
   
   <entry>
-    <title>访问控制2：RBAC</title>
-    <link href="/2022/01/26/RBAC/"/>
-    <url>/2022/01/26/RBAC/</url>
+    <title>cilium-XDP</title>
+    <link href="/2022/02/15/cilium-xdp/"/>
+    <url>/2022/02/15/cilium-xdp/</url>
     
     <content type="html"><![CDATA[]]></content>
     
     
     <categories>
       
-      <category>访问控制</category>
+      <category>cilium源码解析</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>access control</tag>
+      <tag>cilium</tag>
       
-      <tag>access control model</tag>
-      
-      <tag>RBAC</tag>
+      <tag>xdp</tag>
       
     </tags>
     
@@ -62,25 +50,32 @@
   
   
   <entry>
-    <title>访问控制1：访问控制概述</title>
-    <link href="/2022/01/26/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/"/>
-    <url>/2022/01/26/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/</url>
+    <title>metallb-01</title>
+    <link href="/2022/02/14/metallb-01/"/>
+    <url>/2022/02/14/metallb-01/</url>
     
-    <content type="html"><![CDATA[<p>访问控制是识别从事特定工作的人，通过查看他们的身份来验证他们的身份，然后只给那个人他们需要访问的门或计算机的钥匙，仅此而已。在信息安全领域，人们会将其视为通过用户名和密码授予个人访问网络的权限，允许他们访问该人所需的文件、计算机或其他硬件或软件，并确保他们拥有权利完成工作的权限级别（即只读）。那么，如何向个人授予适当级别的权限，以便他们能够履行职责呢？这就是访问控制模型发挥作用的地方。</p><p>访问控制模型有四种类型：强制访问控制 (MAC)、基于角色的访问控制 (RBAC)、自主访问控制 (DAC) 和基于规则的访问控制（RBAC 或 RB-RBAC）</p>]]></content>
+    <content type="html"><![CDATA[]]></content>
     
     
-    <categories>
-      
-      <category>访问控制</category>
-      
-    </categories>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>挂载多个XDP</title>
+    <link href="/2022/02/09/xdp/"/>
+    <url>/2022/02/09/xdp/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-为什么需要多个XDP"><a href="#1-为什么需要多个XDP" class="headerlink" title="1. 为什么需要多个XDP"></a>1. 为什么需要多个XDP</h2><p>每个 netdev 只有一个 XDP  hook，因此想要使用 XDP 的应用程序必须拥有 XDP hook。</p><p>但是如果用户想要安装多个这样的应用程序怎么办？</p><p>例如 - 应该可以同时运行所有这些：</p><ul><li>XDP-基于 DDOS 保护*[1]*</li><li>XDP-加速 IDS（例如 Suricata）*[2]*</li><li>自定义 XDP 程序</li></ul><h2 id="2-如何运行多个XDP"><a href="#2-如何运行多个XDP" class="headerlink" title="2. 如何运行多个XDP"></a>2. 如何运行多个XDP</h2><p><code>libxdp</code>使用AF_XDP sockets将XDP程序绑定到网络接口。<code>libxdp</code>相当轻量，依赖于<code>libbpf</code>处理eBPF等对象文件的工作。</p><p>libxdp基于libbpf之上，提供两个主要的功能：</p><ol><li>在单个网络设备上，按顺序加载多个xdp程序的能力（内核本身不支持），这种支持依赖于内核中的<code>freplace</code>功能。这使得绑定一个eBPF程序来代替另一个已经加载的eBPF程序中的全局函数成为可能。</li><li>用于配置AF_XDP sockets以及从这些sockets读写数据包的辅助函数</li></ol><h3 id="2-1-从应用程序使用-libxdp"><a href="#2-1-从应用程序使用-libxdp" class="headerlink" title="2.1 从应用程序使用 libxdp"></a>2.1 从应用程序使用 libxdp</h3><p>应用程序中 libxdp 的基本用法如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> IFINDEX 1</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">xdp_program</span> *<span class="hljs-title">prog</span>;</span><br><span class="hljs-keyword">int</span> err;<br><br>prog = xdp_program__open_file(<span class="hljs-string">&quot;my-program.o&quot;</span>, <span class="hljs-string">&quot;section_name&quot;</span>, <span class="hljs-literal">NULL</span>);<br># 加载XDP程序的接口<br>err = xdp_program__attach(prog, IFINDEX, XDP_MODE_NATIVE, <span class="hljs-number">0</span>);<br><br># 加载失败了<br><span class="hljs-keyword">if</span> (!err)<br>  # 卸载XDP程序的接口<br>    xdp_program__detach(prog, IFINDEX, XDP_MODE_NATIVE, <span class="hljs-number">0</span>);<br><br>xdp_program__close(prog);<br></code></pre></td></tr></table></figure><p>该<code>xdp_program</code>结构是表示单个 XDP 程序结构。</p><p><code>libxdp</code>包含如下三种创建此类结构体的函数：</p><ol><li>从磁盘上的 BPF 对象文件</li><li><code>libbpf</code>的BPF 对象</li><li>已加载到内核中的程序标识符</li></ol><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_bpf_obj</span><span class="hljs-params">(struct bpf_object *obj,</span></span><br><span class="hljs-params"><span class="hljs-function">      <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *section_name)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__find_file</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename,</span></span><br><span class="hljs-params"><span class="hljs-function">   <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *section_name,</span></span><br><span class="hljs-params"><span class="hljs-function">   struct bpf_object_open_opts *opts)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__open_file</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename,</span></span><br><span class="hljs-params"><span class="hljs-function">   <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *section_name,</span></span><br><span class="hljs-params"><span class="hljs-function">   struct bpf_object_open_opts *opts)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_fd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_id</span><span class="hljs-params">(__u32 prog_id)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_pin</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *pin_path)</span></span>;<br></code></pre></td></tr></table></figure><p>打开 BPF 对象或文件的函数需要 XDP 程序的函数名以及文件名或对象，因为一个 ELF 文件可以包含多个 XDP 程序。<code>xdp_program__find_file()</code>函数采用不带路径的文件名，并将查找<code>LIBXDP_OBJECT_PATH</code>上定义的对象，默认为<code>/usr/lib/bpf</code>（或<code>/usr/lib64/bpf</code>在使用拆分库路径的系统上）。这对于传送预编译的 eBPF 目标文件的应用程序来说很方便。</p><p>该<code>xdp_program__attach()</code>函数将程序附加到一个接口，构建一个调度程序来执行它。可以一次附加多个程序<code>xdp_program__attach_multi()</code>；它们将按照它们的运行优先级排序，并且从一个程序到下一个程序的执行将根据为每个程序定义的链调用动作进行（请参阅下面的<strong>程序元数据</strong>部分）。由于加载过程涉及修改程序的附加类型，因此附加函数仅适用于<code>struct xdp_program</code>尚未加载到内核中的对象。</p><p>当使用附加函数附加到已经加载了 XDP 程序的接口时，libxdp 将尝试将该程序添加到已加载程序的列表中。但是，这可能会失败，原因可能是缺少内核支持，或者是因为未使用与 libxdp 兼容的调度程序加载已附加的程序。如果缺少对增量附加（在内核 5.10 中合并）的内核支持，那么在单个接口上实际运行多个程序的唯一方法是使用 <code>xdp_program__attach_multi()</code>. 如果现有程序不是 XDP 调度程序，则必须先将该程序与接口分离，然后 libxdp 才能附加新程序。这可以通过调用来完成<code>xdp_program__detach()</code>引用加载的程序；但请注意，这当然会破坏任何依赖于存在的其他 XDP 程序的应用程序。</p><h2 id="3-多个XDP实现原理"><a href="#3-多个XDP实现原理" class="headerlink" title="3. 多个XDP实现原理"></a>3. 多个XDP实现原理</h2><p>为了在同一个接口上支持多个 XDP 程序，libxdp 为每个 XDP 程序使用两个元数据：运行优先级和链式调用操作。</p><h3 id="运行优先级"><a href="#运行优先级" class="headerlink" title="运行优先级"></a>运行优先级</h3><p>这是程序的优先级，是一个简单的整数，用于在将多个程序加载到同一界面时对程序进行排序。希望提前运行的程序（如数据包过滤器）应为此设置较低的值，而希望稍后运行的程序（如数据包转发器或计数器）应设置较高的值。请注意，仅当先前的程序以作为其链式调用操作的一部分的返回码结束时，以后的程序才会运行（见下文）。如果未指定，则默认优先级值为 50。</p><h3 id="链式调用动作"><a href="#链式调用动作" class="headerlink" title="链式调用动作"></a>链式调用动作</h3><p>这些是程序为应继续处理的数据包指示的程序返回代码。如果程序返回这些动作之一，调用链中的后续程序将运行，而如果它返回任何其他动作，则处理将被中断，XDP 调度程序将立即返回结果。如果未设置，则默认为 XDP_PASS，这可能是大多数程序应该使用的值。</p><h3 id="指定元数据"><a href="#指定元数据" class="headerlink" title="指定元数据"></a>指定元数据</h3><p>上述元数据被指定为嵌入在包含 XDP 程序的 ELF 文件中的 BTF 信息。<code>xdp_helpers.h</code>附带的文件包含包含此信息的辅助宏，可按如下方式使用：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bpf/bpf_helpers.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;xdp/xdp_helpers.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>__uint(priority, <span class="hljs-number">10</span>);<br>__uint(XDP_PASS, <span class="hljs-number">1</span>);<br>__uint(XDP_DROP, <span class="hljs-number">1</span>);<br>&#125; XDP_RUN_CONFIG(my_xdp_func);<br></code></pre></td></tr></table></figure><p>这个例子指定 XDP 程序的<code>my_xdp_func</code>优先级应该是 10 并且它的链式调用动作是<code>XDP_PASS</code>and <code>XDP_DROP</code>。在同一个文件中包含多个 XDP 程序的源文件中，可以为每个程序（主要 XDP 函数）包含上述定义。任何未指定任何配置信息的程序都将使用上述默认值。</p><h3 id="检查和修改元数据"><a href="#检查和修改元数据" class="headerlink" title="检查和修改元数据"></a>检查和修改元数据</h3><p><code>libxdp</code>公开了应用程序可用于检查和修改 XDP 程序上的元数据的以下函数。只有在程序附加到接口上之前才能进行修改。这些函数不会修改 BTF 信息本身，但新值将作为程序附件的一部分存储。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__run_prio</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *xdp_prog)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__set_run_prio</span><span class="hljs-params">(struct xdp_program *xdp_prog,</span></span><br><span class="hljs-params"><span class="hljs-function">                              <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> run_prio)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">xdp_program__chain_call_enabled</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *xdp_prog,</span></span><br><span class="hljs-params"><span class="hljs-function">     <span class="hljs-keyword">enum</span> xdp_action action)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__set_chain_call_enabled</span><span class="hljs-params">(struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">                                        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> action,</span></span><br><span class="hljs-params"><span class="hljs-function">                                        <span class="hljs-keyword">bool</span> enabled)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__print_chain_call_actions</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">  <span class="hljs-keyword">char</span> *buf,</span></span><br><span class="hljs-params"><span class="hljs-function">  <span class="hljs-keyword">size_t</span> buf_len)</span></span>;<br></code></pre></td></tr></table></figure><h3 id="调度程序"><a href="#调度程序" class="headerlink" title="调度程序"></a>调度程序</h3><p>为了在同一个网络接口上支持多个非卸载程序， <code>libxdp</code>使用一个<strong>调度程序</strong>，它是一个小的包装程序，它将依次调用每个组件程序，期望返回码，然后基于链调用链调用到下一个程序上一个程序的操作。</p><p>虽然使用的应用程序<code>libxdp</code>不需要知道调度程序的详细信息，只需将 XDP 程序加载到接口，<code>libxdp</code>但确实公开了调度程序及其附加的组件程序，可用于列出当前附加到接口的程序。</p><p>用于此的结构是<code>struct xdp_multiprog</code>，它只能由加载在基于 ifindex 的接口上的程序构建。用于获取 multiprog 引用并遍历附加程序的 API 如下所示：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function">struct xdp_multiprog *<span class="hljs-title">xdp_multiprog__get_from_ifindex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> ifindex)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__next_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">     <span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">xdp_multiprog__close</span><span class="hljs-params">(struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_multiprog__detach</span><span class="hljs-params">(struct xdp_multiprog *mp, <span class="hljs-keyword">int</span> ifindex)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">enum</span> xdp_attach_mode <span class="hljs-title">xdp_multiprog__attach_mode</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__main_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__hw_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">xdp_multiprog__is_legacy</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br></code></pre></td></tr></table></figure><p>如果未卸载程序附加到<code>libxdp</code>无法识别为调度程序的接口，<code>xdp_multiprog</code>则仍将返回一个结构，并将<code>xdp_multiprog__is_legacy()</code>对该程序返回 true（请注意，如果仅加载卸载程序，这也适用） . 可以通过 获得对该（常规）XDP 程序的引用 <code>xdp_multiprog__main_prog()</code>。如果附加到接口的程序<strong>是</strong>调度程序，<code>xdp_multiprog__main_prog()</code>将返回对调度程序本身的引用，这主要用于获取有关该程序的其他数据（例如程序ID）。可以使用 获取对已卸载程序的引用<code>xdp_multiprog_hw_prog()</code>。功能 <code>xdp_multiprog__attach_mode()</code>返回非卸载程序的附加模式，是否附加卸载程序应通过<code>xdp_multiprog_hw_prog()</code>.</p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><p>[1] <a href="https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/">https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/</a></p></li><li><p>[2] <a href="https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html">https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html</a></p></li><li><p>[3] <a href="https://lpc.events/event/4/contributions/460/">https://lpc.events/event/4/contributions/460/</a></p></li><li><p>[4] <a href="https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf">https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf</a></p></li></ul>]]></content>
+    
     
     
     <tags>
       
-      <tag>access control</tag>
+      <tag>eBPF</tag>
       
-      <tag>access control model</tag>
+      <tag>XDP</tag>
       
     </tags>
     

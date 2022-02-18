@@ -1,0 +1,593 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Flynn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 为什么需要多个XDP每个 netdev 只有一个 XDP  hook，因此想要使用 XDP 的应用程序必须拥有 XDP hook。 但是如果用户想要安装多个这样的应用程序怎么办？ 例如 - 应该可以同时运行所有这些：  XDP-基于 DDOS 保护*[1]* XDP-加速 IDS（例如 Suricata）*[2]* 自定义 XDP 程序  2. 如何运行多个XDPlibxdp使用AF_XDP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="挂载多个XDP">
+<meta property="og:url" content="http://eightzero.site/2022/02/09/xdp/index.html">
+<meta property="og:site_name" content="EightZERO">
+<meta property="og:description" content="1. 为什么需要多个XDP每个 netdev 只有一个 XDP  hook，因此想要使用 XDP 的应用程序必须拥有 XDP hook。 但是如果用户想要安装多个这样的应用程序怎么办？ 例如 - 应该可以同时运行所有这些：  XDP-基于 DDOS 保护*[1]* XDP-加速 IDS（例如 Suricata）*[2]* 自定义 XDP 程序  2. 如何运行多个XDPlibxdp使用AF_XDP">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-09T08:18:19.000Z">
+<meta property="article:modified_time" content="2022-02-18T08:58:12.352Z">
+<meta property="article:author" content="Flynn">
+<meta property="article:tag" content="eBPF">
+<meta property="article:tag" content="XDP">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>挂载多个XDP - EightZERO</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eightzero.site","root":"/","version":"1.8.13","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Eight ZERO</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-category-fill"></i>
+                文章分类
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-books"></i>
+                合集
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                链接
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-book"></i>
+                电子书
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/rust-handbook/">
+                    
+                    Rust学习笔记
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/leetcode/">
+                    
+                    LeetCode笔记
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://eightzero.site/prometheus/">
+                    
+                    Prometheus指南
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="挂载多个XDP">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-09 16:18" pubdate>
+        2022年2月9日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      40 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">挂载多个XDP</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-为什么需要多个XDP"><a href="#1-为什么需要多个XDP" class="headerlink" title="1. 为什么需要多个XDP"></a>1. 为什么需要多个XDP</h2><p>每个 netdev 只有一个 XDP  hook，因此想要使用 XDP 的应用程序必须拥有 XDP hook。</p>
+<p>但是如果用户想要安装多个这样的应用程序怎么办？</p>
+<p>例如 - 应该可以同时运行所有这些：</p>
+<ul>
+<li>XDP-基于 DDOS 保护*[1]*</li>
+<li>XDP-加速 IDS（例如 Suricata）*[2]*</li>
+<li>自定义 XDP 程序</li>
+</ul>
+<h2 id="2-如何运行多个XDP"><a href="#2-如何运行多个XDP" class="headerlink" title="2. 如何运行多个XDP"></a>2. 如何运行多个XDP</h2><p><code>libxdp</code>使用AF_XDP sockets将XDP程序绑定到网络接口。<code>libxdp</code>相当轻量，依赖于<code>libbpf</code>处理eBPF等对象文件的工作。</p>
+<p>libxdp基于libbpf之上，提供两个主要的功能：</p>
+<ol>
+<li>在单个网络设备上，按顺序加载多个xdp程序的能力（内核本身不支持），这种支持依赖于内核中的<code>freplace</code>功能。这使得绑定一个eBPF程序来代替另一个已经加载的eBPF程序中的全局函数成为可能。</li>
+<li>用于配置AF_XDP sockets以及从这些sockets读写数据包的辅助函数</li>
+</ol>
+<h3 id="2-1-从应用程序使用-libxdp"><a href="#2-1-从应用程序使用-libxdp" class="headerlink" title="2.1 从应用程序使用 libxdp"></a>2.1 从应用程序使用 libxdp</h3><p>应用程序中 libxdp 的基本用法如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> IFINDEX 1</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">xdp_program</span> *<span class="hljs-title">prog</span>;</span><br><span class="hljs-keyword">int</span> err;<br><br>prog = xdp_program__open_file(<span class="hljs-string">&quot;my-program.o&quot;</span>, <span class="hljs-string">&quot;section_name&quot;</span>, <span class="hljs-literal">NULL</span>);<br># 加载XDP程序的接口<br>err = xdp_program__attach(prog, IFINDEX, XDP_MODE_NATIVE, <span class="hljs-number">0</span>);<br><br># 加载失败了<br><span class="hljs-keyword">if</span> (!err)<br>  # 卸载XDP程序的接口<br>    xdp_program__detach(prog, IFINDEX, XDP_MODE_NATIVE, <span class="hljs-number">0</span>);<br><br>xdp_program__close(prog);<br></code></pre></td></tr></table></figure>
+
+<p>该<code>xdp_program</code>结构是表示单个 XDP 程序结构。</p>
+<p><code>libxdp</code>包含如下三种创建此类结构体的函数：</p>
+<ol>
+<li>从磁盘上的 BPF 对象文件</li>
+<li><code>libbpf</code>的BPF 对象</li>
+<li>已加载到内核中的程序标识符</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_bpf_obj</span><span class="hljs-params">(struct bpf_object *obj,</span></span><br><span class="hljs-params"><span class="hljs-function">					      <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *section_name)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__find_file</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename,</span></span><br><span class="hljs-params"><span class="hljs-function">					   <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *section_name,</span></span><br><span class="hljs-params"><span class="hljs-function">					   struct bpf_object_open_opts *opts)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__open_file</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename,</span></span><br><span class="hljs-params"><span class="hljs-function">					   <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *section_name,</span></span><br><span class="hljs-params"><span class="hljs-function">					   struct bpf_object_open_opts *opts)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_fd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_id</span><span class="hljs-params">(__u32 prog_id)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_program__from_pin</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *pin_path)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>打开 BPF 对象或文件的函数需要 XDP 程序的函数名以及文件名或对象，因为一个 ELF 文件可以包含多个 XDP 程序。<code>xdp_program__find_file()</code>函数采用不带路径的文件名，并将查找<code>LIBXDP_OBJECT_PATH</code>上定义的对象，默认为<code>/usr/lib/bpf</code>（或<code>/usr/lib64/bpf</code>在使用拆分库路径的系统上）。这对于传送预编译的 eBPF 目标文件的应用程序来说很方便。</p>
+<p>该<code>xdp_program__attach()</code>函数将程序附加到一个接口，构建一个调度程序来执行它。可以一次附加多个程序<code>xdp_program__attach_multi()</code>；它们将按照它们的运行优先级排序，并且从一个程序到下一个程序的执行将根据为每个程序定义的链调用动作进行（请参阅下面的<strong>程序元数据</strong>部分）。由于加载过程涉及修改程序的附加类型，因此附加函数仅适用于<code>struct xdp_program</code>尚未加载到内核中的对象。</p>
+<p>当使用附加函数附加到已经加载了 XDP 程序的接口时，libxdp 将尝试将该程序添加到已加载程序的列表中。但是，这可能会失败，原因可能是缺少内核支持，或者是因为未使用与 libxdp 兼容的调度程序加载已附加的程序。如果缺少对增量附加（在内核 5.10 中合并）的内核支持，那么在单个接口上实际运行多个程序的唯一方法是使用 <code>xdp_program__attach_multi()</code>. 如果现有程序不是 XDP 调度程序，则必须先将该程序与接口分离，然后 libxdp 才能附加新程序。这可以通过调用来完成<code>xdp_program__detach()</code>引用加载的程序；但请注意，这当然会破坏任何依赖于存在的其他 XDP 程序的应用程序。</p>
+<h2 id="3-多个XDP实现原理"><a href="#3-多个XDP实现原理" class="headerlink" title="3. 多个XDP实现原理"></a>3. 多个XDP实现原理</h2><p>为了在同一个接口上支持多个 XDP 程序，libxdp 为每个 XDP 程序使用两个元数据：运行优先级和链式调用操作。</p>
+<h3 id="运行优先级"><a href="#运行优先级" class="headerlink" title="运行优先级"></a>运行优先级</h3><p>这是程序的优先级，是一个简单的整数，用于在将多个程序加载到同一界面时对程序进行排序。希望提前运行的程序（如数据包过滤器）应为此设置较低的值，而希望稍后运行的程序（如数据包转发器或计数器）应设置较高的值。请注意，仅当先前的程序以作为其链式调用操作的一部分的返回码结束时，以后的程序才会运行（见下文）。如果未指定，则默认优先级值为 50。</p>
+<h3 id="链式调用动作"><a href="#链式调用动作" class="headerlink" title="链式调用动作"></a>链式调用动作</h3><p>这些是程序为应继续处理的数据包指示的程序返回代码。如果程序返回这些动作之一，调用链中的后续程序将运行，而如果它返回任何其他动作，则处理将被中断，XDP 调度程序将立即返回结果。如果未设置，则默认为 XDP_PASS，这可能是大多数程序应该使用的值。</p>
+<h3 id="指定元数据"><a href="#指定元数据" class="headerlink" title="指定元数据"></a>指定元数据</h3><p>上述元数据被指定为嵌入在包含 XDP 程序的 ELF 文件中的 BTF 信息。<code>xdp_helpers.h</code>附带的文件包含包含此信息的辅助宏，可按如下方式使用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bpf/bpf_helpers.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;xdp/xdp_helpers.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>	__uint(priority, <span class="hljs-number">10</span>);<br>	__uint(XDP_PASS, <span class="hljs-number">1</span>);<br>	__uint(XDP_DROP, <span class="hljs-number">1</span>);<br>&#125; XDP_RUN_CONFIG(my_xdp_func);<br></code></pre></td></tr></table></figure>
+
+<p>这个例子指定 XDP 程序的<code>my_xdp_func</code>优先级应该是 10 并且它的链式调用动作是<code>XDP_PASS</code>and <code>XDP_DROP</code>。在同一个文件中包含多个 XDP 程序的源文件中，可以为每个程序（主要 XDP 函数）包含上述定义。任何未指定任何配置信息的程序都将使用上述默认值。</p>
+<h3 id="检查和修改元数据"><a href="#检查和修改元数据" class="headerlink" title="检查和修改元数据"></a>检查和修改元数据</h3><p><code>libxdp</code>公开了应用程序可用于检查和修改 XDP 程序上的元数据的以下函数。只有在程序附加到接口上之前才能进行修改。这些函数不会修改 BTF 信息本身，但新值将作为程序附件的一部分存储。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__run_prio</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *xdp_prog)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__set_run_prio</span><span class="hljs-params">(struct xdp_program *xdp_prog,</span></span><br><span class="hljs-params"><span class="hljs-function">                              <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> run_prio)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">xdp_program__chain_call_enabled</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *xdp_prog,</span></span><br><span class="hljs-params"><span class="hljs-function">				     <span class="hljs-keyword">enum</span> xdp_action action)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__set_chain_call_enabled</span><span class="hljs-params">(struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">                                        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> action,</span></span><br><span class="hljs-params"><span class="hljs-function">                                        <span class="hljs-keyword">bool</span> enabled)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__print_chain_call_actions</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">					  <span class="hljs-keyword">char</span> *buf,</span></span><br><span class="hljs-params"><span class="hljs-function">					  <span class="hljs-keyword">size_t</span> buf_len)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="调度程序"><a href="#调度程序" class="headerlink" title="调度程序"></a>调度程序</h3><p>为了在同一个网络接口上支持多个非卸载程序， <code>libxdp</code>使用一个<strong>调度程序</strong>，它是一个小的包装程序，它将依次调用每个组件程序，期望返回码，然后基于链调用链调用到下一个程序上一个程序的操作。</p>
+<p>虽然使用的应用程序<code>libxdp</code>不需要知道调度程序的详细信息，只需将 XDP 程序加载到接口，<code>libxdp</code>但确实公开了调度程序及其附加的组件程序，可用于列出当前附加到接口的程序。</p>
+<p>用于此的结构是<code>struct xdp_multiprog</code>，它只能由加载在基于 ifindex 的接口上的程序构建。用于获取 multiprog 引用并遍历附加程序的 API 如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function">struct xdp_multiprog *<span class="hljs-title">xdp_multiprog__get_from_ifindex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> ifindex)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__next_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">					     <span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">xdp_multiprog__close</span><span class="hljs-params">(struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_multiprog__detach</span><span class="hljs-params">(struct xdp_multiprog *mp, <span class="hljs-keyword">int</span> ifindex)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">enum</span> xdp_attach_mode <span class="hljs-title">xdp_multiprog__attach_mode</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__main_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__hw_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">xdp_multiprog__is_legacy</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>如果未卸载程序附加到<code>libxdp</code>无法识别为调度程序的接口，<code>xdp_multiprog</code>则仍将返回一个结构，并将<code>xdp_multiprog__is_legacy()</code>对该程序返回 true（请注意，如果仅加载卸载程序，这也适用） . 可以通过 获得对该（常规）XDP 程序的引用 <code>xdp_multiprog__main_prog()</code>。如果附加到接口的程序<strong>是</strong>调度程序，<code>xdp_multiprog__main_prog()</code>将返回对调度程序本身的引用，这主要用于获取有关该程序的其他数据（例如程序ID）。可以使用 获取对已卸载程序的引用<code>xdp_multiprog_hw_prog()</code>。功能 <code>xdp_multiprog__attach_mode()</code>返回非卸载程序的附加模式，是否附加卸载程序应通过<code>xdp_multiprog_hw_prog()</code>.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><p>[1] <a target="_blank" rel="noopener" href="https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/">https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/</a></p>
+</li>
+<li><p>[2] <a target="_blank" rel="noopener" href="https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html">https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html</a></p>
+</li>
+<li><p>[3] <a target="_blank" rel="noopener" href="https://lpc.events/event/4/contributions/460/">https://lpc.events/event/4/contributions/460/</a></p>
+</li>
+<li><p>[4] <a target="_blank" rel="noopener" href="https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf">https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf</a></p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/eBPF/">eBPF</a>
+                    
+                      <a class="hover-with-bg" href="/tags/XDP/">XDP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/02/14/metallb-01/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">metallb-01</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/01/k8s%E5%A4%9A%E7%A7%9F%E6%88%B7/">
+                        <span class="hidden-mobile">k8s多租户</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <i class="iconfont icon-github-fill"></i> <a href="https://github.com/eightzero" target="_blank" rel="nofollow noopener"><span>eightzero</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

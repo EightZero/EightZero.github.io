@@ -251,15 +251,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/01/26/casbin/" target="_self">
-          casbin教程
+        <a href="/2022/02/18/ebpf-01/" target="_self">
+          eBPF应用开发
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/01/26/casbin/" target="_self">
+        <a href="/2022/02/18/ebpf-01/" target="_self">
           
-          
+          1. eBPF应用开发流程 使用 C 语言开发一个 eBPF 程序 借助 LLVM 把 eBPF 程序编译成 BPF bytecode 通过 bpf 系统调用，把 BPF bytecode提交给内核 内核验证并运行 BPF bytecode，并把相应的状态保存到 BPF maps中 用户程序通过 BPF maps查询 BPF bytecode的运行状态   2. 开发实践BCC 是一个 BPF 编
         </a>
       </p>
 
@@ -267,28 +267,17 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-26 14:21" pubdate>
-              2022-01-26
+            <time datetime="2022-02-18 18:12" pubdate>
+              2022-02-18
             </time>
           </div>
         
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">访问控制</a>
-            
-          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/access-control/">access control</a>
-            
-              <a href="/tags/access-control-model/">access control model</a>
-            
-              <a href="/tags/casbin/">casbin</a>
+              <a href="/tags/ebpf/">ebpf</a>
             
           </div>
         
@@ -302,13 +291,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/01/26/RBAC/" target="_self">
-          访问控制2：RBAC
+        <a href="/2022/02/15/cilium-xdp/" target="_self">
+          cilium-XDP
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/01/26/RBAC/" target="_self">
+        <a href="/2022/02/15/cilium-xdp/" target="_self">
           
           
         </a>
@@ -318,8 +307,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-26 14:17" pubdate>
-              2022-01-26
+            <time datetime="2022-02-15 14:55" pubdate>
+              2022-02-15
             </time>
           </div>
         
@@ -327,7 +316,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">访问控制</a>
+              <a href="/categories/cilium%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">cilium源码解析</a>
             
           </div>
         
@@ -335,11 +324,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/access-control/">access control</a>
+              <a href="/tags/cilium/">cilium</a>
             
-              <a href="/tags/access-control-model/">access control model</a>
-            
-              <a href="/tags/RBAC/">RBAC</a>
+              <a href="/tags/xdp/">xdp</a>
             
           </div>
         
@@ -353,15 +340,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/01/26/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/" target="_self">
-          访问控制1：访问控制概述
+        <a href="/2022/02/14/metallb-01/" target="_self">
+          metallb-01
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/01/26/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/" target="_self">
+        <a href="/2022/02/14/metallb-01/" target="_self">
           
-          访问控制是识别从事特定工作的人，通过查看他们的身份来验证他们的身份，然后只给那个人他们需要访问的门或计算机的钥匙，仅此而已。在信息安全领域，人们会将其视为通过用户名和密码授予个人访问网络的权限，允许他们访问该人所需的文件、计算机或其他硬件或软件，并确保他们拥有权利完成工作的权限级别（即只读）。那么，如何向个人授予适当级别的权限，以便他们能够履行职责呢？这就是访问控制模型发挥作用的地方。 访问控制模
+          
         </a>
       </p>
 
@@ -369,26 +356,52 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-26 11:49" pubdate>
-              2022-01-26
+            <time datetime="2022-02-14 15:55" pubdate>
+              2022-02-14
             </time>
           </div>
         
         
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/09/xdp/" target="_self">
+          挂载多个XDP
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/09/xdp/" target="_self">
+          
+          1. 为什么需要多个XDP每个 netdev 只有一个 XDP  hook，因此想要使用 XDP 的应用程序必须拥有 XDP hook。 但是如果用户想要安装多个这样的应用程序怎么办？ 例如 - 应该可以同时运行所有这些：  XDP-基于 DDOS 保护*[1]* XDP-加速 IDS（例如 Suricata）*[2]* 自定义 XDP 程序  2. 如何运行多个XDPlibxdp使用AF_XDP
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
           <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">访问控制</a>
-            
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-09 16:18" pubdate>
+              2022-02-09
+            </time>
           </div>
+        
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/access-control/">access control</a>
+              <a href="/tags/eBPF/">eBPF</a>
             
-              <a href="/tags/access-control-model/">access control model</a>
+              <a href="/tags/XDP/">XDP</a>
             
           </div>
         
@@ -607,46 +620,6 @@
           </div>
         
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/11/28/go%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90goroutine/" target="_self">
-          go深入解析goroutine
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/11/28/go%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90goroutine/" target="_self">
-          
-          Goroutine Scheduler 概述调度器是go语言运行时最核心的内容，其基本理论建立在三种基本对象（系统线程对象M，抽象处理器对象P，goroutine对象G）  M、P、G关系GO运行时存在两种类型队列（queue）：  全局queue 每个P维护自己的G的queue   基本对象数据结构MPG 调用go func()&amp;#123;...&amp;#125;()起一个协程，都会创建一个gorou
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-11-28 14:24" pubdate>
-              2019-11-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/go/">go</a>
-            
-          </div>
         
       </div>
     </article>
