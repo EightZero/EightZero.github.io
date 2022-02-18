@@ -291,6 +291,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/02/18/libxdp/" target="_self">
+          libxdp实现原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/18/libxdp/" target="_self">
+          
+          为了在同一个接口上支持多个 XDP 程序，libxdp 为每个 XDP 程序使用两个元数据：运行优先级和链式调用操作。 运行优先级这是程序的优先级，是一个简单的整数，用于在将多个程序加载到同一界面时对程序进行排序。希望提前运行的程序（如数据包过滤器）应为此设置较低的值，而希望稍后运行的程序（如数据包转发器或计数器）应设置较高的值。请注意，仅当先前的程序以作为其链式调用操作的一部分的返回码结束时，以
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-18 17:03" pubdate>
+              2022-02-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xdp/">xdp</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/02/15/cilium-xdp/" target="_self">
           cilium-XDP
         </a>
@@ -583,39 +623,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2021-10-08 10:43" pubdate>
               2021-10-08
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/" target="_self">
-          kubernetes集群安装Flink
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/11/30/kubernetes%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85Flink/" target="_self">
-          
-          1、创建flink configmap1kubectl create -f flink-configuration-configmap.yaml   flink-configuration-configmap.yaml  1234567891011121314151617181920212223242526apiVersion: v1kind: ConfigMapmetadata:  name:
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-11-30 14:28" pubdate>
-              2019-11-30
             </time>
           </div>
         

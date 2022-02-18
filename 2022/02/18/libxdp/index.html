@@ -16,23 +16,21 @@
   <meta name="author" content="Flynn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. eBPF应用开发流程 使用 C 语言开发一个 eBPF 程序 借助 LLVM 把 eBPF 程序编译成 BPF bytecode 通过 bpf 系统调用，把 BPF bytecode提交给内核 内核验证并运行 BPF bytecode，并把相应的状态保存到 BPF maps中 用户程序通过 BPF maps查询 BPF bytecode的运行状态   2. 开发实践BCC 是一个 BPF 编">
+    <meta name="description" content="为了在同一个接口上支持多个 XDP 程序，libxdp 为每个 XDP 程序使用两个元数据：运行优先级和链式调用操作。 运行优先级这是程序的优先级，是一个简单的整数，用于在将多个程序加载到同一界面时对程序进行排序。希望提前运行的程序（如数据包过滤器）应为此设置较低的值，而希望稍后运行的程序（如数据包转发器或计数器）应设置较高的值。请注意，仅当先前的程序以作为其链式调用操作的一部分的返回码结束时，以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="eBPF应用开发">
-<meta property="og:url" content="http://eightzero.site/2022/02/18/ebpf-01/index.html">
+<meta property="og:title" content="libxdp实现原理">
+<meta property="og:url" content="http://eightzero.site/2022/02/18/libxdp/index.html">
 <meta property="og:site_name" content="EightZERO">
-<meta property="og:description" content="1. eBPF应用开发流程 使用 C 语言开发一个 eBPF 程序 借助 LLVM 把 eBPF 程序编译成 BPF bytecode 通过 bpf 系统调用，把 BPF bytecode提交给内核 内核验证并运行 BPF bytecode，并把相应的状态保存到 BPF maps中 用户程序通过 BPF maps查询 BPF bytecode的运行状态   2. 开发实践BCC 是一个 BPF 编">
+<meta property="og:description" content="为了在同一个接口上支持多个 XDP 程序，libxdp 为每个 XDP 程序使用两个元数据：运行优先级和链式调用操作。 运行优先级这是程序的优先级，是一个简单的整数，用于在将多个程序加载到同一界面时对程序进行排序。希望提前运行的程序（如数据包过滤器）应为此设置较低的值，而希望稍后运行的程序（如数据包转发器或计数器）应设置较高的值。请注意，仅当先前的程序以作为其链式调用操作的一部分的返回码结束时，以">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/eightzero/pico/raw/master/ebpf-dev-01.png">
-<meta property="article:published_time" content="2022-02-18T10:12:54.000Z">
-<meta property="article:modified_time" content="2022-02-18T09:00:08.876Z">
+<meta property="article:published_time" content="2022-02-18T09:03:37.000Z">
+<meta property="article:modified_time" content="2022-02-18T09:04:39.231Z">
 <meta property="article:author" content="Flynn">
-<meta property="article:tag" content="ebpf">
+<meta property="article:tag" content="xdp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/eightzero/pico/raw/master/ebpf-dev-01.png">
   
   
-  <title>eBPF应用开发 - EightZERO</title>
+  <title>libxdp实现原理 - EightZERO</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -238,7 +236,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="eBPF应用开发">
+            <span class="h2" id="subtitle" title="libxdp实现原理">
               
             </span>
 
@@ -248,8 +246,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-18 18:12" pubdate>
-        2022年2月18日 晚上
+      <time datetime="2022-02-18 17:03" pubdate>
+        2022年2月18日 下午
       </time>
     </span>
   
@@ -259,7 +257,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      2.4k 字
     </span>
   
 
@@ -268,7 +266,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10 分钟
+      21 分钟
     </span>
   
 
@@ -297,29 +295,25 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">eBPF应用开发</h1>
+            <h1 style="display: none">libxdp实现原理</h1>
             
             <div class="markdown-body">
-              <h1 id="1-eBPF应用开发流程"><a href="#1-eBPF应用开发流程" class="headerlink" title="1. eBPF应用开发流程"></a>1. eBPF应用开发流程</h1><ol>
-<li>使用 C 语言开发一个 eBPF 程序</li>
-<li>借助 LLVM 把 eBPF 程序编译成 BPF bytecode</li>
-<li>通过 bpf 系统调用，把 BPF bytecode提交给内核</li>
-<li>内核验证并运行 BPF bytecode，并把相应的状态保存到 BPF maps中</li>
-<li>用户程序通过 BPF maps查询 BPF bytecode的运行状态</li>
-</ol>
-<p><img src="https://gitee.com/eightzero/pico/raw/master/ebpf-dev-01.png" srcset="/img/loading.gif" lazyload alt="ebpf-dev-01"></p>
-<h1 id="2-开发实践"><a href="#2-开发实践" class="headerlink" title="2. 开发实践"></a>2. 开发实践</h1><p>BCC 是一个 BPF 编译器集合，包含了用于构建 BPF 程序的编程框架和库，并提供了大量可以直接使用的工具。使用 BCC 的好处是，<strong>它把上述的 eBPF 执行过程通过内置框架抽象了起来，并提供了 Python、C++ 等编程语言接口</strong>。这样，就可以直接通过 Python 语言去跟 eBPF 的各种事件和数据进行交互。</p>
-<p>以跟踪 <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/open.2.html">openat()</a>（即打开文件）这个系统调用为例，看看如何开发并运行第一个 eBPF 程序。</p>
-<h2 id="2-1-使用-C-开发一个-eBPF-程序"><a href="#2-1-使用-C-开发一个-eBPF-程序" class="headerlink" title="2.1 使用 C 开发一个 eBPF 程序"></a>2.1 使用 C 开发一个 eBPF 程序</h2><p>新建一个 <code>hello.c</code> 文件:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hello_world</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *ctx)</span></span><br><span class="hljs-function"></span>&#123;<br>    bpf_trace_printk(<span class="hljs-string">&quot;Hello, World!&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+              <p>为了在同一个接口上支持多个 XDP 程序，libxdp 为每个 XDP 程序使用两个元数据：运行优先级和链式调用操作。</p>
+<h3 id="运行优先级"><a href="#运行优先级" class="headerlink" title="运行优先级"></a>运行优先级</h3><p>这是程序的优先级，是一个简单的整数，用于在将多个程序加载到同一界面时对程序进行排序。希望提前运行的程序（如数据包过滤器）应为此设置较低的值，而希望稍后运行的程序（如数据包转发器或计数器）应设置较高的值。请注意，仅当先前的程序以作为其链式调用操作的一部分的返回码结束时，以后的程序才会运行（见下文）。如果未指定，则默认优先级值为 50。</p>
+<h3 id="链式调用动作"><a href="#链式调用动作" class="headerlink" title="链式调用动作"></a>链式调用动作</h3><p>这些是程序为应继续处理的数据包指示的程序返回代码。如果程序返回这些动作之一，调用链中的后续程序将运行，而如果它返回任何其他动作，则处理将被中断，XDP 调度程序将立即返回结果。如果未设置，则默认为 XDP_PASS，这可能是大多数程序应该使用的值。</p>
+<h3 id="指定元数据"><a href="#指定元数据" class="headerlink" title="指定元数据"></a>指定元数据</h3><p>上述元数据被指定为嵌入在包含 XDP 程序的 ELF 文件中的 BTF 信息。<code>xdp_helpers.h</code>附带的文件包含包含此信息的辅助宏，可按如下方式使用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bpf/bpf_helpers.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;xdp/xdp_helpers.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>	__uint(priority, <span class="hljs-number">10</span>);<br>	__uint(XDP_PASS, <span class="hljs-number">1</span>);<br>	__uint(XDP_DROP, <span class="hljs-number">1</span>);<br>&#125; XDP_RUN_CONFIG(my_xdp_func);<br></code></pre></td></tr></table></figure>
 
-<p> <code>bpf_trace_printk()</code> 是一个最常用的 BPF 辅助函数，它的作用是输出一段字符串。不过，由于 eBPF 运行在内核中，它的输出并不是通常的标准输出（stdout），而是内核调试文件 <code>/sys/kernel/debug/tracing/trace_pipe</code> ，可以直接使用 <code>cat</code> 命令来查看这个文件的内容</p>
-<h2 id="2-2-使用-Python-和-BCC-库开发一个用户态程序"><a href="#2-2-使用-Python-和-BCC-库开发一个用户态程序" class="headerlink" title="2.2 使用 Python 和 BCC 库开发一个用户态程序"></a>2.2 使用 Python 和 BCC 库开发一个用户态程序</h2><p>新建一个 <code>hello.py</code> 文件:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-comment"># 1) 导入了 BCC 库的 BPF 模块，以便接下来调用</span><br><span class="hljs-keyword">from</span> bcc <span class="hljs-keyword">import</span> BPF<br><br><span class="hljs-comment"># 2) 调用 BPF() 加载第一步开发的 BPF 源代码</span><br>b = BPF(src_file=<span class="hljs-string">&quot;hello.c&quot;</span>)<br><span class="hljs-comment"># 3) 将 BPF 程序挂载到内核探针(kprobe)其中 do_sys_openat2() 是系统调用 openat() 在内核中的实现</span><br>b.attach_kprobe(event=<span class="hljs-string">&quot;do_sys_openat2&quot;</span>, fn_name=<span class="hljs-string">&quot;hello_world&quot;</span>)<br><span class="hljs-comment"># 4) 读取内核调试文件 /sys/kernel/debug/tracing/trace_pipe 的内容，并打印到标准输出中</span><br>b.trace_print()<br></code></pre></td></tr></table></figure>
+<p>这个例子指定 XDP 程序的<code>my_xdp_func</code>优先级应该是 10 并且它的链式调用动作是<code>XDP_PASS</code>and <code>XDP_DROP</code>。在同一个文件中包含多个 XDP 程序的源文件中，可以为每个程序（主要 XDP 函数）包含上述定义。任何未指定任何配置信息的程序都将使用上述默认值。</p>
+<h3 id="检查和修改元数据"><a href="#检查和修改元数据" class="headerlink" title="检查和修改元数据"></a>检查和修改元数据</h3><p><code>libxdp</code>公开了应用程序可用于检查和修改 XDP 程序上的元数据的以下函数。只有在程序附加到接口上之前才能进行修改。这些函数不会修改 BTF 信息本身，但新值将作为程序附件的一部分存储。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__run_prio</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *xdp_prog)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__set_run_prio</span><span class="hljs-params">(struct xdp_program *xdp_prog,</span></span><br><span class="hljs-params"><span class="hljs-function">                              <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> run_prio)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">xdp_program__chain_call_enabled</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *xdp_prog,</span></span><br><span class="hljs-params"><span class="hljs-function">				     <span class="hljs-keyword">enum</span> xdp_action action)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__set_chain_call_enabled</span><span class="hljs-params">(struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">                                        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> action,</span></span><br><span class="hljs-params"><span class="hljs-function">                                        <span class="hljs-keyword">bool</span> enabled)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_program__print_chain_call_actions</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">					  <span class="hljs-keyword">char</span> *buf,</span></span><br><span class="hljs-params"><span class="hljs-function">					  <span class="hljs-keyword">size_t</span> buf_len)</span></span>;<br></code></pre></td></tr></table></figure>
 
-<h2 id="2-3-执行-eBPF-程序"><a href="#2-3-执行-eBPF-程序" class="headerlink" title="2.3 执行 eBPF 程序"></a>2.3 执行 eBPF 程序</h2><p>用户态程序开发完成之后，最后一步就是执行它了。需要注意的是， eBPF 程序需要以 root 用户来运行，非 root 用户需要加上 sudo 来执行：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">$ chmod +x hello.py<br>$ sudo ./hello.py<br></code></pre></td></tr></table></figure>
+<h3 id="调度程序"><a href="#调度程序" class="headerlink" title="调度程序"></a>调度程序</h3><p>为了在同一个网络接口上支持多个非卸载程序， <code>libxdp</code>使用一个<strong>调度程序</strong>，它是一个小的包装程序，它将依次调用每个组件程序，期望返回码，然后基于链调用链调用到下一个程序上一个程序的操作。</p>
+<p>虽然使用的应用程序<code>libxdp</code>不需要知道调度程序的详细信息，只需将 XDP 程序加载到接口，<code>libxdp</code>但确实公开了调度程序及其附加的组件程序，可用于列出当前附加到接口的程序。</p>
+<p>用于此的结构是<code>struct xdp_multiprog</code>，它只能由加载在基于 ifindex 的接口上的程序构建。用于获取 multiprog 引用并遍历附加程序的 API 如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function">struct xdp_multiprog *<span class="hljs-title">xdp_multiprog__get_from_ifindex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> ifindex)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__next_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_program *prog,</span></span><br><span class="hljs-params"><span class="hljs-function">					     <span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">xdp_multiprog__close</span><span class="hljs-params">(struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">xdp_multiprog__detach</span><span class="hljs-params">(struct xdp_multiprog *mp, <span class="hljs-keyword">int</span> ifindex)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">enum</span> xdp_attach_mode <span class="hljs-title">xdp_multiprog__attach_mode</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__main_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function">struct xdp_program *<span class="hljs-title">xdp_multiprog__hw_prog</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">xdp_multiprog__is_legacy</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct xdp_multiprog *mp)</span></span>;<br></code></pre></td></tr></table></figure>
 
+<p>如果未卸载程序附加到<code>libxdp</code>无法识别为调度程序的接口，<code>xdp_multiprog</code>则仍将返回一个结构，并将<code>xdp_multiprog__is_legacy()</code>对该程序返回 true（请注意，如果仅加载卸载程序，这也适用） . 可以通过 获得对该（常规）XDP 程序的引用 <code>xdp_multiprog__main_prog()</code>。如果附加到接口的程序<strong>是</strong>调度程序，<code>xdp_multiprog__main_prog()</code>将返回对调度程序本身的引用，这主要用于获取有关该程序的其他数据（例如程序ID）。可以使用 获取对已卸载程序的引用<code>xdp_multiprog_hw_prog()</code>。功能 <code>xdp_multiprog__attach_mode()</code>返回非卸载程序的附加模式，是否附加卸载程序应通过<code>xdp_multiprog_hw_prog()</code>.</p>
 
             </div>
             <hr>
@@ -330,7 +324,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/ebpf/">ebpf</a>
+                      <a class="hover-with-bg" href="/tags/xdp/">xdp</a>
                     
                   </div>
                 
@@ -347,12 +341,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/02/18/ebpf-01/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">eBPF应用开发</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/18/libxdp/">
-                        <span class="hidden-mobile">libxdp实现原理</span>
+                      <a href="/2022/02/15/cilium-xdp/">
+                        <span class="hidden-mobile">cilium-XDP</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
