@@ -42,46 +42,6 @@
   
   
   <entry>
-    <title>cilium-XDP</title>
-    <link href="/2022/02/15/cilium-xdp/"/>
-    <url>/2022/02/15/cilium-xdp/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    <categories>
-      
-      <category>cilium源码解析</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>cilium</tag>
-      
-      <tag>xdp</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>metallb-01</title>
-    <link href="/2022/02/14/metallb-01/"/>
-    <url>/2022/02/14/metallb-01/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>挂载多个XDP</title>
     <link href="/2022/02/09/xdp/"/>
     <url>/2022/02/09/xdp/</url>
