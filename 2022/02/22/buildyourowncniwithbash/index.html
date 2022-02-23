@@ -16,20 +16,20 @@
   <meta name="author" content="Flynn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Manacher’s Algorithm 马拉车算法马拉车算法用来查找一个字符串的最长回文子串的线性方法 传统查找最长回文串方法：以每个字符为中心，向两边寻找回文子串，遍历完整数组后，就可以找到最长回文子串，但是复杂度为O(n*n)">
+    <meta name="description" content="https:&#x2F;&#x2F;www.altoros.com&#x2F;blog&#x2F;kubernetes-networking-writing-your-own-simple-cni-plug-in-with-bash&#x2F;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="马拉车算法">
-<meta property="og:url" content="http://eightzero.site/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="buildyourowncniwithbash">
+<meta property="og:url" content="http://eightzero.site/2022/02/22/buildyourowncniwithbash/index.html">
 <meta property="og:site_name" content="EightZERO">
-<meta property="og:description" content="Manacher’s Algorithm 马拉车算法马拉车算法用来查找一个字符串的最长回文子串的线性方法 传统查找最长回文串方法：以每个字符为中心，向两边寻找回文子串，遍历完整数组后，就可以找到最长回文子串，但是复杂度为O(n*n)">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.altoros.com&#x2F;blog&#x2F;kubernetes-networking-writing-your-own-simple-cni-plug-in-with-bash&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-05-03T15:21:03.000Z">
-<meta property="article:modified_time" content="2021-10-08T11:42:06.631Z">
+<meta property="article:published_time" content="2022-02-22T03:58:12.000Z">
+<meta property="article:modified_time" content="2022-02-22T03:59:25.653Z">
 <meta property="article:author" content="Flynn">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>马拉车算法 - EightZERO</title>
+  <title>buildyourowncniwithbash - EightZERO</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -235,7 +235,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="马拉车算法">
+            <span class="h2" id="subtitle" title="buildyourowncniwithbash">
               
             </span>
 
@@ -245,8 +245,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2019-05-03 23:21" pubdate>
-        2019年5月3日 晚上
+      <time datetime="2022-02-22 11:58" pubdate>
+        2022年2月22日 中午
       </time>
     </span>
   
@@ -256,7 +256,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      97 字
     </span>
   
 
@@ -265,7 +265,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10 分钟
+      1 分钟
     </span>
   
 
@@ -294,323 +294,12 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">马拉车算法</h1>
+            <h1 style="display: none">buildyourowncniwithbash</h1>
             
             <div class="markdown-body">
-              <h3 id="Manacher’s-Algorithm-马拉车算法"><a href="#Manacher’s-Algorithm-马拉车算法" class="headerlink" title="Manacher’s Algorithm 马拉车算法"></a>Manacher’s Algorithm 马拉车算法</h3><p>马拉车算法用来查找一个字符串的最长回文子串的线性方法</p>
-<p>传统查找最长回文串方法：以每个字符为中心，向两边寻找回文子串，遍历完整数组后，就可以找到最长回文子串，但是复杂度为O(n*n)</p>
-<span id="more"></span>
-
-<p>马拉车算法推导过程：</p>
-<ol>
-<li><p><strong>预处理</strong></p>
-<p>在每个字符的左右都加上一个特殊字符，比如“#”</p>
-<p>bob    –&gt;    #b#o#b#</p>
-<p>noon    –&gt;    #n#o#o#n# </p>
-<p>不论原字符串是奇数还是偶数，处理之后得到的字符串个数都是奇数个，就不用分奇偶两种情况讨论。</p>
-</li>
-<li><p><strong>新建一个和预处理后的字符串数组t等长的数组p，p[i]表示以t[i]字符为中心的回文子串的半径</strong></p>
-<p>预处理后的得到字符串数组t。</p>
-<p>在回文子串半径数组Pt中，1表示t[i]本身，即该处无回文子串：</p>
-<table>
-<thead>
-<tr>
-<th>数组下标</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>原始字符串s</td>
-<td>a</td>
-<td>b</td>
-<td>b</td>
-<td>a</td>
-<td>b</td>
-<td>b</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>预处理后的数组t</td>
-<td>#</td>
-<td>a</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>a</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-</tr>
-<tr>
-<td>回文子串半径数组Pt</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>5</td>
-<td>2</td>
-<td>1</td>
-<td>6</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>2</td>
-<td>1</td>
-</tr>
-</tbody></table>
-<p>预处理后的字符串t中如果存在回文子串的话，存在如下特征：</p>
-<ul>
-<li><p><strong>原始回文子串的长度 = 预处理后回文子串的半径 - 1</strong></p>
-<p>以第2个a为中心的回文串半径为6</p>
-<p>而原始回文子串的长度“abbabb”的回文串长度为5</p>
-</li>
-<li><p><strong>原始回文子串的起始位置 = 预处理后回文子串的中心位置 - 预处理后回文子串的半径</strong></p>
-<p>预处理后回文子串中心位置为第2个a所在的位置：7</p>
-<p>预处理后回文子串的半径：6</p>
-<p>而原始回文子串“bbabb”的位置为第1个b所在的位置：1</p>
-</li>
+              <ul>
+<li><a target="_blank" rel="noopener" href="https://www.altoros.com/blog/kubernetes-networking-writing-your-own-simple-cni-plug-in-with-bash/">https://www.altoros.com/blog/kubernetes-networking-writing-your-own-simple-cni-plug-in-with-bash/</a></li>
 </ul>
-</li>
-<li><p><strong>二次处理，数组t[0]插入一个原字符串未出现的字符，防止数组越界</strong></p>
-<table>
-<thead>
-<tr>
-<th>数组下标</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>原始字符串s</td>
-<td>b</td>
-<td>o</td>
-<td>n</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>预处理后的数组t</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>o</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-</tr>
-<tr>
-<td>回文子串半径数组Pt</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>4</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-</tr>
-</tbody></table>
-<p>如果不经过二次处理，在t[0]插入一个原字符串未出现的字符。在上面的这种场景下，会发生预处理后回文子串的中心位置（3） - 预处理后回文子串的半径（4）= -1，产生了数组越界。</p>
-<p>二次处理后得到字符串数组f：</p>
-<table>
-<thead>
-<tr>
-<th>数组下标</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>原始字符串s</td>
-<td>b</td>
-<td>o</td>
-<td>b</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>预处理后的数组t</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>o</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td></td>
-</tr>
-<tr>
-<td>回文子串半径数组Pt</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>4</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>二次处理后的数组f</td>
-<td>$</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>o</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-</tr>
-<tr>
-<td>回文子串半径数组Pf</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>4</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-</tr>
-</tbody></table>
-<p>此时原始回文子串的起始位置 = 预处理后回文子串的中心位置（4） - 预处理后回文子串的半径（4）= 0  </p>
-</li>
-<li><p>考虑</p>
-<table>
-<thead>
-<tr>
-<th>数组下标</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-<th>13</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>原始字符串s</td>
-<td>a</td>
-<td>b</td>
-<td>b</td>
-<td>a</td>
-<td>b</td>
-<td>b</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>预处理后的数组t</td>
-<td>#</td>
-<td>a</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>a</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td></td>
-</tr>
-<tr>
-<td>二次处理后的数组f</td>
-<td>$</td>
-<td>#</td>
-<td>a</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>a</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-<td>b</td>
-<td>#</td>
-</tr>
-<tr>
-<td>回文子串半径数组Pf</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>5</td>
-<td>2</td>
-<td>1</td>
-<td>6</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>2</td>
-<td>1</td>
-</tr>
-</tbody></table>
-</li>
-</ol>
-<p>此时原始回文子串的起始位置 = 预处理后回文子串的中心位置（8） - 预处理后回文子串的半径（6）= 2</p>
-<p>   需再除以2。</p>
-<ol start="5">
-<li>如何求数组P</li>
-</ol>
-<p><strong>上述过程总结为一行代码</strong>：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">p[i] = mx &gt; i ? min( p[<span class="hljs-number">2</span>*id - i], mx - i ) : i <br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -631,18 +320,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2019/05/08/default-token/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">default-token</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2018/10/03/kubernetes%E4%B8%8B%E7%9A%84DNS/">
-                        <span class="hidden-mobile">kubernetes下的DNS</span>
+                      <a href="/2022/02/21/cilium-bgp-metallb/">
+                        <span class="hidden-mobile">cilium集群中使用metallb BGP模式访问服务</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

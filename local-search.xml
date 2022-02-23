@@ -4,6 +4,42 @@
   
   
   <entry>
+    <title>buildyourowncniwithbash</title>
+    <link href="/2022/02/22/buildyourowncniwithbash/"/>
+    <url>/2022/02/22/buildyourowncniwithbash/</url>
+    
+    <content type="html"><![CDATA[<ul><li><a href="https://www.altoros.com/blog/kubernetes-networking-writing-your-own-simple-cni-plug-in-with-bash/">https://www.altoros.com/blog/kubernetes-networking-writing-your-own-simple-cni-plug-in-with-bash/</a></li></ul>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>cilium集群中使用metallb BGP模式访问服务</title>
+    <link href="/2022/02/21/cilium-bgp-metallb/"/>
+    <url>/2022/02/21/cilium-bgp-metallb/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Cilium安装和配置"><a href="#Cilium安装和配置" class="headerlink" title="Cilium安装和配置"></a>Cilium安装和配置</h1><p>Cilium 原生支持通过 BGP 发布服务的 LoadBalancer IP 和 Kubernetes 节点的 Pod CIDR 范围。它利用 MetalLB 简单有效的 IP 分配实现和最小的 BGP 协议支持来做到这一点。 Cilium 的配置与 MetalLB 的配置相同，</p><p>需要开启以下三个配置项：</p><ul><li>bgp.enabled</li><li>bgp.announce.loadbalancerIP</li><li>bgp.announce.podCIDR</li></ul><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh">helm install cilium cilium/cilium --version 1.11.1 \<br>  --namespace kube-system \<br>  --<span class="hljs-built_in">set</span> kubeProxyReplacement=strict \<br>  --<span class="hljs-built_in">set</span> k8sServiceHost=192.168.92.132 \<br>  --<span class="hljs-built_in">set</span> k8sServicePort=6443 \<br>  --<span class="hljs-built_in">set</span> bgp.enabled=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> bgp.announce.loadbalancerIP=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> bgp.announce.podCIDR=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> hubble.relay.enabled=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> hubble.ui.enabled=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>cilium</tag>
+      
+      <tag>bgp</tag>
+      
+      <tag>metallb</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>eBPF应用开发</title>
     <link href="/2022/02/18/ebpf-01/"/>
     <url>/2022/02/18/ebpf-01/</url>
@@ -272,19 +308,6 @@
     <url>/2019/05/08/default-token/</url>
     
     <content type="html"><![CDATA[<p>default-token得先从service account说起，Service account是Pod里面的进程调用Kubernetes API或其他外部服务而设计的，每个namespace下有一个名为default的默认的ServiceAccount对象，如下图：</p><p><img src="https://gitee.com/eightzero/pico/raw/master/202110081409513.png" alt="3_4_1_serviceaccount"></p><p>Token controller监测service account的创建，并为它们创建默认token，即每个ServiceAccount都有一个名叫<code>&#123;Service Account name&#125;-token-xxx</code>的default token。在新建pod时，会自动挂载当前namespace的default token到pod的secrets下，用于Pod进程访问API Server。如下图：</p><p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410657.png" alt="3_4_1_svc_token-1"></p><p>default-token实际上就是secret，由于每个namespace下有一个名为default的默认的ServiceAccount对象，因此，每个namespaces下都有一个名为<code>default-token-xxx</code>的secret，如下图：</p><p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410689.png" alt="3_4_1_ns_token"></p><p>default-token自动刷新就是为每个default-token设置一个过期时间（24小时）。到期后，去IAM重新获取新的token更新到default-token中，如下图：</p><p><img src="https://gitee.com/eightzero/pico/raw/master/202110081410936.png" alt="3_4_1_token_refresh"></p>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>马拉车算法</title>
-    <link href="/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/"/>
-    <url>/2019/05/03/%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95/</url>
-    
-    <content type="html"><![CDATA[<h3 id="Manacher’s-Algorithm-马拉车算法"><a href="#Manacher’s-Algorithm-马拉车算法" class="headerlink" title="Manacher’s Algorithm 马拉车算法"></a>Manacher’s Algorithm 马拉车算法</h3><p>马拉车算法用来查找一个字符串的最长回文子串的线性方法</p><p>传统查找最长回文串方法：以每个字符为中心，向两边寻找回文子串，遍历完整数组后，就可以找到最长回文子串，但是复杂度为O(n*n)</p><span id="more"></span><p>马拉车算法推导过程：</p><ol><li><p><strong>预处理</strong></p><p>在每个字符的左右都加上一个特殊字符，比如“#”</p><p>bob    –&gt;    #b#o#b#</p><p>noon    –&gt;    #n#o#o#n# </p><p>不论原字符串是奇数还是偶数，处理之后得到的字符串个数都是奇数个，就不用分奇偶两种情况讨论。</p></li><li><p><strong>新建一个和预处理后的字符串数组t等长的数组p，p[i]表示以t[i]字符为中心的回文子串的半径</strong></p><p>预处理后的得到字符串数组t。</p><p>在回文子串半径数组Pt中，1表示t[i]本身，即该处无回文子串：</p><table><thead><tr><th>数组下标</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead><tbody><tr><td>原始字符串s</td><td>a</td><td>b</td><td>b</td><td>a</td><td>b</td><td>b</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>预处理后的数组t</td><td>#</td><td>a</td><td>#</td><td>b</td><td>#</td><td>b</td><td>#</td><td>a</td><td>#</td><td>b</td><td>#</td><td>b</td><td>#</td></tr><tr><td>回文子串半径数组Pt</td><td>1</td><td>2</td><td>1</td><td>2</td><td>5</td><td>2</td><td>1</td><td>6</td><td>1</td><td>2</td><td>3</td><td>2</td><td>1</td></tr></tbody></table><p>预处理后的字符串t中如果存在回文子串的话，存在如下特征：</p><ul><li><p><strong>原始回文子串的长度 = 预处理后回文子串的半径 - 1</strong></p><p>以第2个a为中心的回文串半径为6</p><p>而原始回文子串的长度“abbabb”的回文串长度为5</p></li><li><p><strong>原始回文子串的起始位置 = 预处理后回文子串的中心位置 - 预处理后回文子串的半径</strong></p><p>预处理后回文子串中心位置为第2个a所在的位置：7</p><p>预处理后回文子串的半径：6</p><p>而原始回文子串“bbabb”的位置为第1个b所在的位置：1</p></li></ul></li><li><p><strong>二次处理，数组t[0]插入一个原字符串未出现的字符，防止数组越界</strong></p><table><thead><tr><th>数组下标</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead><tbody><tr><td>原始字符串s</td><td>b</td><td>o</td><td>n</td><td></td><td></td><td></td><td></td></tr><tr><td>预处理后的数组t</td><td>#</td><td>b</td><td>#</td><td>o</td><td>#</td><td>b</td><td>#</td></tr><tr><td>回文子串半径数组Pt</td><td>1</td><td>2</td><td>1</td><td>4</td><td>1</td><td>2</td><td>1</td></tr></tbody></table><p>如果不经过二次处理，在t[0]插入一个原字符串未出现的字符。在上面的这种场景下，会发生预处理后回文子串的中心位置（3） - 预处理后回文子串的半径（4）= -1，产生了数组越界。</p><p>二次处理后得到字符串数组f：</p><table><thead><tr><th>数组下标</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td>原始字符串s</td><td>b</td><td>o</td><td>b</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>预处理后的数组t</td><td>#</td><td>b</td><td>#</td><td>o</td><td>#</td><td>b</td><td>#</td><td></td></tr><tr><td>回文子串半径数组Pt</td><td>1</td><td>2</td><td>1</td><td>4</td><td>1</td><td>2</td><td>1</td><td></td></tr><tr><td>二次处理后的数组f</td><td>$</td><td>#</td><td>b</td><td>#</td><td>o</td><td>#</td><td>b</td><td>#</td></tr><tr><td>回文子串半径数组Pf</td><td>1</td><td>1</td><td>2</td><td>1</td><td>4</td><td>1</td><td>2</td><td>1</td></tr></tbody></table><p>此时原始回文子串的起始位置 = 预处理后回文子串的中心位置（4） - 预处理后回文子串的半径（4）= 0  </p></li><li><p>考虑</p><table><thead><tr><th>数组下标</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th></tr></thead><tbody><tr><td>原始字符串s</td><td>a</td><td>b</td><td>b</td><td>a</td><td>b</td><td>b</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>预处理后的数组t</td><td>#</td><td>a</td><td>#</td><td>b</td><td>#</td><td>b</td><td>#</td><td>a</td><td>#</td><td>b</td><td>#</td><td>b</td><td>#</td><td></td></tr><tr><td>二次处理后的数组f</td><td>$</td><td>#</td><td>a</td><td>#</td><td>b</td><td>#</td><td>b</td><td>#</td><td>a</td><td>#</td><td>b</td><td>#</td><td>b</td><td>#</td></tr><tr><td>回文子串半径数组Pf</td><td>1</td><td>1</td><td>2</td><td>1</td><td>2</td><td>5</td><td>2</td><td>1</td><td>6</td><td>1</td><td>2</td><td>3</td><td>2</td><td>1</td></tr></tbody></table></li></ol><p>此时原始回文子串的起始位置 = 预处理后回文子串的中心位置（8） - 预处理后回文子串的半径（6）= 2</p><p>   需再除以2。</p><ol start="5"><li>如何求数组P</li></ol><p><strong>上述过程总结为一行代码</strong>：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">p[i] = mx &gt; i ? min( p[<span class="hljs-number">2</span>*id - i], mx - i ) : i <br></code></pre></td></tr></table></figure>]]></content>
     
     
     

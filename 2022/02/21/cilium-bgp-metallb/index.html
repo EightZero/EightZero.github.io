@@ -16,19 +16,41 @@
   <meta name="author" content="Flynn">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://eightzero.site/archives/2022/index.html">
+    <meta name="description" content="Cilium安装和配置Cilium 原生支持通过 BGP 发布服务的 LoadBalancer IP 和 Kubernetes 节点的 Pod CIDR 范围。它利用 MetalLB 简单有效的 IP 分配实现和最小的 BGP 协议支持来做到这一点。 Cilium 的配置与 MetalLB 的配置相同， 需要开启以下三个配置项：  bgp.enabled bgp.announce.loadbala">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cilium集群中使用metallb BGP模式访问服务">
+<meta property="og:url" content="http://eightzero.site/2022/02/21/cilium-bgp-metallb/index.html">
 <meta property="og:site_name" content="EightZERO">
+<meta property="og:description" content="Cilium安装和配置Cilium 原生支持通过 BGP 发布服务的 LoadBalancer IP 和 Kubernetes 节点的 Pod CIDR 范围。它利用 MetalLB 简单有效的 IP 分配实现和最小的 BGP 协议支持来做到这一点。 Cilium 的配置与 MetalLB 的配置相同， 需要开启以下三个配置项：  bgp.enabled bgp.announce.loadbala">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-21T07:15:34.000Z">
+<meta property="article:modified_time" content="2022-02-21T07:53:34.091Z">
 <meta property="article:author" content="Flynn">
+<meta property="article:tag" content="cilium">
+<meta property="article:tag" content="bgp">
+<meta property="article:tag" content="metallb">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>归档 - EightZERO</title>
+  <title>cilium集群中使用metallb BGP模式访问服务 - EightZERO</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -55,7 +77,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -216,9 +238,43 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="cilium集群中使用metallb BGP模式访问服务">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-21 15:15" pubdate>
+        2022年2月21日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      523 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      5 分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -231,64 +287,109 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">cilium集群中使用metallb BGP模式访问服务</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Cilium安装和配置"><a href="#Cilium安装和配置" class="headerlink" title="Cilium安装和配置"></a>Cilium安装和配置</h1><p>Cilium 原生支持通过 BGP 发布服务的 LoadBalancer IP 和 Kubernetes 节点的 Pod CIDR 范围。它利用 MetalLB 简单有效的 IP 分配实现和最小的 BGP 协议支持来做到这一点。 Cilium 的配置与 MetalLB 的配置相同，</p>
+<p>需要开启以下三个配置项：</p>
+<ul>
+<li>bgp.enabled</li>
+<li>bgp.announce.loadbalancerIP</li>
+<li>bgp.announce.podCIDR</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh">helm install cilium cilium/cilium --version 1.11.1 \<br>  --namespace kube-system \<br>  --<span class="hljs-built_in">set</span> kubeProxyReplacement=strict \<br>  --<span class="hljs-built_in">set</span> k8sServiceHost=192.168.92.132 \<br>  --<span class="hljs-built_in">set</span> k8sServicePort=6443 \<br>  --<span class="hljs-built_in">set</span> bgp.enabled=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> bgp.announce.loadbalancerIP=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> bgp.announce.podCIDR=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> hubble.relay.enabled=<span class="hljs-literal">true</span> \<br>  --<span class="hljs-built_in">set</span> hubble.ui.enabled=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/cilium/">cilium</a>
+                    
+                      <a class="hover-with-bg" href="/tags/bgp/">bgp</a>
+                    
+                      <a class="hover-with-bg" href="/tags/metallb/">metallb</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/02/22/buildyourowncniwithbash/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">buildyourowncniwithbash</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/18/ebpf-01/">
+                        <span class="hidden-mobile">eBPF应用开发</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
                 
 
-<div class="list-group">
-  <p class="h4">共计 34 篇文章</p>
-  <hr>
-  
-  
-    
-      
-      <p class="h5">2022</p>
-    
-    <a href="/2022/02/22/buildyourowncniwithbash/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">buildyourowncniwithbash</span>
-      <time style="float: right;">02-22</time>
-    </a>
-  
-    
-    <a href="/2022/02/21/cilium-bgp-metallb/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">cilium集群中使用metallb BGP模式访问服务</span>
-      <time style="float: right;">02-21</time>
-    </a>
-  
-    
-    <a href="/2022/02/18/ebpf-01/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">eBPF应用开发</span>
-      <time style="float: right;">02-18</time>
-    </a>
-  
-    
-    <a href="/2022/02/18/libxdp/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">libxdp实现原理</span>
-      <time style="float: right;">02-18</time>
-    </a>
-  
-    
-    <a href="/2022/02/09/xdp/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">挂载多个XDP</span>
-      <time style="float: right;">02-09</time>
-    </a>
-  
-</div>
-
-
-
-
-
-              </div>
-            </div>
-          </div>
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -395,6 +496,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 
