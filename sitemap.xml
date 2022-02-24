@@ -335,20 +335,6 @@
 
   
   <url>
-    <loc>http://eightzero.site/tags/cilium/</loc>
-    <lastmod>2022-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eightzero.site/tags/xdp/</loc>
-    <lastmod>2022-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://eightzero.site/tags/k8s/</loc>
     <lastmod>2022-02-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -356,7 +342,7 @@
   </url>
   
   <url>
-    <loc>http://eightzero.site/tags/Multi-tenancy/</loc>
+    <loc>http://eightzero.site/tags/Istio/</loc>
     <lastmod>2022-02-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -364,13 +350,6 @@
   
   <url>
     <loc>http://eightzero.site/tags/MDM-Vendor/</loc>
-    <lastmod>2022-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eightzero.site/tags/Istio/</loc>
     <lastmod>2022-02-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -392,6 +371,13 @@
   
   <url>
     <loc>http://eightzero.site/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2022-02-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eightzero.site/tags/cilium/</loc>
     <lastmod>2022-02-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -427,6 +413,20 @@
   
   <url>
     <loc>http://eightzero.site/tags/hexo/</loc>
+    <lastmod>2022-02-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eightzero.site/tags/Multi-tenancy/</loc>
+    <lastmod>2022-02-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eightzero.site/tags/xdp/</loc>
     <lastmod>2022-02-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
