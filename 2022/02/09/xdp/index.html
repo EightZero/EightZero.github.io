@@ -24,7 +24,7 @@
 <meta property="og:description" content="1. 为什么需要多个XDP每个 netdev 只有一个 XDP  hook，因此想要使用 XDP 的应用程序必须拥有 XDP hook。 但是如果用户想要安装多个这样的应用程序怎么办？ 例如 - 应该可以同时运行所有这些：  XDP-基于 DDOS 保护*[1]* XDP-加速 IDS（例如 Suricata）*[2]* 自定义 XDP 程序  2. 如何运行多个XDPlibxdp使用AF_XDP">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-09T08:18:19.000Z">
-<meta property="article:modified_time" content="2022-02-18T09:03:22.569Z">
+<meta property="article:modified_time" content="2022-02-24T07:58:36.326Z">
 <meta property="article:author" content="Flynn">
 <meta property="article:tag" content="eBPF">
 <meta property="article:tag" content="XDP">
@@ -258,7 +258,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.3k 字
+      2.4k 字
     </span>
   
 
@@ -267,7 +267,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20 分钟
+      21 分钟
     </span>
   
 
@@ -329,14 +329,12 @@
 <p>该<code>xdp_program__attach()</code>函数将程序附加到一个接口，构建一个调度程序来执行它。可以一次附加多个程序<code>xdp_program__attach_multi()</code>；它们将按照它们的运行优先级排序，并且从一个程序到下一个程序的执行将根据为每个程序定义的链调用动作进行（请参阅下面的<strong>程序元数据</strong>部分）。由于加载过程涉及修改程序的附加类型，因此附加函数仅适用于<code>struct xdp_program</code>尚未加载到内核中的对象。</p>
 <p>当使用附加函数附加到已经加载了 XDP 程序的接口时，libxdp 将尝试将该程序添加到已加载程序的列表中。但是，这可能会失败，原因可能是缺少内核支持，或者是因为未使用与 libxdp 兼容的调度程序加载已附加的程序。如果缺少对增量附加（在内核 5.10 中合并）的内核支持，那么在单个接口上实际运行多个程序的唯一方法是使用 <code>xdp_program__attach_multi()</code>. 如果现有程序不是 XDP 调度程序，则必须先将该程序与接口分离，然后 libxdp 才能附加新程序。这可以通过调用来完成<code>xdp_program__detach()</code>引用加载的程序；但请注意，这当然会破坏任何依赖于存在的其他 XDP 程序的应用程序。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><p>[1] <a target="_blank" rel="noopener" href="https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/">https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/</a></p>
-</li>
-<li><p>[2] <a target="_blank" rel="noopener" href="https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html">https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html</a></p>
-</li>
-<li><p>[3] <a target="_blank" rel="noopener" href="https://lpc.events/event/4/contributions/460/">https://lpc.events/event/4/contributions/460/</a></p>
-</li>
-<li><p>[4] <a target="_blank" rel="noopener" href="https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf">https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf</a></p>
-</li>
+<li>[1] <a target="_blank" rel="noopener" href="https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/">https://blog.cloudflare.com/l4drop-xdp-ebpf-based-ddos-mitigations/</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html">https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html</a></li>
+<li>[3] <a target="_blank" rel="noopener" href="https://lpc.events/event/4/contributions/460/">https://lpc.events/event/4/contributions/460/</a></li>
+<li>[4] <a target="_blank" rel="noopener" href="https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf">https://lpc.events/event/7/contributions/671/attachments/561/992/xdp-multiprog.pdf</a></li>
+<li>[5] <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Fu4L8ewcO70">https://www.youtube.com/watch?v=Fu4L8ewcO70</a></li>
+<li>[6] <a target="_blank" rel="noopener" href="https://cilium.io/blog/2021/05/20/cilium-110">https://cilium.io/blog/2021/05/20/cilium-110</a></li>
 </ul>
 
             </div>
