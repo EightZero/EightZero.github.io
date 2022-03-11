@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://eightzero.site/ssh.html</loc>
+    
+    <lastmod>2022-03-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://eightzero.site/2022/02/09/xdp/</loc>
     
     <lastmod>2022-02-24</lastmod>
@@ -29,7 +38,7 @@
   </url>
   
   <url>
-    <loc>http://eightzero.site/2022/02/21/cilium-bgp-metallb/</loc>
+    <loc>http://eightzero.site/cilium-bgp-metallb.html</loc>
     
     <lastmod>2022-02-21</lastmod>
     
@@ -319,7 +328,7 @@
 
   <url>
     <loc>http://eightzero.site/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -327,98 +336,77 @@
   
   <url>
     <loc>http://eightzero.site/tags/k8s/</loc>
-    <lastmod>2022-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eightzero.site/tags/cilium/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/xdp/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/Multi-tenancy/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/MDM-Vendor/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/iOS/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/operator/</loc>
-    <lastmod>2022-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eightzero.site/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/Istio/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://eightzero.site/tags/bgp/</loc>
-    <lastmod>2022-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eightzero.site/tags/metallb/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <loc>http://eightzero.site/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/ebpf/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/go/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eightzero.site/tags/hexo/</loc>
-    <lastmod>2022-02-24</lastmod>
+    <lastmod>2022-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
